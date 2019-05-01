@@ -1217,6 +1217,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta A.3 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaA3'])) {
+              $material = $_POST['materialGavetaA3'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta A.3';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal8" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1289,50 +1333,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaA3'])) {
-              $material = $_POST['materialGavetaA3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.3';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1343,6 +1343,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta A.6 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaA6'])) {
+              $material = $_POST['materialGavetaA6'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta A.6';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal9" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1413,50 +1457,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaA6'])) {
-              $material = $_POST['materialGavetaA6'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.6';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1467,6 +1468,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira A.3 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraA3'])) {
+              $material = $_POST['materialPraA3'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira A.3';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal10" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1539,50 +1584,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraA3'])) {
-              $material = $_POST['materialPraA3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira A.3';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+         
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1593,6 +1595,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira A.4 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraA4'])) {
+              $material = $_POST['materialPraA4'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira A.4';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal11" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1664,50 +1710,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraA4'])) {
-              $material = $_POST['materialPraA4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira A.4';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1718,6 +1721,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Bau B -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialBauB'])) {
+              $material = $_POST['materialBauB'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Bau B';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal12" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1789,50 +1836,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialBauB'])) {
-              $material = $_POST['materialBauB'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Bau B';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+         
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1843,6 +1847,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira B.1 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraB1'])) {
+              $material = $_POST['materialPraB1'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira B.1';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal13" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1914,50 +1962,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraB1'])) {
-              $material = $_POST['materialPraB1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.1';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1968,6 +1973,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira B.2 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraB2'])) {
+              $material = $_POST['materialPraB2'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira B.2';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal14" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2039,50 +2088,7 @@ if ($action == 'armario') {
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
 
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraB2'])) {
-              $material = $_POST['materialPraB2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.2';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2093,6 +2099,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta B.1 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaB1'])) {
+              $material = $_POST['materialGavetaB1'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta B.1';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal15" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2164,50 +2214,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaB1'])) {
-              $material = $_POST['materialGavetaB1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.1';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2218,6 +2225,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta B.4 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaB4'])) {
+              $material = $_POST['materialGavetaB4'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta B.4';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal16" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2290,50 +2341,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaB4'])) {
-              $material = $_POST['materialGavetaB4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.4';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+         
 
         </div>
         <div class="modal-footer">
@@ -2345,6 +2353,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta B.2 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaB2'])) {
+              $material = $_POST['materialGavetaB2'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta B.2';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal17" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2418,50 +2470,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaB2'])) {
-              $material = $_POST['materialGavetaB2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.2';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
 
         </div>
         <div class="modal-footer">
@@ -2473,6 +2482,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta B.5 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaB5'])) {
+              $material = $_POST['materialGavetaB5'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta B.5';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal18" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2545,50 +2598,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaB5'])) {
-              $material = $_POST['materialGavetaB5'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.5';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2599,6 +2609,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta B.3 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaB3'])) {
+              $material = $_POST['materialGavetaB3'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta B.3';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal19" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2671,50 +2725,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaB3'])) {
-              $material = $_POST['materialGavetaB3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.3';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+            
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2725,6 +2736,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta B.6 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaB6'])) {
+              $material = $_POST['materialGavetaB6'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta B.6';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal20" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2798,50 +2853,7 @@ if ($action == 'armario') {
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
 
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaB6'])) {
-              $material = $_POST['materialGavetaB6'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.6';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2852,6 +2864,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira B.3 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraB3'])) {
+              $material = $_POST['materialPraB3'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira B.3';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal21" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2923,50 +2979,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraB3'])) {
-              $material = $_POST['materialPraB3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.3';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+            
 
         </div>
         <div class="modal-footer">
@@ -2978,6 +2991,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira B.4 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraB4'])) {
+              $material = $_POST['materialPraB4'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira B.4';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal22" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3050,50 +3107,7 @@ if ($action == 'armario') {
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
 
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraB4'])) {
-              $material = $_POST['materialPraB4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.4';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+        
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3104,6 +3118,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Bau C -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialBauC'])) {
+              $material = $_POST['materialBauC'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Bau C';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal23" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3175,50 +3233,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialBauC'])) {
-              $material = $_POST['materialBauC'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Bau C';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+         
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3229,6 +3244,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira C.1 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraC1'])) {
+              $material = $_POST['materialPraC1'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira C.1';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal24" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3301,50 +3360,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraC1'])) {
-              $material = $_POST['materialPraC1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.1';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3355,6 +3371,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Prateleira C.2 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialPraC2'])) {
+              $material = $_POST['materialPraC2'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira C.2';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal25" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3426,50 +3486,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraC2'])) {
-              $material = $_POST['materialPraC2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.2';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3480,6 +3497,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta C.1-->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaC1'])) {
+              $material = $_POST['materialGavetaC1'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta C.1';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal26" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3551,50 +3612,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaC1'])) {
-              $material = $_POST['materialGavetaC1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.1';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3605,6 +3623,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta C.4 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaC4'])) {
+              $material = $_POST['materialGavetaC4'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta C.4';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal27" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3676,50 +3738,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaC4'])) {
-              $material = $_POST['materialGavetaC4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.4';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3730,6 +3749,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!-- Modal Gaveta C.2 -->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
+
+            if (isset($_POST['materialGavetaC2'])) {
+              $material = $_POST['materialGavetaC2'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta C.2';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal28" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3801,50 +3864,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaC2'])) {
-              $material = $_POST['materialGavetaC2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.2';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3855,7 +3875,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!----------------------------------- Modal Gaveta C.5 --------------------------------------->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
 
+            if (isset($_POST['materialGavetaC5'])) {
+              $material = $_POST['materialGavetaC5'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta C.5';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal29" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3927,50 +3990,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaC5'])) {
-              $material = $_POST['materialGavetaC5'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.5';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
 
         </div>
         <div class="modal-footer">
@@ -3982,7 +4002,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!----------------------------------- Modal Gaveta C.3 --------------------------------------->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
 
+            if (isset($_POST['materialGavetaC3'])) {
+              $material = $_POST['materialGavetaC3'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta C.3';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
 
   <div class="modal fade" id="siteModal30" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -4055,50 +4118,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaC3'])) {
-              $material = $_POST['materialGavetaC3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.3';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
 
         </div>
         <div class="modal-footer">
@@ -4110,7 +4130,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!----------------------------------- Modal Gaveta C.6 --------------------------------------->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
 
+            if (isset($_POST['materialGavetaC6'])) {
+              $material = $_POST['materialGavetaC6'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Gaveta C.6';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal31" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -4182,50 +4245,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialGavetaC6'])) {
-              $material = $_POST['materialGavetaC6'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.6';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+       
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -4236,7 +4256,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!----------------------------------- Modal Prateleira C.3 --------------------------------------->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
 
+            if (isset($_POST['materialPraC3'])) {
+              $material = $_POST['materialPraC3'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira C.3';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal32" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -4308,50 +4371,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraC3'])) {
-              $material = $_POST['materialPraC3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.3';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -4362,7 +4382,50 @@ if ($action == 'armario') {
     </div>
   </div>
   <!----------------------------------- Modal Prateleira C.4 --------------------------------------->
+  <?php
+            require_once 'sql.php';
+            $sql = new Sql;
 
+            if (isset($_POST['materialPraC4'])) {
+              $material = $_POST['materialPraC4'];
+              $quantidade = $_POST['quantidade'];
+              $localizacao = 'Prateleira C.4';
+
+              //verificar se os campos estão todos preenchidos
+              if (!empty($material) && !empty($quantidade)) {
+                $sql->conectar("lab", "localhost", "root", "");
+                if ($sql->msgErro == "") {
+                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
+                    ?>
+                    <div style="bottom:838px;" class="alert alert-success" role="alert">
+                      Material retirado.
+                    </div>
+                  <?php
+                } else {
+                  ?>
+                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                      Você não pode retirar mais do que tem.
+                    </div>
+                  <?php
+                }
+              } else {
+                ?>
+                  <div style="bottom:838px;" class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div style="bottom:838px;" class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
+          ?>
   <div class="modal fade" id="siteModal33" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -4434,50 +4497,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
-
-            if (isset($_POST['materialPraC4'])) {
-              $material = $_POST['materialPraC4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.4';
-
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
-          ?>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>

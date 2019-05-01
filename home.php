@@ -4496,8 +4496,7 @@ if ($action == 'armario') {
             <div class="form-group col-md-2">
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
-            </div>
-          
+            </div>   
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>

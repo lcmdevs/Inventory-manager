@@ -17,7 +17,7 @@ if( $_SESSION['matricula'] == null){
 	<link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
 	<link rel="stylesheet" href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css">
 </head>
-<body>
+<body style="background-image:url(img/pap3.png);">
 
 	<?php
 	$pagina = 'home';
@@ -31,13 +31,8 @@ if( $_SESSION['matricula'] == null){
 		} else {
 			?> <i class="glyphicon glyphicon-thumbs-down"></i>Pagina não encotrada. <?php
 			   }
-     $URL_ATUAL= "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-     
-	 if($URL_ATUAL == "http://localhost/Inventor%20Manager/index.php" or $URL_ATUAL == "http://localhost/Inventor%20Manager/" or $URL_ATUAL == "http://localhost/Inventor%20Manager/index.php?" ){
-		 ?>
-	 <div style="text-align: center; margin-top:100px; margin-right: 100px;"><img src="img/estoque.jpg">
 	 																	
-	<?php   } ?> 
+	  } ?> 
 	<script src="node_modules/jquery/dist/jquery.js"></script>
 	<script src="node_modules/Popper.js/dist/Popper.js"></script>
 	<script src="script/validar.js"></script> 
@@ -48,5 +43,5 @@ if( $_SESSION['matricula'] == null){
 </html>
 
 	 <?php
-	}
+
 	?>

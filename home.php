@@ -1,13 +1,13 @@
 <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-dark bg-success">
   <div class="container">
-    <a class="navbar-brand h1 mb-0" href="index.php">Laboratory Manager</a>
+    <a class="navbar-brand h1 mb-0" style="font-family: Impact, fantasy; font-size: 22px;" href="index.php">Laboratory Manager</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSite">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">
+          <a class="nav-link dropdown-toggle" style="color: white;" href="#" data-toggle="dropdown" id="navDrop">
             Armário
           </a>
           <div class="dropdown-menu">
@@ -17,7 +17,7 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">
+          <a class="nav-link dropdown-toggle" style="color: white;" href="#" data-toggle="dropdown" id="navDrop">
             Estoque
           </a>
           <div class="dropdown-menu">
@@ -28,7 +28,7 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navDrop">
+          <a class="nav-link dropdown-toggle" style="color: white;" href="#" data-toggle="dropdown" id="navDrop">
             Empréstimo
           </a>
           <div class="dropdown-menu">
@@ -39,12 +39,12 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="sair.php">
-            Sair
-          </a>
+          <a class="nav-link" style="margin-left:310px; color:white;" href=""> Seja Bem vindo <?php echo $_SESSION['nome']; ?></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="margin-left:310px; color:white;" href=""> Seja Bem vindo <?php echo $_SESSION['nome']; ?></a>
+        <a class="nav-link"  style="margin-left: 15px; color: white;"href="sair.php">
+        Sair
+        </a>
         </li>
       </ul>
     </div>
@@ -62,66 +62,68 @@ if (!empty($_GET['action'])) {
 }
 if ($action == 'armario') {
   
-                require_once 'classes/localizar.php';
-                $localizar = new localizar;
-                if (isset($_POST['material'])) {
-                  $material = $_POST['material'];
-                  //verificar se os campos estão todos preenchidos
-                  if (!empty($material)) {
-                    $localizar->conectar();
-                    if ($localizar->msgErro == "") {
-                      if ($localizar->buscarMaterial($material) == true) {
-                        $sql = $pdo->prepare("SELECT fk_material, fk_localizacao, quantidade FROM alocacao WHERE fk_material LIKE :material");
-                        $sql->bindValue(":material", $material."%");
-                        $sql->execute();
-                        echo '<table  class="table table-hover">';
-                        echo '<tr>';
-                        echo '<td><b>Nome_modelo</td>';
-                        echo '<td><b>Localização</td>';
-                        echo '<td><b>Quantidade</td>';
-                        echo '</tr>';
-                        while ($dados = $sql->fetch()) {
-                          echo '<tr>';
-                          echo '<td>' . $dados['fk_material'] . '</td>';
-                          echo '<td>' . $dados['fk_localizacao'] . '</td>';
-                          echo '<td>' . $dados['quantidade'] . '</td>';
-                          echo '</tr>';
+  require_once 'classes/material.php';
+  require_once 'conexao.php';
+  $conn = new Conexao;
+  $mat = new Material;
+  if (isset($_POST['material'])) {
+    $material = $_POST['material'];
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->buscarMaterial($material)) {
+          $sql = $pdo->prepare("SELECT fk_material, fk_localizacao, quantidade FROM alocacao WHERE fk_material LIKE :material");
+          $sql->bindValue(":material", $material ."%");
+          $sql->execute();
+          echo '<table  class="table table-hover">';
+          echo '<tr>';
+          echo '<td><b>Nome_modelo</td>';
+          echo '<td><b>Localização</td>';
+          echo '<td><b>Quantidade</td>';
+          echo '</tr>';
+          while ($dados = $sql->fetch()) {
+            echo '<tr>';
+            echo '<td>' . $dados['fk_material'] . '</td>';
+            echo '<td>' . $dados['fk_localizacao'] . '</td>';
+            echo '<td>' . $dados['quantidade'] . '</td>';
+            echo '</tr>';
 
-                          ######################################################################################################################     
-                          //if (trim($dados['fk_localizacao']) == $gavetasCor[trim($dados['fk_localizacao'])]) {
+            ######################################################################################################################     
+            //if (trim($dados['fk_localizacao']) == $gavetasCor[trim($dados['fk_localizacao'])]) {
 
-                            //$gavetasCor[trim($dados['fk_localizacao'])]  = 'red';
-                         // }
-                          ######################################################################################################################                        
-                        }
-                        echo '</table>';
-                      } else {
-                        ?>
-                        <div class="alert alert-danger" role="alert">
-                          Este material não está alocado.
-                        </div>
-                      <?php
-                    }
-                  } else {
-                    ?>
-                      <div class="msn-erro">
-                        <?php
-                        echo "erro: " . $equipamento->msgErro;
-                        ?>
-                      </div>
-                    <?php
-                  }
-                } else {
-                  ?>
-                    <div class="alert alert-danger" role="alert">
-                      Preencha todos os campos.
-                    </div>
-                  <?php
-                }
-              }
-              ?>
-              <br>
-              
+            //$gavetasCor[trim($dados['fk_localizacao'])]  = 'red';
+            // }
+            ######################################################################################################################                        
+          }
+          echo '</table>';
+        } else {
+          ?>
+          <div class="alert alert-danger" role="alert">
+            Este material não está alocado.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $mat->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
+  <br>
+
   <div class="row">
     <div class="col-md-12">
       <div class="card card-body">
@@ -132,7 +134,7 @@ if ($action == 'armario') {
               <form class="form-inline ml-auto" method="POST" style="width: 100%;">
                 <input type="text" name="material" class="form-control" placeholder="Localizar">
 
-              
+
                 <input type="image" src="img/lupa.png" alt="submit" /></a>
               </form>
             </nav>
@@ -307,52 +309,57 @@ if ($action == 'armario') {
   </div>
   </div>
   </div>
-  <!-- Modais -->
-  <!-- Modal Bau A -->
-  <?php
-        require_once 'sql.php';
-        $sql = new Sql;
 
-        if (isset($_POST['materialBauA'])) {
-          $material = $_POST['materialBauA'];
-          $quantidade = $_POST['quantidade'];
-          $localizacao = 'Bau A';
-          //verificar se os campos estão todos preenchidos
-          if (!empty($material) && !empty($quantidade)) {
-            $sql->conectar("lab", "localhost", "root", "");
-            if ($sql->msgErro == "") {
-              if ($sql->retirarMaterial($material, $quantidade, $localizacao) == true) {
-                ?>
-                <div style="bottom:838px; " class="alert alert-success" role="alert">
-                  Material retirado.
-                </div>
-              <?php
-            } else {
-              ?>
-                <div style="bottom:838px;"  class="alert alert-danger" role="alert">
-                  Você não pode retirar mais do que tem.
-                </div>
-              <?php
-            }
-          } else {
-            ?>
-              <div class="msn-erro">
-                <?php
-                echo "erro: " . $material->msgErro;
-                ?>
-              </div>
-            <?php
-          }
-        } else {
+  <!--###################################################### MODAIS ####################################################-->
+
+  <!--####################################################### BAU A ####################################################-->
+  <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
+
+  $conn = new Conexao;
+  $mat = new Material;
+
+  if (isset($_POST['materialBauA'])) {
+    $material = $_POST['materialBauA'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Bau A';
+    
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-            <div  style="bottom:838px;" class="alert alert-danger" role="alert">
-              Preencha todos os campos.
-            </div>
-          <?php
-        }
+          <div style="bottom:838px; " class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
       }
+    } else {
       ?>
-    <div class="modal fade" id="siteModal1" tabindex="-1" role="dialog">
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
+  <div class="modal fade" id="siteModal1" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -365,31 +372,29 @@ if ($action == 'armario') {
           <h4 class="modal-body">Lista</h4>
           <form method="POST">
 
-            <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
+            <!-- Faz uma conexão com o banco de dados, retorna uma lista de materiais -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
 
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau A'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau A'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
-            echo '</table>';
-            mysqli_close($conn);
+            echo '</table>';       
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -397,26 +402,22 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialBauA">
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
+                    require_once 'conexao.php';         
+                    $conn = new Conexao;    
+                    $conn->conectar();             
                 ?>
                 <div class="tabela">
                   <?php
                   $material = $_POST['materialbauA'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Bau A'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Bau A'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -433,52 +434,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira A.1 -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
 
-            if (isset($_POST['materialPraA1'])) {
-              $material = $_POST['materialPraA1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira A.1';
+    <!--################################################ Modal Prateleira A.1 ##########################################-->
+   <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px; " class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px; "class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px; " class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraA1'])) {
+    $material = $_POST['materialPraA1'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira A.1';
+    
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px; " class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal2" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -492,32 +495,28 @@ if ($action == 'armario') {
           <h4 class="modal-body">Lista</h4>
           <form method="POST">
 
-            <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
+            <!-- Faz uma conexão com o banco de dados, retorna uma lista de materiais -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-            ?>
-            <?php
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.1'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.1'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
-            echo '</table>';
-            mysqli_close($conn);
+            echo '</table>';  
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -525,28 +524,22 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialPraA1">
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
+                    require_once 'conexao.php';         
+                    $conn = new Conexao;    
+                    $conn->conectar();             
                 ?>
                 <div class="tabela">
-
                   <?php
                   $material = $_POST['materialPraA1'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira A.1'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira A.1'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
-
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -564,52 +557,55 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira A.2 -->
+
+   <!--################################################ Modal Prateleira A.2 ##########################################-->
+
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraA2'])) {
-              $material = $_POST['materialPraA2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira A.2';
+  $conn = new Conexao;
+  $mat = new Material;
 
+  if (isset($_POST['materialPraA2'])) {
+    $material = $_POST['materialPraA2'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira A.2';
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;"class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal3" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -625,30 +621,26 @@ if ($action == 'armario') {
 
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-            ?>
-            <?php
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.2'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.2'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -656,28 +648,23 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialPraA2">
                 <option selected>Escolher...</option>
 
-                <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-                <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
-
+                  <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
+                  <?php
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraA2'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira A.2'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira A.2'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
-
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -694,52 +681,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta A.1 -->
+     <!--################################################ Modal Gaveta A.1 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaA1'])) {
-              $material = $_POST['materialGavetaA1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.1';
+  $conn = new Conexao;
+  $mat = new Material;
 
+  if (isset($_POST['materialGavetaA1'])) {
+    $material = $_POST['materialGavetaA1'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta A.1';
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal4" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -753,61 +742,51 @@ if ($action == 'armario') {
           <h4 class="modal-body">Lista</h4>
           <form method="POST">
 
-            <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
+              <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-            ?>
-
-            <?php
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.1'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.1'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
               <label for="inputModelo">Selecione Material</label>
               <select id="inputModelo" class="form-control" name="materialGavetaA1">
                 <option selected>Escolher...</option>
-
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
-
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA1'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta A.1'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.1'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -824,52 +803,55 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta A.4 -->
+       <!--################################################ Modal Gaveta A.4 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaA4'])) {
-              $material = $_POST['materialGavetaA4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.4';
+  $conn = new Conexao;
+  $mat = new Material;
+
+  if (isset($_POST['materialGavetaA4'])) {
+    $material = $_POST['materialGavetaA4'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta A.4';
 
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal5" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -883,33 +865,27 @@ if ($action == 'armario') {
           <h4 class="modal-body">Lista</h4>
           <form method="POST">
 
-            <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-            ?>
-
-            <?php
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.4'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.4'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -917,28 +893,23 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialGavetaA4">
                 <option selected>Escolher...</option>
 
-                <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-                <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
-
+                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
+                 <?php
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
-                  $material = $_POST['materialGaveta4'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta A.4'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $material = $_POST['materialGavetaA4'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.4'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
-
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -955,52 +926,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta A.2 -->
-            <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+       <!--################################################ Modal Gaveta A.2 ##########################################-->
+  <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaA2'])) {
-              $material = $_POST['materialGavetaA2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.2';
+  $conn = new Conexao;
+  $mat = new Material;
 
+  if (isset($_POST['materialGavetaA2'])) {
+    $material = $_POST['materialGavetaA2'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta A.2';
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal6" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1014,32 +987,27 @@ if ($action == 'armario') {
           <h4 class="modal-body">Lista</h4>
           <form method="POST">
 
-            <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-            ?>
-            <?php
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.2'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.2'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1049,27 +1017,21 @@ if ($action == 'armario') {
 
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
-
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA2'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta A.2'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.2'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
-
                   <?php
                 }
-                mysqli_close($conn);
-
                 ?>
               </select>
             </div>
@@ -1086,52 +1048,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta A.5 -->
+       <!--################################################ Modal Gaveta A.5 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaA5'])) {
-              $material = $_POST['materialGavetaA5'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.5';
+  $conn = new Conexao;
+  $mat = new Material;
 
+  if (isset($_POST['materialGavetaA5'])) {
+    $material = $_POST['materialGavetaA5'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta A.5';
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal7" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1147,30 +1111,26 @@ if ($action == 'armario') {
 
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-            ?>
-            <?php
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.5'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.5'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1180,25 +1140,21 @@ if ($action == 'armario') {
 
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
-
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA5'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta A.5'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.5'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -1216,51 +1172,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta A.3 -->
+    <!--################################################ Modal Gaveta A.3 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaA3'])) {
-              $material = $_POST['materialGavetaA3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.3';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaA3'])) {
+    $material = $_POST['materialGavetaA3'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta A.3';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal8" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1276,29 +1235,26 @@ if ($action == 'armario') {
 
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.3'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.3'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1308,24 +1264,21 @@ if ($action == 'armario') {
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
 
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA3'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta A.3'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.3'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -1342,51 +1295,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta A.6 -->
+  <!--################################################ Modal Gaveta A.6 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaA6'])) {
-              $material = $_POST['materialGavetaA6'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta A.6';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaA6'])) {
+    $material = $_POST['materialGavetaA6'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta A.6';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal9" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1401,29 +1357,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.6'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.6'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1432,24 +1385,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA6'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta A.6'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.6'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -1457,7 +1407,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
+
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1467,51 +1417,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira A.3 -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+ <!--################################################ Modal Prateleira A.3 ##########################################-->
+ <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraA3'])) {
-              $material = $_POST['materialPraA3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira A.3';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraA3'])) {
+    $material = $_POST['materialPraA3'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira A.3';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal10" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1526,29 +1479,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.3'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.3'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1557,26 +1507,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
-
                   $material = $_POST['materialPraA3'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira A.3'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira A.3'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -1584,7 +1529,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-         
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1594,51 +1538,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira A.4 -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+ <!--################################################ Modal Prateleira A.4 ##########################################-->
+ <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraA4'])) {
-              $material = $_POST['materialPraA4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira A.4';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraA4'])) {
+    $material = $_POST['materialPraA4'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira A.4';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal11" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1653,29 +1600,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.4'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.4'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1684,25 +1628,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraA4'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira A.4'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira A.4'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -1710,7 +1650,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
+
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1720,51 +1660,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Bau B -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+        <!--################################################ Bau B ##########################################-->
+ <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialBauB'])) {
-              $material = $_POST['materialBauB'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Bau B';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialBauB'])) {
+    $material = $_POST['materialBauB'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Bau B';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal12" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1779,30 +1722,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau B'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau B'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1811,24 +1750,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialBauB'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Bau B'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Bau B'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -1836,7 +1772,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-         
+
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1846,51 +1782,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira B.1 -->
+  <!--################################################ Modal Prateleira B.1 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraB1'])) {
-              $material = $_POST['materialPraB1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.1';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraB1'])) {
+    $material = $_POST['materialPraB1'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira B.1';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal13" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -1905,30 +1844,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.1'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.1'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -1937,24 +1872,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB1'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira B.1'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.1'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -1962,7 +1894,7 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
+
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -1972,51 +1904,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira B.2 -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+ <!--################################################ Modal Prateleira B.2 ##########################################-->
+ <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraB2'])) {
-              $material = $_POST['materialPraB2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.2';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraB2'])) {
+    $material = $_POST['materialPraB2'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira B.2';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal14" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2031,29 +1966,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.2'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.2'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -2062,33 +1994,28 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB2'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira B.2'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.2'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
             <div class="form-group col-md-2">
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
-
             </div>
-          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2098,51 +2025,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta B.1 -->
+  <!--################################################ Modal Gaveta B.1 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaB1'])) {
-              $material = $_POST['materialGavetaB1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.1';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaB1'])) {
+    $material = $_POST['materialGavetaB1'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta B.1';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal15" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2157,29 +2087,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.1'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.1'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -2188,25 +2115,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB1'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta B.1'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.1'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
-
                 ?>
               </select>
             </div>
@@ -2214,7 +2137,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2224,51 +2146,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta B.4 -->
+  <!--################################################ Modal Gaveta B.4 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaB4'])) {
-              $material = $_POST['materialGavetaB4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.4';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaB4'])) {
+    $material = $_POST['materialGavetaB4'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta B.4';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal16" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2283,32 +2208,27 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.4'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.4'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
-
             <div class="row"></div>
             <div class="form-group col-md-6">
               <label for="inputModelo">Selecione Material</label>
@@ -2316,24 +2236,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB4'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta B.4'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.4'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -2341,8 +2258,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-         
-
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2352,51 +2267,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta B.2 -->
+  <!--################################################ Modal Gaveta B.2 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaB2'])) {
-              $material = $_POST['materialGavetaB2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.2';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaB2'])) {
+    $material = $_POST['materialGavetaB2'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta B.2';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal17" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2411,32 +2329,27 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.2'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.2'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
-
             <div class="row"></div>
             <div class="form-group col-md-6">
               <label for="inputModelo">Selecione Material</label>
@@ -2444,25 +2357,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB2'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta B.2'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.2'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -2470,8 +2379,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
-
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2481,51 +2388,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta B.5 -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+ <!--################################################ Modal Gaveta B.5 ##########################################-->
+ <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaB5'])) {
-              $material = $_POST['materialGavetaB5'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.5';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaB5'])) {
+    $material = $_POST['materialGavetaB5'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta B.5';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal18" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2540,32 +2450,27 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.5'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.5'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
-
             <div class="row"></div>
             <div class="form-group col-md-6">
               <label for="inputModelo">Selecione Material</label>
@@ -2573,24 +2478,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB5'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta B.5'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.5'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -2598,7 +2500,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2608,51 +2509,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta B.3 -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  <!--################################################ Modal Gaveta B.3 ##########################################-->
+ <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaB3'])) {
-              $material = $_POST['materialGavetaB3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.3';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaB3'])) {
+    $material = $_POST['materialGavetaB3'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta B.3';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal19" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2667,30 +2571,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.3'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.3'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -2699,25 +2599,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB3'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta B.3'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.3'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -2725,7 +2621,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2735,51 +2630,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta B.6 -->
+  <!--################################################ Modal Gaveta B.6 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaB6'])) {
-              $material = $_POST['materialGavetaB6'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta B.6';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaB6'])) {
+    $material = $_POST['materialGavetaB6'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta B.6';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar("lab", "localhost", "root", "");
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal20" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2794,31 +2692,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.6'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.6'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -2827,33 +2720,28 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB6'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta B.6'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.6'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
             <div class="form-group col-md-2">
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
-
             </div>
-          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2863,51 +2751,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira B.3 -->
+  <!--################################################ Modal Prateleira B.3 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraB3'])) {
-              $material = $_POST['materialPraB3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.3';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraB3'])) {
+    $material = $_POST['materialPraB3'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira B.3';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal21" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -2922,30 +2813,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.3'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.3'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -2954,24 +2841,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB3'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira B.3'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.3'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -2979,8 +2863,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-            
-
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -2990,51 +2872,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira B.4 -->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+   <!--################################################ Modal Prateleira B.4 ##########################################-->
+   <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraB4'])) {
-              $material = $_POST['materialPraB4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira B.4';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraB4'])) {
+    $material = $_POST['materialPraB4'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira B.4';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal22" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3049,30 +2934,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.4'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.4'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3081,33 +2962,28 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB4'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira B.4'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.4'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
             <div class="form-group col-md-2">
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
-
             </div>
-        
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3117,51 +2993,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Bau C -->
+  <!--################################################  Bau C ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialBauC'])) {
-              $material = $_POST['materialBauC'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Bau C';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialBauC'])) {
+    $material = $_POST['materialBauC'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Bau C';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal23" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3176,30 +3055,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau C'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau C'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3208,24 +3083,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialBauC'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Bau C'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Bau C'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -3233,7 +3105,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-         
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3243,51 +3114,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira C.1 -->
+  <!--################################################ Prateleira C.1 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraC1'])) {
-              $material = $_POST['materialPraC1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.1';
+  $conn = new Conexao;
+  $mat = new Material;
+  
+  if (isset($_POST['materialPraC1'])) {
+    $material = $_POST['materialPraC1'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira C.1';
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal24" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3302,30 +3176,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-            ?>
-            <?php
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.1'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.1'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3333,34 +3203,29 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialPraC1">
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-                <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+              <?php
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC1'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira C.1'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.1'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
-
             <div class="form-group col-md-2">
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3370,51 +3235,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Prateleira C.2 -->
+  <!--################################################ Prateleira C.2 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraC2'])) {
-              $material = $_POST['materialPraC2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.2';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraC2'])) {
+    $material = $_POST['materialPraC2'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira C.2';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal25" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3429,30 +3297,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.2'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.2'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3461,24 +3325,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC2'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira C.2'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.2'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -3486,7 +3347,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3496,51 +3356,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta C.1-->
+  <!--################################################ Gaveta C.1 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaC1'])) {
-              $material = $_POST['materialGavetaC1'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.1';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaC1'])) {
+    $material = $_POST['materialGavetaC1'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta C.1';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal26" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3555,30 +3418,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.1'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.1'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3587,24 +3446,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC1'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta C.1'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.1'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -3612,7 +3468,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3622,51 +3477,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta C.4 -->
+  <!--################################################ Gaveta C.4 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaC4'])) {
-              $material = $_POST['materialGavetaC4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.4';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaC4'])) {
+    $material = $_POST['materialGavetaC4'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta C.4';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal27" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3681,30 +3539,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.4'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.4'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3713,24 +3567,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC4'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta C.4'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.4'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -3738,7 +3589,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3748,51 +3598,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!-- Modal Gaveta C.2 -->
+  <!--################################################ Gaveta C.2 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaC2'])) {
-              $material = $_POST['materialGavetaC2'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.2';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaC2'])) {
+    $material = $_POST['materialGavetaC2'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta C.2';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal28" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3807,30 +3660,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.2'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.2'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3839,24 +3688,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC2'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta C.2'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.2'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -3864,7 +3710,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -3874,51 +3719,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!----------------------------------- Modal Gaveta C.5 --------------------------------------->
+  <!--################################################ Gaveta C.5 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaC5'])) {
-              $material = $_POST['materialGavetaC5'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.5';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaC5'])) {
+    $material = $_POST['materialGavetaC5'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta C.5';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal29" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -3933,30 +3781,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.5'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.5'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -3965,24 +3809,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC5'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta C.5'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.5'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -3990,8 +3831,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
-
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -4001,52 +3840,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!----------------------------------- Modal Gaveta C.3 --------------------------------------->
+  <!--################################################ Gaveta C.3 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaC3'])) {
-              $material = $_POST['materialGavetaC3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.3';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaC3'])) {
+    $material = $_POST['materialGavetaC3'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta C.3';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal30" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -4061,30 +3902,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.3'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.3'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -4093,24 +3930,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC3'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta C.3'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.3'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -4118,8 +3952,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-          
-
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -4129,51 +3961,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!----------------------------------- Modal Gaveta C.6 --------------------------------------->
+  <!--################################################ Gaveta C.6 ##########################################-->
   <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialGavetaC6'])) {
-              $material = $_POST['materialGavetaC6'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Gaveta C.6';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialGavetaC6'])) {
+    $material = $_POST['materialGavetaC6'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Gaveta C.6';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal31" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -4188,30 +4023,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.6'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.6'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -4220,24 +4051,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC6'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Gaveta C.6'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.6'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -4245,7 +4073,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-       
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -4255,51 +4082,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!----------------------------------- Modal Prateleira C.3 --------------------------------------->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+   <!--################################################ Prateleira C.3 ##########################################-->
+   <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraC3'])) {
-              $material = $_POST['materialPraC3'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.3';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraC3'])) {
+    $material = $_POST['materialPraC3'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira C.3';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal32" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -4314,30 +4144,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.3'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.3'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -4346,24 +4172,21 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC3'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira C.3'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.3'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
@@ -4371,7 +4194,6 @@ if ($action == 'armario') {
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
             </div>
-           
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -4381,51 +4203,54 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!----------------------------------- Modal Prateleira C.4 --------------------------------------->
-  <?php
-            require_once 'sql.php';
-            $sql = new Sql;
+   <!--################################################ Prateleira C.4 ##########################################-->
+   <?php
+  require_once 'conexao.php';
+  require_once 'classes/material.php';
 
-            if (isset($_POST['materialPraC4'])) {
-              $material = $_POST['materialPraC4'];
-              $quantidade = $_POST['quantidade'];
-              $localizacao = 'Prateleira C.4';
+  $conn = new Conexao;
+  $mat = new Material;
 
-              //verificar se os campos estão todos preenchidos
-              if (!empty($material) && !empty($quantidade)) {
-                $sql->conectar("lab", "localhost", "root", "");
-                if ($sql->msgErro == "") {
-                  if ($sql->retirarMaterial($material, $quantidade, $localizacao)) {
-                    ?>
-                    <div style="bottom:838px;" class="alert alert-success" role="alert">
-                      Material retirado.
-                    </div>
-                  <?php
-                } else {
-                  ?>
-                    <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                      Você não pode retirar mais do que tem.
-                    </div>
-                  <?php
-                }
-              } else {
-                ?>
-                  <div style="bottom:838px;" class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div style="bottom:838px;" class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
+  if (isset($_POST['materialPraC4'])) {
+    $material = $_POST['materialPraC4'];
+    $quantidade = $_POST['quantidade'];
+    $localizacao = 'Prateleira C.4';
+
+    //verificar se os campos estão todos preenchidos
+    if (!empty($material) && !empty($quantidade)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
+          <div style="bottom:838px;" class="alert alert-success" role="alert">
+            Material retirado.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+            Você não pode retirar mais do que tem.
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div style="bottom:838px;" class="msn-erro">
+          <?php
+          echo "erro: " . $conn->msgErro;
+          ?>
+        </div>
+      <?php
+    }
+  } else {
+    ?>
+      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+        Preencha todos os campos.
+      </div>
+    <?php
+  }
+}
+?>
   <div class="modal fade" id="siteModal33" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -4440,30 +4265,26 @@ if ($action == 'armario') {
           <form method="POST">
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
-            $servidor = "localhost";
-            $usuario = "root";
-            $senha = "";
-            $dbnome = "lab";
-            $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-            $sql = "SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.4'";
-            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+            require_once 'conexao.php';
+           
+            $conn = new Conexao;
+            $conn->conectar();
+            $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.4'");
+            $sql->execute();
             echo '<table  class="table table-hover">';
             echo '<tr>';
             echo '<td><b>Nome_modelo</td>';
             echo '<td><b>Quantidade</td>';
             echo '</tr>';
-            while ($registro = mysqli_fetch_array($resultado)) {
-              $nome = $registro['fk_material'];
-              $qtde = $registro['quantidade'];
+            while ($dados = $sql->fetch()) {
+              $nome = $dados['fk_material'];
+              $qtde = $dados['quantidade'];
               echo '<tr>';
               echo '<td>' . $nome . '</td>';
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
             echo '</table>';
-
-            mysqli_close($conn);
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -4472,31 +4293,28 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                ?>
-                <div class="tabela">
+                  require_once 'conexao.php';         
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
+                  <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC4'];
-                  $sql = "SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira C.4'";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $alocacao = $registro['fk_material'];
+                  $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.4'");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $alocacao = $dados['fk_material'];
                     ?>
                     <option value="<?php echo "$alocacao "; ?>"> <?php echo "$alocacao"; ?> </option>
                   <?php
                 }
-                mysqli_close($conn);
                 ?>
               </select>
             </div>
             <div class="form-group col-md-2">
               <label for="inputUsuario">Retirar</label>
               <input type="text" class="form-control" onkeyup="num(this);" name="quantidade" placeholder="Retirar">
-            </div>   
+            </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
@@ -4506,23 +4324,26 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-  <!----------------------------------- CADASTRO DE MATERIAL --------------------------------------->
-
+        <!--########################################### CADASTRO DE MATERIAL ################################################-->
 <?php
 }
 if ($action == 'material') {
-  // Cadastro de material 
+  
+  require_once 'conexao.php';
   require_once 'classes/material.php';
-  $material = new material;
+
+  $conn = new Conexao;
+  $mat = new Material;
+
   if (isset($_POST['nome'])) {
     $nome = $_POST['nome'];
     $descri = $_POST['descri'];
     $tipo = $_POST['tipo'];
     //verificar se os campos estão todos preenchidos
     if (!empty($nome) && !empty($tipo)) {
-      $material->conectar("lab", "localhost", "root", "");
-      if ($material->msgErro == "") {
-        if ($material->cadastrar($nome, $descri, $tipo)) {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
+        if ($mat->cadastrar($nome, $descri, $tipo)) {
           ?>
           <div class="alert alert-success" role="alert">
             Material cadastrado.
@@ -4539,7 +4360,7 @@ if ($action == 'material') {
       ?>
         <div class="msn-erro">
           <?php
-          echo "erro: " . $material->msgErro;
+          echo "erro: " . $conn->msgErro;
           ?>
         </div>
       <?php
@@ -4570,7 +4391,7 @@ if ($action == 'material') {
               </div>
               <div class="form-group">
                 <label for="inputDescricao">Descrição</label>
-                <input type="text" class="form-control" id="inputDescricao" name="descri" placeholder="Descrição do Material">
+                <input type="text" class="form-control" id="inputNome4" name="descri" placeholder="Descrição do Material">
               </div>
               <div class="form-row"></div>
               &nbsp;&nbsp;&nbsp;&nbsp; <div class="form-group col-md-4">
@@ -4578,33 +4399,30 @@ if ($action == 'material') {
                 <select id="inputModelo" class="form-control" name="tipo">
                   <option selected></option>
                   <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
-                  <?php
-                  $servidor = "localhost";
-                  $usuario = "root";
-                  $senha = "";
-                  $dbnome = "lab";
-                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                  ?>
+                  <?php  
+                  require_once 'conexao.php'; 
+
+                  $conn = new Conexao;    
+                  $conn->conectar();             
+                   ?>
                   <div class="tabela">
-                    <?php
-                    $sql = "SELECT * FROM tipo_material";
-                    $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                    while ($registro = mysqli_fetch_array($resultado)) {
-                      $tipo = $registro['tipo'];
-                      ?>
-                      <option value="<?php echo " $tipo "; ?>"> <?php echo " $tipo "; ?> </option>
-                    <?php
-                  }
-                  mysqli_close($conn);
-                  ?>
+                  <?php
+                  $sql = $pdo->prepare("SELECT * FROM tipo_material");
+                  $sql->execute();
+                  while ($dados = $sql->fetch()) {
+                    $tipo = $dados['tipo'];
+                    ?>
+                    <option value="<?php echo "$tipo "; ?>"> <?php echo "$tipo"; ?> </option>
+                  <?php
+                }
+                ?>
                 </select>
                 <!-- Faz uma conexão com o banco de dados, e cadastra o material -->
                 </select>
               </div>
             </div>
-            <hr />
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="submit" class="btn btn-success">Salvar</button>
             </div>
         </div>
       </div>
@@ -4614,8 +4432,7 @@ if ($action == 'material') {
   </div>
   </div>
   </div>
-  <!----------------------------------- CADASTRO DE EQUIPAMENTO --------------------------------------->
-
+        <!--########################################### CADASTRO DE EQUIPAMENTO ################################################--> 
 <?php
 }
 if ($action == 'equipamento') {
@@ -4693,13 +4510,12 @@ if ($action == 'equipamento') {
       </div>
     </div>
   </div>
-  <!----------------------------------- ALOCAÇÃO DE MATERIAL --------------------------------------->
+         <!----------------------------------- ALOCAÇÃO DE MATERIAL --------------------------------------->
 
 <?php
 }
 if ($action == 'alocacao') {
-  ?>
-  <?php
+
   require_once 'classes/alocacaomaterial.php';
   $alocacao = new alocacao;
   if (isset($_POST['material'])) {
@@ -4782,7 +4598,7 @@ if ($action == 'alocacao') {
               </div>
               <div class="form-group col-md-2">
                 <label for="inputUsuario">Quantidade</label>
-                <input type="text" class="form-control" onkeyup="num(this);" id="inputUsario" name="quantidade" placeholder="Qtd">
+                <input type="text" class="form-control" onkeyup="num(this);" id="inputUsario" name="quantidade" maxlength="5" placeholder="Qtd">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputST">Escolher Localização</label>
@@ -4813,7 +4629,7 @@ if ($action == 'alocacao') {
               </div>
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="Salvar" />
+              <input type="submit" class="btn btn-success" value="Salvar" />
             </div>
         </div>
       </div>
@@ -4976,7 +4792,7 @@ if ($action == 'statusequipamento') {
         }
 
         if ($action == 'hardware') {
-          
+
           require_once 'classes/material.php';
           $material = new material;
           if (isset($_POST['nome'])) {
@@ -4991,28 +4807,28 @@ if ($action == 'statusequipamento') {
                 $material->alterarMaterial($id, $nome, $descri, $tipo);
 
                 ?>
-                <div class="alert alert-success" role="alert">
-                  Material alterado com sucesso.
-                </div>
-              <?php
+                  <div class="alert alert-success" role="alert">
+                    Material alterado com sucesso.
+                  </div>
+                <?php
+              } else {
+                ?>
+                  <div class="msn-erro">
+                    <?php
+                    echo "erro: " . $material->msgErro;
+                    ?>
+                  </div>
+                <?php
+              }
             } else {
               ?>
-                <div class="msn-erro">
-                  <?php
-                  echo "erro: " . $material->msgErro;
-                  ?>
+                <div class="alert alert-danger" role="alert">
+                  Preencha todos os campos.
                 </div>
               <?php
             }
-          } else {
-            ?>
-              <div class="alert alert-danger" role="alert">
-                Preencha todos os campos.
-              </div>
-            <?php
           }
-        }
-        ?>
+          ?>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -5031,7 +4847,7 @@ if ($action == 'statusequipamento') {
                       $dbnome = "lab";
                       $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
                       $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                      $sql = "SELECT id, nome_modelo, descricao FROM material WHERE fk_tipo=' Hardware';";
+                      $sql = "SELECT id, nome_modelo, descricao FROM material WHERE fk_tipo='Hardware';";
                       $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
                       echo '<table  class="table table-hover">';
                       echo '<tr>';
@@ -5046,8 +4862,9 @@ if ($action == 'statusequipamento') {
                         echo '<tr>';
                         echo '<td>' . $nome . '</td>';
                         echo '<td>' . $desc . '</td>';
-                        echo '<td>' ?> <a href="excluirHardware.php?id=<?= $id ?>"> <img src="img/excluir4.png" /></a>
-                        <a href="#"><img src="img/editar.png" data-toggle="modal" data-target="#exampleModal" /></a>
+                        echo '<td>' ?> <a href="excluirHardware.php?id=<?= $id ?>" class="btn btn-danger">Excluir</a>
+                                       <a href="#" class="btn btn-primary" data-toggle="modal"
+                                          data-target="#exampleModal">Editar</a>
                         <?php
                         echo '</tr>';
                       }
@@ -5096,7 +4913,7 @@ if ($action == 'statusequipamento') {
                                           while ($registro = mysqli_fetch_array($resultado)) {
                                             $tipo = $registro['tipo'];
                                             ?>
-                                            <option value="<?php echo " $tipo "; ?>"> <?php echo " $tipo "; ?> </option>
+                                            <option value="<?php echo "$tipo"; ?>"> <?php echo "$tipo"; ?> </option>
                                           <?php
                                         }
                                         mysqli_close($conn);
@@ -5120,7 +4937,7 @@ if ($action == 'statusequipamento') {
         <?php
       }
       if ($action == 'impressao') {
-        
+
         require_once 'classes/material.php';
         $material = new material;
         if (isset($_POST['nome'])) {
@@ -5135,28 +4952,28 @@ if ($action == 'statusequipamento') {
               $material->alterarMaterial($id, $nome, $descri, $tipo);
 
               ?>
-              <div class="alert alert-success" role="alert">
-              Material alterado com sucesso.
-              </div>
-            <?php
+                <div class="alert alert-success" role="alert">
+                  Material alterado com sucesso.
+                </div>
+              <?php
+            } else {
+              ?>
+                <div class="msn-erro">
+                  <?php
+                  echo "erro: " . $material->msgErro;
+                  ?>
+                </div>
+              <?php
+            }
           } else {
             ?>
-              <div class="msn-erro">
-                <?php
-                echo "erro: " . $material->msgErro;
-                ?>
+              <div class="alert alert-danger" role="alert">
+                Preencha todos os campos.
               </div>
             <?php
           }
-        } else {
-          ?>
-            <div class="alert alert-danger" role="alert">
-              Preencha todos os campos.
-            </div>
-          <?php
         }
-      }
-      ?>
+        ?>
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -5247,7 +5064,7 @@ if ($action == 'statusequipamento') {
                                     </select>
                                   </div>
                                 </div>
-                            
+
                                 <div class="modal-footer">
                                   <button type="submit" class="btn btn-primary">Salvar alterações</button>
                                 </div>
@@ -5263,7 +5080,7 @@ if ($action == 'statusequipamento') {
       <?php
     }
     if ($action == 'telefonia') {
-      
+
       require_once 'classes/material.php';
       $material = new material;
       if (isset($_POST['nome'])) {
@@ -5278,28 +5095,28 @@ if ($action == 'statusequipamento') {
             $material->alterarMaterial($id, $nome, $descri, $tipo);
 
             ?>
-            <div class="alert alert-success" role="alert">
-            Material alterado com sucesso.
-            </div>
-          <?php
+              <div class="alert alert-success" role="alert">
+                Material alterado com sucesso.
+              </div>
+            <?php
+          } else {
+            ?>
+              <div class="msn-erro">
+                <?php
+                echo "erro: " . $material->msgErro;
+                ?>
+              </div>
+            <?php
+          }
         } else {
           ?>
-            <div class="msn-erro">
-              <?php
-              echo "erro: " . $material->msgErro;
-              ?>
+            <div class="alert alert-danger" role="alert">
+              Preencha todos os campos.
             </div>
           <?php
         }
-      } else {
-        ?>
-          <div class="alert alert-danger" role="alert">
-            Preencha todos os campos.
-          </div>
-        <?php
       }
-    }
-    ?>
+      ?>
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -5390,7 +5207,7 @@ if ($action == 'statusequipamento') {
                                   </select>
                                 </div>
                               </div>
-                           
+
                               <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Salvar alterações</button>
                               </div>
@@ -5407,7 +5224,7 @@ if ($action == 'statusequipamento') {
     <?php
   }
   if ($action == 'geral') {
-    
+
     require_once 'classes/material.php';
     $material = new material;
     if (isset($_POST['nome'])) {
@@ -5420,31 +5237,31 @@ if ($action == 'statusequipamento') {
       if (!empty($nome) && !empty($tipo)) {
         $material->conectar("lab", "localhost", "root", "");
         if ($material->msgErro == "") {
-         if( $material->alterarMaterial($id, $nome, $descri, $tipo)){
+          if ($material->alterarMaterial($id, $nome, $descri, $tipo)) {
+            ?>
+              <div class="alert alert-success" role="alert">
+                Material alterado com sucesso.
+              </div>
+            <?php
+          }
+        } else {
           ?>
-          <div class="alert alert-success" role="alert">
-          Material alterado com sucesso.
-          </div>
-        <?php
-         }
+            <div class="msn-erro">
+              <?php
+              echo "erro: " . $material->msgErro;
+              ?>
+            </div>
+          <?php
+        }
       } else {
         ?>
-          <div class="msn-erro">
-            <?php
-            echo "erro: " . $material->msgErro;
-            ?>
+          <div class="alert alert-danger" role="alert">
+            Preencha todos os campos.
           </div>
         <?php
       }
-    } else {
-      ?>
-        <div class="alert alert-danger" role="alert">
-          Preencha todos os campos.
-        </div>
-      <?php
     }
-  }
-  ?>
+    ?>
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -5475,7 +5292,7 @@ if ($action == 'statusequipamento') {
                   $nome = $registro['nome_modelo'];
                   $desc = $registro['descricao'];
                   $id = $registro['id'];
-                   
+
                   echo '<tr>';
                   echo '<td>' . $nome . '</td>';
                   echo '<td>' . $desc . '</td>';
@@ -5485,7 +5302,7 @@ if ($action == 'statusequipamento') {
                   echo '</tr>';
                 }
                 echo '</table>';
-               
+
                 mysqli_close($conn);
                 ?>
                 <!-- Modal -->
@@ -5532,13 +5349,13 @@ if ($action == 'statusequipamento') {
                                       <option value="<?php echo " $tipo "; ?>"> <?php echo " $tipo "; ?> </option>
                                     <?php
                                   }
-                                  
+
                                   mysqli_close($conn);
                                   ?>
                                 </select>
                               </div>
                             </div>
-                          
+
                             <div class="modal-footer">
                               <button type="submit" class="btn btn-primary">Salvar alterações</button>
                             </div>

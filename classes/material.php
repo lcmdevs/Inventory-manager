@@ -47,26 +47,52 @@
     $sql->execute();
 
     }
-  }
-
-    /*
-    ---------------------------------------FUNÇAO EM PRODUÇÃO --------------------------------------
-  public function buscarMaterial($material){
+    public function buscarMaterial($nomeMaterial){
     global $pdo;
     //verificar se está buscando material válido.
-    $sql = $pdo->prepare("SELECT fk_material, fk_localizacao, quantidade FROM alocacao WHERE fk_material = :material");
-    $sql->bindValue(":material", $material);
-    $sql->execute();
+    $sql = $pdo->prepare("SELECT * FROM alocacao WHERE fk_material = :material");
+    $sql->bindValue(":material",$nomeMaterial);
 
+    $sql->execute();
+    
       if($sql->rowCount($sql) > 0){
 
-          $dados = $sql->fetch();  
-          $nomeMaterial = $dados['fk_material']; 
-          $localizacoMaterial = $dados['fk_localizacao']; 
-          $quantidadeMaterial = $dados['quantidade'] ;
       return true;  
       }
-
-
+      else {
+        return false;
+      }
+      
     }
-*/
+    public function retirarMaterial($material, $quantidade, $localizacao){
+      global $pdo;
+      //verificar se a quantidade a ser retirada é menor ou igual ao valor cadastrado.
+      $sql = $pdo->prepare("SELECT * FROM alocacao WHERE fk_material = :material
+                            AND fk_localizacao = :localizacao");
+      $sql->bindValue(":material",$material);
+      $sql->bindValue(":localizacao",$localizacao);
+      $sql->execute();
+      $dados = $sql->fetch();
+   
+      // Se o valor alocado for maior ou igual
+      if($dados['quantidade'] >= $quantidade)
+      {
+
+      //Subtrair quantidade.
+      $sql =$pdo->prepare("UPDATE alocacao SET quantidade =  quantidade - :quantidade 
+                           WHERE fk_material = :material AND fk_localizacao = :localizacao") ;
+      $sql->bindValue(":quantidade",$quantidade);
+      $sql->bindValue(":material",$material);
+      $sql->bindValue(":localizacao",$localizacao);
+      $sql->execute();
+        
+      $sql = $pdo->prepare("DELETE FROM Alocacao WHERE quantidade = 0");
+      $sql->execute();
+      
+      return true;
+          
+      } else{
+      return false;
+      }
+   }
+  }

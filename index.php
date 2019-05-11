@@ -33,7 +33,7 @@ if( $_SESSION['matricula'] == null){
 			   }
      $URL_ATUAL= "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
      
-	 if($URL_ATUAL == "http://localhost/Laboratory/index.php" or $URL_ATUAL == "http://localhost/Laboratory/" or $URL_ATUAL == "http://localhost/Laboratory/index.php?" ){
+	 if($URL_ATUAL == "http://localhost/Inventor%20Manager/index.php" or $URL_ATUAL == "http://localhost/Inventor%20Manager/" or $URL_ATUAL == "http://localhost/Inventor%20Manager/index.php?" ){
 		 ?>
 	 <div style="text-align: center; margin-top:100px; margin-right: 100px;"><img src="img/estoque.jpg">
 	 																	

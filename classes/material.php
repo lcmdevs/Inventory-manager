@@ -38,17 +38,18 @@
 
   public function alterarMaterial($id, $nome, $descri, $tipo){
     global $pdo;
-   
+
     $sql = $pdo->prepare("UPDATE material SET nome_modelo = :nome, descricao = :descri, fk_tipo = :tipo WHERE id = :id");
     $sql->bindValue(":nome",$nome);
     $sql->bindValue(":descri",$descri);
     $sql->bindValue(":tipo",$tipo);
     $sql->bindValue(":id",$id);
-    $sql->execute();
+    $sql->execute();  
 
     }
     public function buscarMaterial($nomeMaterial){
     global $pdo;
+
     //verificar se está buscando material válido.
     $sql = $pdo->prepare("SELECT * FROM alocacao WHERE fk_material = :material");
     $sql->bindValue(":material",$nomeMaterial);
@@ -59,6 +60,7 @@
 
       return true;  
       }
+
       else {
         return false;
       }
@@ -94,5 +96,7 @@
       } else{
       return false;
       }
-   }
+   } 
+   
   }
+  

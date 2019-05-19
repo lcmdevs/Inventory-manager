@@ -14,6 +14,7 @@
             <a class="dropdown-item" href="?pagina=home&action=material" role="button">Cadastro de Material</a>
             <a class="dropdown-item" href="?pagina=home&action=alocacao" role="button">Alocação de Material</a>
             <a class="dropdown-item" href="?pagina=home&action=armario" role="button">Exibir Armários</a>
+            <a class="dropdown-item" href="?pagina=home&action=editar" role="button">Editar Materiais</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -42,15 +43,14 @@
           <a class="nav-link" style="margin-left:310px; color:white;" href=""> Seja Bem vindo <?php echo $_SESSION['nome']; ?></a>
         </li>
         <li class="nav-item">
-        <a class="nav-link"  style="margin-left: 15px; color: white;"href="sair.php">
-        Sair
-        </a>
+          <a class="nav-link" style="margin-left: 15px; color: white;" href="sair.php">
+            Sair
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<br />
 
 <?php
 $action = '';
@@ -61,81 +61,79 @@ if (!empty($_GET['action'])) {
   $action = $_GET['action'];
 }
 if ($action == 'armario') {
-  
-  require_once 'classes/material.php';
-  require_once 'conexao.php';
-  $conn = new Conexao;
-  $mat = new Material;
-  if (isset($_POST['material'])) {
-    $material = $_POST['material'];
-    //verificar se os campos estão todos preenchidos
-    if (!empty($material)) {
-      $conn->conectar();
-      if ($conn->msgErro == "") {
-        if ($mat->buscarMaterial($material)) {
-          $sql = $pdo->prepare("SELECT fk_material, fk_localizacao, quantidade FROM alocacao WHERE fk_material LIKE :material");
-          $sql->bindValue(":material", $material ."%");
-          $sql->execute();
-          echo '<table  class="table table-hover">';
-          echo '<tr>';
-          echo '<td><b>Nome_modelo</td>';
-          echo '<td><b>Localização</td>';
-          echo '<td><b>Quantidade</td>';
-          echo '</tr>';
-          while ($dados = $sql->fetch()) {
-            echo '<tr>';
-            echo '<td>' . $dados['fk_material'] . '</td>';
-            echo '<td>' . $dados['fk_localizacao'] . '</td>';
-            echo '<td>' . $dados['quantidade'] . '</td>';
-            echo '</tr>';
-
-            ######################################################################################################################     
-            //if (trim($dados['fk_localizacao']) == $gavetasCor[trim($dados['fk_localizacao'])]) {
-
-            //$gavetasCor[trim($dados['fk_localizacao'])]  = 'red';
-            // }
-            ######################################################################################################################                        
-          }
-          echo '</table>';
-        } else {
-          ?>
-          <div class="alert alert-danger" role="alert">
-            Este material não está alocado.
-          </div>
-        <?php
-      }
-    } else {
-      ?>
-        <div class="msn-erro">
-          <?php
-          echo "erro: " . $mat->msgErro;
-          ?>
-        </div>
-      <?php
-    }
-  } else {
-    ?>
-      <div class="alert alert-danger" role="alert">
-        Preencha todos os campos.
-      </div>
-    <?php
-  }
-}
-?>
-  <br>
+  ?>
 
   <div class="row">
     <div class="col-md-12">
-      <div class="card card-body">
+      <div class="card card-body" style=" height:890px;">
         <div class="table-responsive col-md-12">
-          <div id="main" class="container">
+          <div id="main" class="container" style="margin-top: 50px;">
             </a>
-            <nav class="navbar navbar-light bg-light">
+            <nav class="navbar navbar-light bg-light" style="width: 100%;">
               <form class="form-inline ml-auto" method="POST" style="width: 100%;">
-                <input type="text" name="material" class="form-control" placeholder="Localizar">
-
-
+                <input type="text" name="material" class="form- control" placeholder="Localizar">
                 <input type="image" src="img/lupa.png" alt="submit" /></a>
+                <?php
+                require_once 'classes/material.php';
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $mat = new Material;
+                if (isset($_POST['material'])) {
+                  $material = $_POST['material'];
+                  //verificar se os campos estão todos preenchidos
+                  if (!empty($material)) {
+                    $conn->conectar();
+                    if ($conn->msgErro == "") {
+                      if ($mat->buscarMaterial($material)) {
+                        $sql = $pdo->prepare("SELECT fk_material, fk_localizacao, quantidade FROM alocacao WHERE fk_material LIKE :material");
+                        $sql->bindValue(":material", $material . "%");
+                        $sql->execute();
+                        echo '<table  class="table table-hover">';
+                        echo '<tr>';
+                        echo '<td><b>Nome_modelo</td>';
+                        echo '<td><b>Localização</td>';
+                        echo '<td><b>Quantidade</td>';
+                        echo '</tr>';
+                        while ($dados = $sql->fetch()) {
+                          echo '<tr>';
+                          echo '<td>' . $dados['fk_material'] . '</td>';
+                          echo '<td>' . $dados['fk_localizacao'] . '</td>';
+                          echo '<td>' . $dados['quantidade'] . '</td>';
+                          echo '</tr>';
+
+                          ######################################################################################################################     
+                          //if (trim($dados['fk_localizacao']) == $gavetasCor[trim($dados['fk_localizacao'])]) {
+
+                          //$gavetasCor[trim($dados['fk_localizacao'])]  = 'red';
+                          // }
+                          ######################################################################################################################                        
+                        }
+                        echo '</table>';
+                      } else {
+                        ?>
+                        <div>
+                          Nem um material encontrado.
+                        </div>
+                      <?php
+                    }
+                  } else {
+                    ?>
+                      <div style="bottom:882px;" class="msn-erro">
+                        <?php
+                        echo "erro: " . $conn->msgErro;
+                        ?>
+                      </div>
+                    <?php
+                  }
+                } else {
+                  ?>
+                    <div>
+                      Preencha todos os campos.
+                    </div>
+                  <?php
+                }
+              }
+              ?>
               </form>
             </nav>
             <div class="row">
@@ -324,19 +322,19 @@ if ($action == 'armario') {
     $material = $_POST['materialBauA'];
     $quantidade = $_POST['quantidade'];
     $localizacao = 'Bau A';
-    
+
     if (!empty($material) && !empty($quantidade)) {
       $conn->conectar();
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px; " class="alert alert-success" role="alert">
+          <div style="bottom:882px; " class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:882px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -352,7 +350,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:882px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -376,7 +374,7 @@ if ($action == 'armario') {
             <?php
 
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau A'");
@@ -394,7 +392,7 @@ if ($action == 'armario') {
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
-            echo '</table>';       
+            echo '</table>';
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -403,9 +401,9 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                    require_once 'conexao.php';         
-                    $conn = new Conexao;    
-                    $conn->conectar();             
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
                 ?>
                 <div class="tabela">
                   <?php
@@ -435,8 +433,8 @@ if ($action == 'armario') {
     </div>
   </div>
 
-    <!--################################################ Modal Prateleira A.1 ##########################################-->
-   <?php
+  <!--################################################ Modal Prateleira A.1 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -447,7 +445,7 @@ if ($action == 'armario') {
     $material = $_POST['materialPraA1'];
     $quantidade = $_POST['quantidade'];
     $localizacao = 'Prateleira A.1';
-    
+
     if (!empty($material) && !empty($quantidade)) {
       $conn->conectar();
       if ($conn->msgErro == "") {
@@ -498,7 +496,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma lista de materiais -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.1'");
@@ -516,7 +514,7 @@ if ($action == 'armario') {
               echo '<td>' . $qtde . '</td>';
               echo '</tr>';
             }
-            echo '</table>';  
+            echo '</table>';
             ?>
             <div class="row"></div>
             <div class="form-group col-md-6">
@@ -525,9 +523,9 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                    require_once 'conexao.php';         
-                    $conn = new Conexao;    
-                    $conn->conectar();             
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
                 ?>
                 <div class="tabela">
                   <?php
@@ -558,7 +556,7 @@ if ($action == 'armario') {
     </div>
   </div>
 
-   <!--################################################ Modal Prateleira A.2 ##########################################-->
+  <!--################################################ Modal Prateleira A.2 ##########################################-->
 
   <?php
   require_once 'conexao.php';
@@ -622,7 +620,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.2'");
@@ -648,13 +646,13 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialPraA2">
                 <option selected>Escolher...</option>
 
-                  <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-                  <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
+                <?php
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraA2'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao = 'Prateleira A.2'");
@@ -681,7 +679,7 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-     <!--################################################ Modal Gaveta A.1 ##########################################-->
+  <!--################################################ Modal Gaveta A.1 ##########################################-->
   <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
@@ -742,10 +740,10 @@ if ($action == 'armario') {
           <h4 class="modal-body">Lista</h4>
           <form method="POST">
 
-              <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
+            <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.1'");
@@ -772,11 +770,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA1'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.1'");
@@ -803,7 +801,7 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-       <!--################################################ Modal Gaveta A.4 ##########################################-->
+  <!--################################################ Modal Gaveta A.4 ##########################################-->
   <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
@@ -867,7 +865,7 @@ if ($action == 'armario') {
 
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.4'");
@@ -893,13 +891,13 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialGavetaA4">
                 <option selected>Escolher...</option>
 
-                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
+                <?php
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA4'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.4'");
@@ -926,7 +924,7 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-       <!--################################################ Modal Gaveta A.2 ##########################################-->
+  <!--################################################ Modal Gaveta A.2 ##########################################-->
   <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
@@ -989,7 +987,7 @@ if ($action == 'armario') {
 
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.2'");
@@ -1017,11 +1015,11 @@ if ($action == 'armario') {
 
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA2'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.2'");
@@ -1048,7 +1046,7 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-       <!--################################################ Modal Gaveta A.5 ##########################################-->
+  <!--################################################ Modal Gaveta A.5 ##########################################-->
   <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
@@ -1112,7 +1110,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.5'");
@@ -1140,11 +1138,11 @@ if ($action == 'armario') {
 
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA5'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.5'");
@@ -1172,7 +1170,7 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-    <!--################################################ Modal Gaveta A.3 ##########################################-->
+  <!--################################################ Modal Gaveta A.3 ##########################################-->
   <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
@@ -1236,7 +1234,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.3'");
@@ -1264,11 +1262,11 @@ if ($action == 'armario') {
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
 
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA3'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.3'");
@@ -1358,7 +1356,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta A.6'");
@@ -1385,11 +1383,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaA6'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta A.6'");
@@ -1417,8 +1415,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
- <!--################################################ Modal Prateleira A.3 ##########################################-->
- <?php
+  <!--################################################ Modal Prateleira A.3 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -1480,7 +1478,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.3'");
@@ -1507,11 +1505,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraA3'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira A.3'");
@@ -1538,8 +1536,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
- <!--################################################ Modal Prateleira A.4 ##########################################-->
- <?php
+  <!--################################################ Modal Prateleira A.4 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -1601,7 +1599,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira A.4'");
@@ -1628,11 +1626,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraA4'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira A.4'");
@@ -1660,8 +1658,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-        <!--################################################ Bau B ##########################################-->
- <?php
+  <!--################################################ Bau B ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -1723,7 +1721,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau B'");
@@ -1750,11 +1748,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialBauB'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Bau B'");
@@ -1845,7 +1843,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.1'");
@@ -1872,11 +1870,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB1'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.1'");
@@ -1904,8 +1902,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
- <!--################################################ Modal Prateleira B.2 ##########################################-->
- <?php
+  <!--################################################ Modal Prateleira B.2 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -1967,7 +1965,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.2'");
@@ -1994,11 +1992,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB2'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.2'");
@@ -2088,7 +2086,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.1'");
@@ -2115,11 +2113,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB1'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.1'");
@@ -2209,7 +2207,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.4'");
@@ -2236,11 +2234,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB4'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.4'");
@@ -2330,7 +2328,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.2'");
@@ -2357,11 +2355,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB2'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.2'");
@@ -2388,8 +2386,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
- <!--################################################ Modal Gaveta B.5 ##########################################-->
- <?php
+  <!--################################################ Modal Gaveta B.5 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -2451,7 +2449,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.5'");
@@ -2478,11 +2476,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB5'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.5'");
@@ -2510,7 +2508,7 @@ if ($action == 'armario') {
     </div>
   </div>
   <!--################################################ Modal Gaveta B.3 ##########################################-->
- <?php
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -2572,7 +2570,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.3'");
@@ -2599,11 +2597,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB3'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.3'");
@@ -2693,7 +2691,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta B.6'");
@@ -2720,11 +2718,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaB6'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta B.6'");
@@ -2814,7 +2812,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.3'");
@@ -2841,11 +2839,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB3'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.3'");
@@ -2872,8 +2870,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-   <!--################################################ Modal Prateleira B.4 ##########################################-->
-   <?php
+  <!--################################################ Modal Prateleira B.4 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -2935,7 +2933,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira B.4'");
@@ -2962,11 +2960,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraB4'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira B.4'");
@@ -3056,7 +3054,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Bau C'");
@@ -3083,11 +3081,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialBauC'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Bau C'");
@@ -3121,7 +3119,7 @@ if ($action == 'armario') {
 
   $conn = new Conexao;
   $mat = new Material;
-  
+
   if (isset($_POST['materialPraC1'])) {
     $material = $_POST['materialPraC1'];
     $quantidade = $_POST['quantidade'];
@@ -3177,7 +3175,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.1'");
@@ -3203,12 +3201,12 @@ if ($action == 'armario') {
               <select id="inputModelo" class="form-control" name="materialPraC1">
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
-              <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                <?php
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC1'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.1'");
@@ -3298,7 +3296,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.2'");
@@ -3325,11 +3323,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC2'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.2'");
@@ -3419,7 +3417,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.1'");
@@ -3446,11 +3444,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC1'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.1'");
@@ -3540,7 +3538,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.4'");
@@ -3567,11 +3565,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC4'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.4'");
@@ -3661,7 +3659,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.2'");
@@ -3688,11 +3686,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC2'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.2'");
@@ -3782,7 +3780,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.5'");
@@ -3809,11 +3807,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC5'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.5'");
@@ -3903,7 +3901,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.3'");
@@ -3930,11 +3928,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC3'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.3'");
@@ -4024,7 +4022,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Gaveta C.6'");
@@ -4051,11 +4049,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialGavetaC6'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Gaveta C.6'");
@@ -4082,8 +4080,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-   <!--################################################ Prateleira C.3 ##########################################-->
-   <?php
+  <!--################################################ Prateleira C.3 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -4145,7 +4143,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.3'");
@@ -4172,11 +4170,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC3'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.3'");
@@ -4203,8 +4201,8 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-   <!--################################################ Prateleira C.4 ##########################################-->
-   <?php
+  <!--################################################ Prateleira C.4 ##########################################-->
+  <?php
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -4266,7 +4264,7 @@ if ($action == 'armario') {
             <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
             <?php
             require_once 'conexao.php';
-           
+
             $conn = new Conexao;
             $conn->conectar();
             $sql = $pdo->prepare("SELECT fk_material, quantidade FROM alocacao WHERE fk_localizacao ='Prateleira C.4'");
@@ -4293,11 +4291,11 @@ if ($action == 'armario') {
                 <option selected>Escolher...</option>
                 <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a alocacao cadastrada -->
                 <?php
-                  require_once 'conexao.php';         
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
-                  <div class="tabela">
+                require_once 'conexao.php';
+                $conn = new Conexao;
+                $conn->conectar();
+                ?>
+                <div class="tabela">
                   <?php
                   $material = $_POST['materialPraC4'];
                   $sql = $pdo->prepare("SELECT fk_material FROM alocacao WHERE fk_localizacao ='Prateleira C.4'");
@@ -4324,11 +4322,11 @@ if ($action == 'armario') {
       </form>
     </div>
   </div>
-        <!--########################################### CADASTRO DE MATERIAL ################################################-->
+  <!--########################################### CADASTRO DE MATERIAL ################################################-->
 <?php
 }
 if ($action == 'material') {
-  
+
   require_once 'conexao.php';
   require_once 'classes/material.php';
 
@@ -4387,11 +4385,11 @@ if ($action == 'material') {
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputNome4">Nome_Modelo</label>
-                <input type="text" class="form-control" id="inputNome4" name="nome" placeholder="Nome">
+                <input type="text" class="form-control" id="inputNome4" maxlength="20" name="nome" placeholder="Nome">
               </div>
               <div class="form-group">
                 <label for="inputDescricao">Descrição</label>
-                <input type="text" class="form-control" id="inputNome4" name="descri" placeholder="Descrição do Material">
+                <input type="text" class="form-control" id="inputNome4" maxlength="30" name="descri" placeholder="Descrição do Material">
               </div>
               <div class="form-row"></div>
               &nbsp;&nbsp;&nbsp;&nbsp; <div class="form-group col-md-4">
@@ -4399,23 +4397,23 @@ if ($action == 'material') {
                 <select id="inputModelo" class="form-control" name="tipo">
                   <option selected></option>
                   <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
-                  <?php  
-                  require_once 'conexao.php'; 
+                  <?php
+                  require_once 'conexao.php';
 
-                  $conn = new Conexao;    
-                  $conn->conectar();             
-                   ?>
+                  $conn = new Conexao;
+                  $conn->conectar();
+                  ?>
                   <div class="tabela">
-                  <?php
-                  $sql = $pdo->prepare("SELECT * FROM tipo_material");
-                  $sql->execute();
-                  while ($dados = $sql->fetch()) {
-                    $tipo = $dados['tipo'];
-                    ?>
-                    <option value="<?php echo "$tipo "; ?>"> <?php echo "$tipo"; ?> </option>
-                  <?php
-                }
-                ?>
+                    <?php
+                    $sql = $pdo->prepare("SELECT * FROM tipo_material");
+                    $sql->execute();
+                    while ($dados = $sql->fetch()) {
+                      $tipo = $dados['tipo'];
+                      ?>
+                      <option value="<?php echo "$tipo "; ?>"> <?php echo "$tipo"; ?> </option>
+                    <?php
+                  }
+                  ?>
                 </select>
                 <!-- Faz uma conexão com o banco de dados, e cadastra o material -->
                 </select>
@@ -4432,7 +4430,7 @@ if ($action == 'material') {
   </div>
   </div>
   </div>
-        <!--########################################### CADASTRO DE EQUIPAMENTO ################################################--> 
+  <!--########################################### CADASTRO DE EQUIPAMENTO ################################################-->
 <?php
 }
 if ($action == 'equipamento') {
@@ -4510,7 +4508,7 @@ if ($action == 'equipamento') {
       </div>
     </div>
   </div>
-         <!----------------------------------- ALOCAÇÃO DE MATERIAL --------------------------------------->
+  <!----------------------------------- ALOCAÇÃO DE MATERIAL --------------------------------------->
 
 <?php
 }
@@ -4792,53 +4790,14 @@ if ($action == 'statusequipamento') {
         }
 
         if ($action == 'hardware') {
-
-          require_once 'classes/material.php';
-          $material = new material;
-          if (isset($_POST['nome'])) {
-            $nome = $_POST['nome'];
-            $descri = $_POST['descri'];
-            $tipo = $_POST['tipo'];
-            $id = $_POST['id'];
-            //verificar se os campos estão todos preenchidos
-            if (!empty($nome) && !empty($tipo)) {
-              $material->conectar("lab", "localhost", "root", "");
-              if ($material->msgErro == "") {
-                $material->alterarMaterial($id, $nome, $descri, $tipo);
-
-                ?>
-                  <div class="alert alert-success" role="alert">
-                    Material alterado com sucesso.
-                  </div>
-                <?php
-              } else {
-                ?>
-                  <div class="msn-erro">
-                    <?php
-                    echo "erro: " . $material->msgErro;
-                    ?>
-                  </div>
-                <?php
-              }
-            } else {
-              ?>
-                <div class="alert alert-danger" role="alert">
-                  Preencha todos os campos.
-                </div>
-              <?php
-            }
-          }
           ?>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Estoque de Hardware</h5>
-                  <a href="index.php"> <img src="img/cancelar.png" /></a>
-                  </a>
                 </div>
                 <div class="modal-body">
                   <div class="container">
-                    <form method="POST">
                       <!-- Faz uma conexão com o banco de dados, retorna uma lista com materiais com tipo igual a hardware -->
                       <?php
                       $servidor = "localhost";
@@ -4846,89 +4805,28 @@ if ($action == 'statusequipamento') {
                       $senha = "";
                       $dbnome = "lab";
                       $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-                      $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                      $sql = "SELECT id, nome_modelo, descricao FROM material WHERE fk_tipo='Hardware';";
+                      $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE fk_tipo='Hardware';";
                       $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
                       echo '<table  class="table table-hover">';
                       echo '<tr>';
                       echo '<th>Nome_modelo</th>';
                       echo '<th>Descrição</th>';
-                      echo '<th>Ações</th>';
+                      echo '<th>Tipo</th>';
                       echo '</tr>';
                       while ($registro = mysqli_fetch_array($resultado)) {
                         $nome = $registro['nome_modelo'];
                         $desc = $registro['descricao'];
-                        $id = $registro['id'];
+                        $tipo = $registro['fk_tipo'];
                         echo '<tr>';
                         echo '<td>' . $nome . '</td>';
                         echo '<td>' . $desc . '</td>';
-                        echo '<td>' ?> <a href="excluirHardware.php?id=<?= $id ?>" class="btn btn-danger">Excluir</a>
-                                       <a href="#" class="btn btn-primary" data-toggle="modal"
-                                          data-target="#exampleModal">Editar</a>
-                        <?php
+                        echo '<td>' . $tipo . '</td>';
                         echo '</tr>';
                       }
                       echo '</table>';
                       mysqli_close($conn);
                       ?>
 
-                      <!-- Modal -->
-                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Editar Material</h5>
-                              <a href="index.php?pagina=home&action=hardware"> <img src="img/cancelar.png" /></a>
-                            </div>
-                            <div class="modal-body">
-                              <div class="container">
-                                <form method="POST">
-                                  <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                      <input type="hidden" name="id" value="<?= $id; ?>">
-                                      <label for="inputNome4">Nome_Modelo</label>
-                                      <input type="text" class="form-control" id="inputNome4" name="nome" placeholder="Nome">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="inputDescricao">Descrição</label>
-                                      <input type="text" class="form-control" id="inputDescricao" name="descri" placeholder="Descrição do Material">
-                                    </div>
-                                    <div class="form-row"></div>
-                                    &nbsp;&nbsp;&nbsp;&nbsp; <div class="form-group col-md-4">
-                                      <label for="inputModelo">Tipo</label>
-                                      <select id="inputModelo" class="form-control" name="tipo">
-                                        <option selected></option>
-                                        <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
-                                        <?php
-                                        $servidor = "localhost";
-                                        $usuario = "root";
-                                        $senha = "";
-                                        $dbnome = "lab";
-                                        $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                                        ?>
-                                        <div class="tabela">
-                                          <?php
-                                          $sql = "SELECT * FROM tipo_material";
-                                          $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                                          while ($registro = mysqli_fetch_array($resultado)) {
-                                            $tipo = $registro['tipo'];
-                                            ?>
-                                            <option value="<?php echo "$tipo"; ?>"> <?php echo "$tipo"; ?> </option>
-                                          <?php
-                                        }
-                                        mysqli_close($conn);
-                                        ?>
-                                      </select>
-                                    </div>
-                                  </div>
-
-                                  <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                                  </div>
-                              </div>
-                            </div>
-                    </form>
-                  </div>
                 </div>
               </div>
             </div>
@@ -4937,53 +4835,15 @@ if ($action == 'statusequipamento') {
         <?php
       }
       if ($action == 'impressao') {
-
-        require_once 'classes/material.php';
-        $material = new material;
-        if (isset($_POST['nome'])) {
-          $nome = $_POST['nome'];
-          $descri = $_POST['descri'];
-          $tipo = $_POST['tipo'];
-          $id = $_POST['id'];
-          //verificar se os campos estão todos preenchidos
-          if (!empty($nome) && !empty($tipo)) {
-            $material->conectar("lab", "localhost", "root", "");
-            if ($material->msgErro == "") {
-              $material->alterarMaterial($id, $nome, $descri, $tipo);
-
-              ?>
-                <div class="alert alert-success" role="alert">
-                  Material alterado com sucesso.
-                </div>
-              <?php
-            } else {
-              ?>
-                <div class="msn-erro">
-                  <?php
-                  echo "erro: " . $material->msgErro;
-                  ?>
-                </div>
-              <?php
-            }
-          } else {
-            ?>
-              <div class="alert alert-danger" role="alert">
-                Preencha todos os campos.
-              </div>
-            <?php
-          }
-        }
         ?>
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Estoque de Impressão</h5>
-                <a href="index.php"> <img src="img/cancelar.png" /></a>
-                </a>
               </div>
               <div class="modal-body">
                 <div class="container">
-                  <form method="POST">
+                  
                     <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo igual a impressão -->
                     <?php
                     $servidor = "localhost";
@@ -4992,85 +4852,27 @@ if ($action == 'statusequipamento') {
                     $dbnome = "lab";
                     $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
 
-                    $sql = "SELECT id, nome_modelo, descricao FROM material WHERE fk_tipo=' Impressao';";
+                    $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE fk_tipo='Impressao';";
                     $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
                     echo '<table  class="table table-hover">';
                     echo '<tr>';
                     echo '<th>Nome_modelo</th>';
                     echo '<th>Descrição</th>';
-                    echo '<th>Ações</th>';
+                    echo '<th>Tipo</th>';
                     echo '</tr>';
                     while ($registro = mysqli_fetch_array($resultado)) {
                       $nome = $registro['nome_modelo'];
                       $desc = $registro['descricao'];
-                      $id = $registro['id'];
+                      $tipo = $registro['fk_tipo'];
                       echo '<tr>';
                       echo '<td>' . $nome . '</td>';
                       echo '<td>' . $desc . '</td>';
-                      echo '<td>' ?> <a href="excluirImpressao.php?id=<?= $id ?>"> <img src="img/excluir4.png" /></a>
-                      <a href="#"><img src="img/editar.png" data-toggle="modal" data-target="#exampleModal" /></a>
-                      <?php
+                      echo '<td>' . $tipo . '</td>';
                       echo '</tr>';
                     }
                     echo '</table>';
                     mysqli_close($conn);
                     ?>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Editar Material</h5>
-                            <a href="index.php?pagina=home&action=impressao"> <img src="img/cancelar.png" /></a>
-                          </div>
-                          <div class="modal-body">
-                            <div class="container">
-                              <form method="POST">
-                                <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <input type="hidden" name="id" value="<?= $id; ?>">
-                                    <label for="inputNome4">Nome_Modelo</label>
-                                    <input type="text" class="form-control" id="inputNome4" name="nome" placeholder="Nome">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="inputDescricao">Descrição</label>
-                                    <input type="text" class="form-control" id="inputDescricao" name="descri" placeholder="Descrição do Material">
-                                  </div>
-                                  <div class="form-row"></div>
-                                  &nbsp;&nbsp;&nbsp;&nbsp; <div class="form-group col-md-4">
-                                    <label for="inputModelo">Tipo</label>
-                                    <select id="inputModelo" class="form-control" name="tipo">
-                                      <option selected></option>
-                                      <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
-                                      <?php
-                                      $servidor = "localhost";
-                                      $usuario = "root";
-                                      $senha = "";
-                                      $dbnome = "lab";
-                                      $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                                      ?>
-                                      <div class="tabela">
-                                        <?php
-                                        $sql = "SELECT * FROM tipo_material";
-                                        $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                                        while ($registro = mysqli_fetch_array($resultado)) {
-                                          $tipo = $registro['tipo'];
-                                          ?>
-                                          <option value="<?php echo " $tipo "; ?>"> <?php echo " $tipo "; ?> </option>
-                                        <?php
-                                      }
-                                      mysqli_close($conn);
-                                      ?>
-                                    </select>
-                                  </div>
-                                </div>
-
-                                <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                                </div>
-                            </div>
-                          </div>
-                  </form>
                 </div>
               </div>
             </div>
@@ -5080,53 +4882,14 @@ if ($action == 'statusequipamento') {
       <?php
     }
     if ($action == 'telefonia') {
-
-      require_once 'classes/material.php';
-      $material = new material;
-      if (isset($_POST['nome'])) {
-        $nome = $_POST['nome'];
-        $descri = $_POST['descri'];
-        $tipo = $_POST['tipo'];
-        $id = $_POST['id'];
-        //verificar se os campos estão todos preenchidos
-        if (!empty($nome) && !empty($tipo)) {
-          $material->conectar("lab", "localhost", "root", "");
-          if ($material->msgErro == "") {
-            $material->alterarMaterial($id, $nome, $descri, $tipo);
-
-            ?>
-              <div class="alert alert-success" role="alert">
-                Material alterado com sucesso.
-              </div>
-            <?php
-          } else {
-            ?>
-              <div class="msn-erro">
-                <?php
-                echo "erro: " . $material->msgErro;
-                ?>
-              </div>
-            <?php
-          }
-        } else {
-          ?>
-            <div class="alert alert-danger" role="alert">
-              Preencha todos os campos.
-            </div>
-          <?php
-        }
-      }
-      ?>
+?>
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Estoque de Telefonia</h5>
-              <a href="index.php"> <img src="img/cancelar.png" /></a>
-              </a>
-            </div>
+           </div>
             <div class="modal-body">
               <div class="container">
-                <form method="POST">
                   <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
                   <?php
                   $servidor = "localhost";
@@ -5135,86 +4898,28 @@ if ($action == 'statusequipamento') {
                   $dbnome = "lab";
                   $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
 
-                  $sql = "SELECT id, nome_modelo, descricao FROM material WHERE fk_tipo=' Telefonia';";
+                  $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE fk_tipo='Telefonia';";
                   $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
                   echo '<table  class="table table-hover">';
                   echo '<tr>';
                   echo '<th>Nome_modelo</th>';
                   echo '<th>Descrição</th>';
-                  echo '<th>Ações</th>';
+                  echo '<th>Tipo</th>';
                   echo '</tr>';
                   while ($registro = mysqli_fetch_array($resultado)) {
                     $nome = $registro['nome_modelo'];
                     $desc = $registro['descricao'];
                     $id = $registro['id'];
+                    $tipo = $registro['fk_tipo'];
                     echo '<tr>';
                     echo '<td>' . $nome . '</td>';
                     echo '<td>' . $desc . '</td>';
-                    echo '<td>' ?> <a href="excluirTelefonia.php?id=<?= $id ?>"> <img src="img/excluir4.png" /></a>
-                    <a href="#"><img src="img/editar.png" data-toggle="modal" data-target="#exampleModal" /></a>
-                    <?php
+                    echo '<td>' . $tipo . '</td>';
                     echo '</tr>';
                   }
                   echo '</table>';
                   mysqli_close($conn);
                   ?>
-                  <!-- Modal -->
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Editar Material</h5>
-                          <a href="index.php?pagina=home&action=telefonia"> <img src="img/cancelar.png" /></a>
-                        </div>
-                        <div class="modal-body">
-                          <div class="container">
-                            <form method="POST">
-                              <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <input type="hidden" name="id" value="<?= $id; ?>">
-                                  <label for="inputNome4">Nome_Modelo</label>
-                                  <input type="text" class="form-control" id="inputNome4" name="nome" placeholder="Nome">
-                                </div>
-                                <div class="form-group">
-                                  <label for="inputDescricao">Descrição</label>
-                                  <input type="text" class="form-control" id="inputDescricao" name="descri" placeholder="Descrição do Material">
-                                </div>
-                                <div class="form-row"></div>
-                                &nbsp;&nbsp;&nbsp;&nbsp; <div class="form-group col-md-4">
-                                  <label for="inputModelo">Tipo</label>
-                                  <select id="inputModelo" class="form-control" name="tipo">
-                                    <option selected></option>
-                                    <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
-                                    <?php
-                                    $servidor = "localhost";
-                                    $usuario = "root";
-                                    $senha = "";
-                                    $dbnome = "lab";
-                                    $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                                    ?>
-                                    <div class="tabela">
-                                      <?php
-                                      $sql = "SELECT * FROM tipo_material";
-                                      $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                                      while ($registro = mysqli_fetch_array($resultado)) {
-                                        $tipo = $registro['tipo'];
-                                        ?>
-                                        <option value="<?php echo " $tipo "; ?>"> <?php echo " $tipo "; ?> </option>
-                                      <?php
-                                    }
-                                    mysqli_close($conn);
-                                    ?>
-                                  </select>
-                                </div>
-                              </div>
-
-                              <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                              </div>
-                          </div>
-                        </div>
-                </form>
-
               </div>
             </div>
           </div>
@@ -5224,54 +4929,14 @@ if ($action == 'statusequipamento') {
     <?php
   }
   if ($action == 'geral') {
-
-    require_once 'classes/material.php';
-    $material = new material;
-    if (isset($_POST['nome'])) {
-      $nome = $_POST['nome'];
-      $descri = $_POST['descri'];
-      $tipo = $_POST['tipo'];
-      $id = $_POST['id'];
-
-      //verificar se os campos estão todos preenchidos
-      if (!empty($nome) && !empty($tipo)) {
-        $material->conectar("lab", "localhost", "root", "");
-        if ($material->msgErro == "") {
-          if ($material->alterarMaterial($id, $nome, $descri, $tipo)) {
-            ?>
-              <div class="alert alert-success" role="alert">
-                Material alterado com sucesso.
-              </div>
-            <?php
-          }
-        } else {
-          ?>
-            <div class="msn-erro">
-              <?php
-              echo "erro: " . $material->msgErro;
-              ?>
-            </div>
-          <?php
-        }
-      } else {
-        ?>
-          <div class="alert alert-danger" role="alert">
-            Preencha todos os campos.
-          </div>
-        <?php
-      }
-    }
-    ?>
+?>
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Estoque Geral</h5>
-            <a href="index.php"> <img src="img/cancelar.png" /></a>
-            </a>
           </div>
           <div class="modal-body">
             <div class="container">
-              <form method="POST">
                 <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materiais cadastrados -->
                 <?php
                 $servidor = "localhost";
@@ -5280,88 +4945,30 @@ if ($action == 'statusequipamento') {
                 $dbnome = "lab";
                 $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
 
-                $sql = "SELECT id, nome_modelo, descricao FROM material;";
+                $sql = "SELECT * FROM material;";
                 $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
                 echo '<table  class="table table-hover">';
                 echo '<tr>';
                 echo '<th>Nome_modelo</th>';
                 echo '<th>Descrição</th>';
-                echo '<th>Ações</th>';
+                echo '<th>Tipo</th>';
                 echo '</tr>';
                 while ($registro = mysqli_fetch_array($resultado)) {
                   $nome = $registro['nome_modelo'];
                   $desc = $registro['descricao'];
                   $id = $registro['id'];
+                  $tipo = $registro['fk_tipo'];
 
                   echo '<tr>';
                   echo '<td>' . $nome . '</td>';
                   echo '<td>' . $desc . '</td>';
-                  echo '<td>' ?><a href="excluirGeral.php?id=<?= $id; ?>"><img src="img/excluir4.png" /></a>
-                  <a href="#"><img src="img/editar.png" data-toggle="modal" data-target="#exampleModal" /></a>
-                  <?php
+                  echo '<td>' . $tipo . '</td>';
                   echo '</tr>';
-                }
+                } 
                 echo '</table>';
 
                 mysqli_close($conn);
                 ?>
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Material</h5>
-                        <a href="index.php?pagina=home&action=geral"> <img src="img/cancelar.png" /></a>
-                      </div>
-                      <div class="modal-body">
-                        <div class="container">
-                          <form method="POST">
-                            <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <input type="hidden" name="id" value="<?= $id; ?>">
-                                <label for="inputNome4">Nome_Modelo</label>
-                                <input type="text" class="form-control" id="inputNome4" name="nome" placeholder="Nome">
-                              </div>
-                              <div class="form-group">
-                                <label for="inputDescricao">Descrição</label>
-                                <input type="text" class="form-control" id="inputDescricao" name="descri" placeholder="Descrição do Material">
-                              </div>
-                              <div class="form-row"></div>
-                              &nbsp;&nbsp;&nbsp;&nbsp; <div class="form-group col-md-4">
-                                <label for="inputModelo">Tipo</label>
-                                <select id="inputModelo" class="form-control" name="tipo">
-                                  <option selected></option>
-                                  <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
-                                  <?php
-                                  $servidor = "localhost";
-                                  $usuario = "root";
-                                  $senha = "";
-                                  $dbnome = "lab";
-                                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                                  ?>
-                                  <div class="tabela">
-                                    <?php
-                                    $sql = "SELECT * FROM tipo_material";
-                                    $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                                    while ($registro = mysqli_fetch_array($resultado)) {
-                                      $tipo = $registro['tipo'];
-                                      ?>
-                                      <option value="<?php echo " $tipo "; ?>"> <?php echo " $tipo "; ?> </option>
-                                    <?php
-                                  }
-
-                                  mysqli_close($conn);
-                                  ?>
-                                </select>
-                              </div>
-                            </div>
-
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                            </div>
-                        </div>
-                      </div>
-              </form>
             </div>
           </div>
         </div>
@@ -5369,4 +4976,164 @@ if ($action == 'statusequipamento') {
     </div>
   <?php
 }
-?>
+//<!----------------------------------- EDITAR MATERIAL --------------------------------------->
+
+
+if ($action == 'editar') {
+
+  require_once 'classes/material.php';
+  $material = new material;
+  if (isset($_POST['nome'])) {
+    $nome = $_POST['nome'];
+    $descri = $_POST['descri'];
+    $tipo = $_POST['tipo'];
+    $id = $_POST['id'];
+    //verificar se os campos estão todos preenchidos
+    if (!empty($nome) && !empty($tipo)) {
+      $material->conectar("lab", "localhost", "root", "");
+      if ($material->msgErro == "") {
+        $material->alterarMaterial($id, $nome, $descri, $tipo);
+        ?>
+          <div class="alert alert-success" role="alert">
+            Material alterado com sucesso.
+          </div>
+        <?php
+      } else {
+        ?>
+          <div class="msn-erro">
+            <?php
+            echo "erro: " . $material->msgErro;
+            ?>
+          </div>
+        <?php
+      }
+    } else {
+      ?>
+        <div class="alert alert-danger" role="alert">
+          Preencha todos os campos.
+        </div>
+      <?php
+    }
+  }
+  ?>
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Materiais</h5>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form method="POST">
+              <!-- Faz uma conexão com o banco de dados, retorna uma lista com materiais com tipo igual a hardware -->
+              <?php
+              $servidor = "localhost";
+              $usuario = "root";
+              $senha = "";
+              $dbnome = "lab";
+              $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
+              $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material;";
+              $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
+              ?>
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Nome do material</th>
+                        <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Ação</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php while ($rows = mysqli_fetch_assoc($resultado)) { ?>
+                        <tr>
+                          <td><?php echo $rows['id']; ?></td>
+                          <td><?php echo $rows['nome_modelo']; ?></td>
+                          <td><?php echo $rows['descricao']; ?></td>
+                          <td><?php echo $rows['fk_tipo']; ?></td>
+                          <td>
+                            <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#exampleModal" 
+                            data-whatever="<?php echo $rows['id']; ?>" data-whatevernome="<?php echo $rows['nome_modelo']; ?>" 
+                            data-whateverdescri="<?php echo $rows['descricao']; ?>" data-whatevertipo="<?php echo $rows['fk_tipo']; ?>">Editar</button>
+                            <a href="excluirMaterial.php?id=<?=$rows['id']?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Apagar</a>
+                          </td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4>Editar material</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="img/cancelar.png" /></button>
+                </div>
+                <div class="modal-body">
+                  <form method="POST">
+                    <div class="form-group">
+                      <label for="recipient-name" class="control-label">Nome_modelo:</label>
+                      <input name="nome" type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                      <label for="message-text" class="control-label">Descrição:</label>
+                      <input name="descri" class="form-control" id="descri">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputModelo" class="control-label" >Tipo:</label>
+                      <select id="inputModelo" class="form-control" name="tipo">
+                          <option selected></option>
+                          <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
+                          <?php
+                          $servidor = "localhost";
+                          $usuario = "root";
+                          $senha = "";
+                          $dbnome = "lab";
+                          $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
+                          ?>
+                          <div class="tabela">
+                            <?php
+                            $sql = "SELECT * FROM tipo_material";
+                            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+                            while ($registro = mysqli_fetch_array($resultado)) {
+                              $tipo = $registro['tipo'];
+                              ?>
+                              <option value="<?php echo "$tipo"; ?>"> <?php echo "$tipo"; ?> </option>
+                            <?php
+                          }
+                          mysqli_close($conn);
+                          ?>
+                        </select>
+                      </div>
+                    <input name="id" type="hidden" class="form-control" id="id" value="<?php echo $rows['id']; ?>">
+                    <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+          <script src="js/bootstrap.min.js"></script>
+          <script type="text/javascript">
+            $('#exampleModal').on('show.bs.modal', function(event) {
+              var button = $(event.relatedTarget) // Button that triggered the modal
+              var recipient = button.data('whatever') // Extract info from data-* attributes
+              var recipientnome = button.data('whatevernome')
+              var recipientdescri = button.data('whateverdescri')
+              var recipienttipo = button.data('whatevertipo')
+
+              var modal = $(this)
+              modal.find('#id').val(recipient)
+              modal.find('#recipient-name').val(recipientnome)
+              modal.find('#descri').val(recipientdescri)
+              modal.find('#tipo').val(recipienttipo)
+
+            })
+          </script>
+        </div>
+      </div>
+    <?php } ?>

@@ -12,6 +12,7 @@ if( $_SESSION['matricula'] == null){
 <head>
 	<title>Laboratory Manager</title>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
 	<link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
@@ -33,6 +34,7 @@ if( $_SESSION['matricula'] == null){
 			   }
 	 																	
 	  } ?> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="node_modules/jquery/dist/jquery.js"></script>
 	<script src="node_modules/Popper.js/dist/Popper.js"></script>
 	<script src="script/validar.js"></script> 

@@ -1,5 +1,13 @@
 <?php
 
+	$servidor = "localhost";
+	$usuario = "root";
+	$senha = "";
+	$dbname = "lab";
+	//Criar a conexao
+	$conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
+
+
  class Conexao{
 
     private $pdo;

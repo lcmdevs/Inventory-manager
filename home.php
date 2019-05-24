@@ -71,7 +71,7 @@ if ($action == 'armario') {
             </a>
             <nav class="navbar navbar-light bg-light" style="width: 100%;">
               <form class="form-inline ml-auto" method="POST" style="width: 100%;">
-                <input type="text" name="material" class="form- control" placeholder="Localizar">
+              <input type="text" name="material" class="form- control" placeholder="Qual material você procura?">
                 <input type="image" src="img/lupa.png" alt="submit" /></a>
                 <?php
                 require_once 'classes/material.php';
@@ -85,8 +85,8 @@ if ($action == 'armario') {
                     $conn->conectar();
                     if ($conn->msgErro == "") {
                       if ($mat->buscarMaterial($material)) {
-                        $sql = $pdo->prepare("SELECT fk_material, fk_localizacao, quantidade FROM alocacao WHERE fk_material LIKE :material");
-                        $sql->bindValue(":material", $material . "%");
+                        $sql = $pdo->prepare("SELECT * FROM alocacao WHERE fk_material LIKE :material");
+                        $sql->bindValue(":material",$material."%");
                         $sql->execute();
                         echo '<table  class="table table-hover">';
                         echo '<tr>';
@@ -100,10 +100,8 @@ if ($action == 'armario') {
                           echo '<td>' . $dados['fk_localizacao'] . '</td>';
                           echo '<td>' . $dados['quantidade'] . '</td>';
                           echo '</tr>';
-
                           ######################################################################################################################     
                           //if (trim($dados['fk_localizacao']) == $gavetasCor[trim($dados['fk_localizacao'])]) {
-
                           //$gavetasCor[trim($dados['fk_localizacao'])]  = 'red';
                           // }
                           ######################################################################################################################                        
@@ -328,13 +326,13 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:882px; " class="alert alert-success" role="alert">
+          <div style="bottom:880px; " class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:882px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -350,7 +348,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:882px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -451,13 +449,13 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px; " class="alert alert-success" role="alert">
+          <div style="bottom:880px; " class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -473,7 +471,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -575,13 +573,13 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -597,7 +595,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -698,13 +696,13 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -720,7 +718,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -821,13 +819,13 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -843,7 +841,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -943,13 +941,13 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -965,7 +963,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -1065,13 +1063,13 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
@@ -1087,7 +1085,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -1189,20 +1187,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -1312,20 +1310,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -1334,7 +1332,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -1434,20 +1432,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -1456,7 +1454,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -1555,20 +1553,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -1577,7 +1575,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -1677,20 +1675,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -1699,7 +1697,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -1799,20 +1797,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -1821,7 +1819,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -1921,20 +1919,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -1943,7 +1941,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2042,20 +2040,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2064,7 +2062,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2163,20 +2161,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2185,7 +2183,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2284,20 +2282,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2306,7 +2304,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2405,20 +2403,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2427,7 +2425,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2526,20 +2524,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2548,7 +2546,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2647,20 +2645,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2669,7 +2667,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2768,20 +2766,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2790,7 +2788,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -2889,20 +2887,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -2911,7 +2909,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3010,20 +3008,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3032,7 +3030,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3131,20 +3129,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3153,7 +3151,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3252,20 +3250,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3274,7 +3272,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3373,20 +3371,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3395,7 +3393,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3494,20 +3492,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3516,7 +3514,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3615,20 +3613,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3637,7 +3635,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3736,20 +3734,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3758,7 +3756,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3857,20 +3855,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -3879,7 +3877,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -3978,20 +3976,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -4000,7 +3998,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -4099,20 +4097,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -4121,7 +4119,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -4220,20 +4218,20 @@ if ($action == 'armario') {
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
-          <div style="bottom:838px;" class="alert alert-success" role="alert">
+          <div style="bottom:880px;" class="alert alert-success" role="alert">
             Material retirado.
           </div>
         <?php
       } else {
         ?>
-          <div style="bottom:838px;" class="alert alert-danger" role="alert">
+          <div style="bottom:880px;" class="alert alert-danger" role="alert">
             Você não pode retirar mais do que tem.
           </div>
         <?php
       }
     } else {
       ?>
-        <div style="bottom:838px;" class="msn-erro">
+        <div style="bottom:880px;" class="msn-erro">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -4242,7 +4240,7 @@ if ($action == 'armario') {
     }
   } else {
     ?>
-      <div style="bottom:838px;" class="alert alert-danger" role="alert">
+      <div style="bottom:880px;" class="alert alert-danger" role="alert">
         Preencha todos os campos.
       </div>
     <?php
@@ -4343,20 +4341,20 @@ if ($action == 'material') {
       if ($conn->msgErro == "") {
         if ($mat->cadastrar($nome, $descri, $tipo)) {
           ?>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success" role="alert" style="margin-top: 10px;">
             Material cadastrado.
           </div>
         <?php
       } else {
         ?>
-          <div class="alert alert-danger" role="alert">
+          <div class="alert alert-danger" role="alert" style="margin-bottom:10px;">
             Material já está cadastrado.
           </div>
         <?php
       }
     } else {
       ?>
-        <div class="msn-erro">
+        <div class="msn-erro" style="margin-bottom:10px;">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -4365,14 +4363,14 @@ if ($action == 'material') {
     }
   } else {
     ?>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert" style="margin-bottom:10px;">
         Preencha todos os campos.
       </div>
     <?php
   }
 }
 ?>
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document" style="margin-top: 90px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cadastro de Material</h5>
@@ -4491,11 +4489,11 @@ if ($action == 'equipamento') {
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="campo1">Nome_Modelo</label>
-                <input type="text" class="form-control" name="nome_modelo">
+                <input type="text" class="form-control" maxlength="20" name="nome_modelo">
               </div>
               <div class="form-group col-md-6">
                 <label for="campo1">Service Tag/IMEI</label>
-                <input type="text" class="form-control" name="codigo">
+                <input type="text" class="form-control" onkeyup="num(this);" maxlength="15" name="codigo">
               </div>
               <div>
                 <input id="hidden" type="hidden" value="disponivel" name="situacao">
@@ -4515,7 +4513,11 @@ if ($action == 'equipamento') {
 if ($action == 'alocacao') {
 
   require_once 'classes/alocacaomaterial.php';
+  require_once 'conexao.php';
+
+  $conn = new Conexao;
   $alocacao = new alocacao;
+
   if (isset($_POST['material'])) {
     $nome_material = $_POST['material'];
     $qtde = $_POST['quantidade'];
@@ -4523,8 +4525,8 @@ if ($action == 'alocacao') {
 
     //verificar se os campos estão todos preenchidos
     if (!empty($nome_material) && !empty($qtde) && !empty($localizacao)) {
-      $alocacao->conectar("lab", "localhost", "root", "");
-      if ($alocacao->msgErro == "") {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
         if ($alocacao->cadastrar($nome_material, $qtde, $localizacao)) {
           ?>
           <div class="alert alert-success" role="alert">
@@ -4533,7 +4535,7 @@ if ($action == 'alocacao') {
         <?php
       } else {
         ?>
-          <div class="alert alert-danger" role="alert">
+          <div class="alert alert-success" role="alert">
             Alocação atualizada.
           </div>
         <?php
@@ -4542,7 +4544,7 @@ if ($action == 'alocacao') {
       ?>
         <div class="msn-erro">
           <?php
-          echo "erro: " . $alocacao->msgErro;
+          echo "erro: " . $conn->msgErro;
           ?>
         </div>
       <?php
@@ -4556,7 +4558,7 @@ if ($action == 'alocacao') {
   }
 }
 ?>
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document" style="margin-top: 90px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Alocação de Material</h5>
@@ -4572,25 +4574,18 @@ if ($action == 'alocacao') {
                 <select id="inputST" class="form-control" name="material">
                   <option selected></option>
                   <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a localização cadastrada -->
-                  <?php
-                  $servidor = "localhost";
-                  $usuario = "root";
-                  $senha = "";
-                  $dbnome = "lab";
-                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                  ?>
+                
                   <div class="tabela">
                     <?php
-                    $material = $_POST['material'];
-                    $sql = "SELECT nome_modelo FROM material";
-                    $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                    while ($registro = mysqli_fetch_array($resultado)) {
+                    $conn->conectar();
+                    $sql = $pdo->prepare("SELECT nome_modelo FROM material");
+                    $sql->execute();
+                    while ($registro = $sql->fetch()) {
                       $material = $registro['nome_modelo'];
                       ?>
                       <option value="<?php echo "$material "; ?>"> <?php echo "$material"; ?> </option>
                     <?php
                   }
-                  mysqli_close($conn);
                   ?>
                 </select>
               </div>
@@ -4603,26 +4598,20 @@ if ($action == 'alocacao') {
                 <select id="inputST" class="form-control" name="localizacao">
                   <option selected></option>
                   <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a localização cadastrada -->
-                  <?php
-                  $servidor = "localhost";
-                  $usuario = "root";
-                  $senha = "";
-                  $dbnome = "lab";
-                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                  ?>
+                  
                   <div class="tabela">
                     <?php
-                    $localizacao = $_POST['localizacao'];
-                    $sql = "SELECT localizacao FROM localizacao";
-                    $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                    while ($registro = mysqli_fetch_array($resultado)) {
+                    $conn->conectar();
+                    $sql = $pdo->prepare("SELECT localizacao FROM localizacao");
+                    $sql->execute();
+                    while ($registro = $sql->fetch()) {
                       $localizacao = $registro['localizacao'];
                       ?>
                       <option value="<?php echo "$localizacao "; ?>"> <?php echo "$localizacao"; ?> </option>
                     <?php
                   }
-                  mysqli_close($conn);
                   ?>
+
                 </select>
               </div>
             </div>
@@ -4636,6 +4625,10 @@ if ($action == 'alocacao') {
   <?php
 }
 if ($action == 'statusequipamento') {
+
+  require_once 'conexao.php';
+  $conn = new Conexao;
+
   ?>
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -4651,24 +4644,22 @@ if ($action == 'statusequipamento') {
               <div class="row">
                 <div class="form-group col-md-12">
                   <!-- Faz uma conexão com o banco de dados, retorna uma lista de equipamentos e seus status -->
-                  <?php
-                  $servidor = "localhost";
-                  $usuario = "root";
-                  $senha = "";
-                  $dbnome = "lab";
-                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                  ?>
                   <div>
                     <?php
-                    $sql = "SELECT * FROM equipamento";
-                    $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
+
+                    $conn->conectar();
+                    $sql = $pdo->prepare("SELECT * FROM equipamento");
+                    $sql->execute();
+
                     echo '<table  class="table table-hover">';
                     echo '<tr>';
                     echo '<td><b>Nome_modelo</td>';
                     echo '<td><b>Service_tag/IMEI</td>';
                     echo '<td><b>Status</td>';
                     echo '</tr>';
-                    while ($registro = mysqli_fetch_array($resultado)) {
+
+                    while ($registro = $sql->fetch()) {
+
                       $nome = $registro['nome_modelo'];
                       $codigo = $registro['codigo'];
                       $situacao = $registro['situacao'];
@@ -4679,9 +4670,6 @@ if ($action == 'statusequipamento') {
                       echo '</tr>';
                     }
                     echo '</table>';
-                    ?>
-                    <?php
-                    mysqli_close($conn);
                     ?>
                   </div>
                 </div>
@@ -4788,8 +4776,11 @@ if ($action == 'statusequipamento') {
 
           <?php
         }
-
         if ($action == 'hardware') {
+
+          require_once 'conexao.php';
+          $conn = new Conexao;
+
           ?>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -4798,35 +4789,40 @@ if ($action == 'statusequipamento') {
                 </div>
                 <div class="modal-body">
                   <div class="container">
-                      <!-- Faz uma conexão com o banco de dados, retorna uma lista com materiais com tipo igual a hardware -->
-                      <?php
-                      $servidor = "localhost";
-                      $usuario = "root";
-                      $senha = "";
-                      $dbnome = "lab";
-                      $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-                      $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE fk_tipo='Hardware';";
-                      $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
-                      echo '<table  class="table table-hover">';
-                      echo '<tr>';
-                      echo '<th>Nome_modelo</th>';
-                      echo '<th>Descrição</th>';
-                      echo '<th>Tipo</th>';
-                      echo '</tr>';
-                      while ($registro = mysqli_fetch_array($resultado)) {
-                        $nome = $registro['nome_modelo'];
-                        $desc = $registro['descricao'];
-                        $tipo = $registro['fk_tipo'];
-                        echo '<tr>';
-                        echo '<td>' . $nome . '</td>';
-                        echo '<td>' . $desc . '</td>';
-                        echo '<td>' . $tipo . '</td>';
-                        echo '</tr>';
-                      }
-                      echo '</table>';
-                      mysqli_close($conn);
-                      ?>
+                        <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
+                  <?php
+                  
+                  $conn->conectar();
+                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
+                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
+                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Hardware'");
+                  $sql->execute();
+                  
+                  echo '<table  class="table table-hover">';
+                  echo '<tr>';
+                  echo '<th>Nome_modelo</th>';
+                  echo '<th>Descrição</th>';
+                  echo '<th>Quantidade</th>';
+                  echo '<th>Localização</th>';
+                  echo '</tr>';
 
+                  while ($registro = $sql->fetch()) {
+                  
+                  $id = $registro['id'];
+                  $nome = $registro['nome_modelo'];
+                  $desc = $registro['descricao'];
+                  $qtd = $registro['quantidade'];
+                  $local = $registro['fk_localizacao'];
+
+                  echo '<tr>';
+                  echo '<td>' . $nome . '</td>';
+                  echo '<td>' . $desc . '</td>';
+                  echo '<td>' . $qtd . '</td>';
+                  echo '<td>' . $local . '</td>';
+                  echo '</tr>';
+                } 
+                echo '</table>';
+                  ?>
                 </div>
               </div>
             </div>
@@ -4835,6 +4831,9 @@ if ($action == 'statusequipamento') {
         <?php
       }
       if ($action == 'impressao') {
+
+        require_once 'conexao.php';
+        $conn = new Conexao;
         ?>
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -4844,35 +4843,40 @@ if ($action == 'statusequipamento') {
               <div class="modal-body">
                 <div class="container">
                   
-                    <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo igual a impressão -->
-                    <?php
-                    $servidor = "localhost";
-                    $usuario = "root";
-                    $senha = "";
-                    $dbnome = "lab";
-                    $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
+                    <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
+                  <?php
+                  
+                  $conn->conectar();
+                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
+                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
+                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Impressao'");
+                  $sql->execute();
+                  
+                  echo '<table  class="table table-hover">';
+                  echo '<tr>';
+                  echo '<th>Nome_modelo</th>';
+                  echo '<th>Descrição</th>';
+                  echo '<th>Quantidade</th>';
+                  echo '<th>Localização</th>';
+                  echo '</tr>';
 
-                    $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE fk_tipo='Impressao';";
-                    $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
-                    echo '<table  class="table table-hover">';
-                    echo '<tr>';
-                    echo '<th>Nome_modelo</th>';
-                    echo '<th>Descrição</th>';
-                    echo '<th>Tipo</th>';
-                    echo '</tr>';
-                    while ($registro = mysqli_fetch_array($resultado)) {
-                      $nome = $registro['nome_modelo'];
-                      $desc = $registro['descricao'];
-                      $tipo = $registro['fk_tipo'];
-                      echo '<tr>';
-                      echo '<td>' . $nome . '</td>';
-                      echo '<td>' . $desc . '</td>';
-                      echo '<td>' . $tipo . '</td>';
-                      echo '</tr>';
-                    }
-                    echo '</table>';
-                    mysqli_close($conn);
-                    ?>
+                  while ($registro = $sql->fetch()) {
+                  
+                  $id = $registro['id'];
+                  $nome = $registro['nome_modelo'];
+                  $desc = $registro['descricao'];
+                  $qtd = $registro['quantidade'];
+                  $local = $registro['fk_localizacao'];
+
+                  echo '<tr>';
+                  echo '<td>' . $nome . '</td>';
+                  echo '<td>' . $desc . '</td>';
+                  echo '<td>' . $qtd . '</td>';
+                  echo '<td>' . $local . '</td>';
+                  echo '</tr>';
+                } 
+                echo '</table>';
+                  ?>
                 </div>
               </div>
             </div>
@@ -4882,6 +4886,9 @@ if ($action == 'statusequipamento') {
       <?php
     }
     if ($action == 'telefonia') {
+
+      require_once 'conexao.php';
+      $conn = new Conexao;
 ?>
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
@@ -4892,33 +4899,37 @@ if ($action == 'statusequipamento') {
               <div class="container">
                   <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
                   <?php
-                  $servidor = "localhost";
-                  $usuario = "root";
-                  $senha = "";
-                  $dbnome = "lab";
-                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-
-                  $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE fk_tipo='Telefonia';";
-                  $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
+                  
+                  $conn->conectar();
+                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
+                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
+                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Telefonia'");
+                  $sql->execute();
+                  
                   echo '<table  class="table table-hover">';
                   echo '<tr>';
                   echo '<th>Nome_modelo</th>';
                   echo '<th>Descrição</th>';
-                  echo '<th>Tipo</th>';
+                  echo '<th>Quantidade</th>';
+                  echo '<th>Localização</th>';
                   echo '</tr>';
-                  while ($registro = mysqli_fetch_array($resultado)) {
-                    $nome = $registro['nome_modelo'];
-                    $desc = $registro['descricao'];
-                    $id = $registro['id'];
-                    $tipo = $registro['fk_tipo'];
-                    echo '<tr>';
-                    echo '<td>' . $nome . '</td>';
-                    echo '<td>' . $desc . '</td>';
-                    echo '<td>' . $tipo . '</td>';
-                    echo '</tr>';
-                  }
-                  echo '</table>';
-                  mysqli_close($conn);
+
+                  while ($registro = $sql->fetch()) {
+                  
+                  $id = $registro['id'];
+                  $nome = $registro['nome_modelo'];
+                  $desc = $registro['descricao'];
+                  $qtd = $registro['quantidade'];
+                  $local = $registro['fk_localizacao'];
+
+                  echo '<tr>';
+                  echo '<td>' . $nome . '</td>';
+                  echo '<td>' . $desc . '</td>';
+                  echo '<td>' . $qtd . '</td>';
+                  echo '<td>' . $local . '</td>';
+                  echo '</tr>';
+                } 
+                echo '</table>';
                   ?>
               </div>
             </div>
@@ -4929,6 +4940,9 @@ if ($action == 'statusequipamento') {
     <?php
   }
   if ($action == 'geral') {
+
+    require_once 'conexao.php';
+    $conn = new Conexao;
 ?>
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -4937,37 +4951,40 @@ if ($action == 'statusequipamento') {
           </div>
           <div class="modal-body">
             <div class="container">
-                <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materiais cadastrados -->
-                <?php
-                $servidor = "localhost";
-                $usuario = "root";
-                $senha = "";
-                $dbnome = "lab";
-                $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
 
-                $sql = "SELECT * FROM material;";
-                $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
-                echo '<table  class="table table-hover">';
-                echo '<tr>';
-                echo '<th>Nome_modelo</th>';
-                echo '<th>Descrição</th>';
-                echo '<th>Tipo</th>';
-                echo '</tr>';
-                while ($registro = mysqli_fetch_array($resultado)) {
+                <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materiais cadastrados -->    
+                <?php
+                  
+                  $conn->conectar();
+                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
+                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
+                                               material.nome_modelo = alocacao.fk_material");
+                  $sql->execute();
+                  
+                  echo '<table  class="table table-hover">';
+                  echo '<tr>';
+                  echo '<th>Nome_modelo</th>';
+                  echo '<th>Descrição</th>';
+                  echo '<th>Quantidade</th>';
+                  echo '<th>Localização</th>';
+                  echo '</tr>';
+
+                  while ($registro = $sql->fetch()) {
+                  
+                  $id = $registro['id'];
                   $nome = $registro['nome_modelo'];
                   $desc = $registro['descricao'];
-                  $id = $registro['id'];
-                  $tipo = $registro['fk_tipo'];
+                  $qtd = $registro['quantidade'];
+                  $local = $registro['fk_localizacao'];
 
                   echo '<tr>';
                   echo '<td>' . $nome . '</td>';
                   echo '<td>' . $desc . '</td>';
-                  echo '<td>' . $tipo . '</td>';
+                  echo '<td>' . $qtd . '</td>';
+                  echo '<td>' . $local . '</td>';
                   echo '</tr>';
                 } 
                 echo '</table>';
-
-                mysqli_close($conn);
                 ?>
             </div>
           </div>
@@ -4982,7 +4999,11 @@ if ($action == 'statusequipamento') {
 if ($action == 'editar') {
 
   require_once 'classes/material.php';
+  require_once 'conexao.php';
+
+  $conn = new Conexao;
   $material = new material;
+
   if (isset($_POST['nome'])) {
     $nome = $_POST['nome'];
     $descri = $_POST['descri'];
@@ -4990,8 +5011,8 @@ if ($action == 'editar') {
     $id = $_POST['id'];
     //verificar se os campos estão todos preenchidos
     if (!empty($nome) && !empty($tipo)) {
-      $material->conectar("lab", "localhost", "root", "");
-      if ($material->msgErro == "") {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
         $material->alterarMaterial($id, $nome, $descri, $tipo);
         ?>
           <div class="alert alert-success" role="alert">
@@ -5002,7 +5023,7 @@ if ($action == 'editar') {
         ?>
           <div class="msn-erro">
             <?php
-            echo "erro: " . $material->msgErro;
+            echo "erro: " . $conn->msgErro;
             ?>
           </div>
         <?php
@@ -5026,20 +5047,17 @@ if ($action == 'editar') {
             <form method="POST">
               <!-- Faz uma conexão com o banco de dados, retorna uma lista com materiais com tipo igual a hardware -->
               <?php
-              $servidor = "localhost";
-              $usuario = "root";
-              $senha = "";
-              $dbnome = "lab";
-              $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome);
-              $sql = "SELECT id, nome_modelo, descricao, fk_tipo FROM material;";
-              $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar buscar registro");
+              
+              $conn->conectar();
+
+              $sql =$pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material;");
+              $sql->execute();
               ?>
               <div class="row">
                 <div class="col-md-12">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>#</th>
                         <th>Nome do material</th>
                         <th>Descrição</th>
                         <th>Tipo</th>
@@ -5047,16 +5065,17 @@ if ($action == 'editar') {
                       </tr>
                     </thead>
                     <tbody>
-                      <?php while ($rows = mysqli_fetch_assoc($resultado)) { ?>
+                      <?php while ($rows = $sql->fetch()) { ?>
                         <tr>
-                          <td><?php echo $rows['id']; ?></td>
                           <td><?php echo $rows['nome_modelo']; ?></td>
                           <td><?php echo $rows['descricao']; ?></td>
                           <td><?php echo $rows['fk_tipo']; ?></td>
                           <td>
                             <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#exampleModal" 
                             data-whatever="<?php echo $rows['id']; ?>" data-whatevernome="<?php echo $rows['nome_modelo']; ?>" 
-                            data-whateverdescri="<?php echo $rows['descricao']; ?>" data-whatevertipo="<?php echo $rows['fk_tipo']; ?>">Editar</button>
+                            data-whateverdescri="<?php echo $rows['descricao']; ?>" data-whatevertipo="<?php echo $rows['fk_tipo'];
+                            ?>">Editar</button>
+
                             <a href="excluirMaterial.php?id=<?=$rows['id']?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Apagar</a>
                           </td>
                         </tr>
@@ -5088,25 +5107,18 @@ if ($action == 'editar') {
                       <select id="inputModelo" class="form-control" name="tipo">
                           <option selected></option>
                           <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
-                          <?php
-                          $servidor = "localhost";
-                          $usuario = "root";
-                          $senha = "";
-                          $dbnome = "lab";
-                          $conn = mysqli_connect($servidor, $usuario, $senha, $dbnome)
-                          ?>
+
                           <div class="tabela">
                             <?php
-                            $sql = "SELECT * FROM tipo_material";
-                            $resultado = mysqli_query($conn, $sql) or die("Erro ao tentar cadastrar registro");
-                            while ($registro = mysqli_fetch_array($resultado)) {
+                            $sql = $pdo->prepare("SELECT * FROM tipo_material");
+                            $sql->execute();
+
+                            while ($registro = $sql->fetch()) {
                               $tipo = $registro['tipo'];
                               ?>
                               <option value="<?php echo "$tipo"; ?>"> <?php echo "$tipo"; ?> </option>
                             <?php
-                          }
-                          mysqli_close($conn);
-                          ?>
+                          }?>
                         </select>
                       </div>
                     <input name="id" type="hidden" class="form-control" id="id" value="<?php echo $rows['id']; ?>">
@@ -5116,6 +5128,7 @@ if ($action == 'editar') {
               </div>
             </div>
           </div>
+
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
           <script src="js/bootstrap.min.js"></script>
           <script type="text/javascript">

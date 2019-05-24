@@ -34,6 +34,7 @@ if( $_SESSION['matricula'] == null){
 			   }
 	 																	
 	  } ?> 
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="node_modules/jquery/dist/jquery.js"></script>
 	<script src="node_modules/Popper.js/dist/Popper.js"></script>

@@ -97,6 +97,28 @@
       return false;
       }
    } 
+
+      public function localizar(){
+
+        	//Incluir a conexão com banco de dados
+          include_once('../conexao.php');
+          
+          //Recuperar o valor da palavra
+          $material = $_POST['palavra'];
+          
+          //Pesquisar no banco de dados nome do curso referente a palavra digitada pelo usuário
+          $sql = "SELECT * FROM alocacao WHERE nome_modelo LIKE '%$material%'";
+          $resultado_cursos = mysqli_query($conn, $sql);
+          
+          if(mysqli_num_rows($resultado_cursos) <= 0){
+            echo "Nenhum curso encontrado...";
+          }else{
+            while($rows = mysqli_fetch_assoc($resultado_cursos)){
+              echo "<li>".$rows['nome']."</li>";
+            }
+          }
+
+      }
    
   }
   

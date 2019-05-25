@@ -1,6 +1,6 @@
 <?php
 
- Class equipamento{
+ Class Equipamento{
 
   private $pdo;
   public $msgErro="";
@@ -34,6 +34,29 @@
       $sql->execute();
       return true;
       }
+  }
+
+  public function cadastrarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim){
+  global $pdo;
+
+  $sql = $pdo->prepare("INSERT INTO emprestimo(nome_modelo, fk_codigo, usuario, email, data_inicio, data_fim )
+                        VALUES(:equipamento, :serviceTag, :usuario, :email, :dataInicio, :dataFim)");
+  $sql->bindValue(":equipamento", $equipamento); 
+  $sql->bindValue(":serviceTag", $service);  
+  $sql->bindValue(":usuario", $usuario); 
+  $sql->bindValue(":email", $email); 
+  $sql->bindValue(":dataInicio", $dataInicio);  
+  $sql->bindValue(":dataFim", $dataFim); 
+  $sql->execute();
+
+  $sql = $pdo->prepare("UPDATE equipamento SET situacao = :situacao WHERE nome_modelo = :equipamento");
+  $sql->bindValue(":equipamento", $equipamento); 
+  $sql->bindValue(":situacao", 'Indisponível');
+  $sql->execute();
+
+ 
+  return true;
+
   }
   
  }

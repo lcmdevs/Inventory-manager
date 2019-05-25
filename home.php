@@ -4435,7 +4435,7 @@ if ($action == 'equipamento') {
   ?>
   <?php
   require_once 'classes/equipamento.php';
-  $equipamento = new equipamento;
+  $equipamento = new Equipamento;
   if (isset($_POST['situacao'])) {
     $nome_equipamento = $_POST['nome_modelo'];
     $codigo = $_POST['codigo'];
@@ -4496,7 +4496,7 @@ if ($action == 'equipamento') {
                 <input type="text" class="form-control" onkeyup="num(this);" maxlength="15" name="codigo">
               </div>
               <div>
-                <input id="hidden" type="hidden" value="disponivel" name="situacao">
+                <input id="hidden" type="hidden" value="Disponivel" name="situacao">
               </div>
             </div>
         </div>
@@ -4558,7 +4558,7 @@ if ($action == 'alocacao') {
   }
 }
 ?>
-  <div class="modal-dialog" role="document" style="margin-top: 90px;">
+  <div class="modal-dialog" role="document" style="margin-top: 70px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Alocação de Material</h5>
@@ -4583,7 +4583,7 @@ if ($action == 'alocacao') {
                     while ($registro = $sql->fetch()) {
                       $material = $registro['nome_modelo'];
                       ?>
-                      <option value="<?php echo "$material "; ?>"> <?php echo "$material"; ?> </option>
+                      <option value="<?php echo "$material"; ?>"> <?php echo "$material"; ?> </option>
                     <?php
                   }
                   ?>
@@ -4607,7 +4607,7 @@ if ($action == 'alocacao') {
                     while ($registro = $sql->fetch()) {
                       $localizacao = $registro['localizacao'];
                       ?>
-                      <option value="<?php echo "$localizacao "; ?>"> <?php echo "$localizacao"; ?> </option>
+                      <option value="<?php echo "$localizacao"; ?>"> <?php echo "$localizacao"; ?> </option>
                     <?php
                   }
                   ?>
@@ -4684,10 +4684,74 @@ if ($action == 'statusequipamento') {
       <?php
     }
     if ($action == 'emprestimo') {
+
+      require_once 'classes/equipamento.php';
+      require_once 'conexao.php';
+    
+      $conn = new Conexao;
+      $equi = new Equipamento;
+    
+      if (isset($_POST['equipamento'])) {
+        $equipamento = $_POST['equipamento'];
+        $service = $_POST['service'];
+        $usuario = $_POST['usuario'];
+        $email = $_POST['email'];
+        $dataInicio = $_POST['dataInicio'];
+        $dataFim = $_POST['dataFim'];
+    
+      if(strtotime($dataInicio) < strtotime($dataFim)){
+
+              if (!empty($equipamento) && !empty($service) && !empty($usuario) && !empty($email)
+              && !empty($dataInicio) && !empty($dataFim)) {
+              $conn->conectar();
+
+                      if ($conn->msgErro == "") {
+
+                              if ($equi->cadastrarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim)) {
+                              ?>
+                              <div class="alert alert-success" role="alert">
+                              Empréstimo realizado.
+                              </div>
+                              <?php
+                              }
+                              else {
+                              ?>
+                              <div class="alert alert-success" role="alert">
+                              Alocação atualizada.
+                              </div>
+                             <?php
+                             }
+                       }
+                       else {
+                       ?>  
+                       <div class="msn-erro">
+                       <?php
+                       echo "erro: " . $conn->msgErro;
+                       ?>
+                       </div>
+                       <?php
+                       }
+              }    
+              else {
+              ?>
+              <div class="alert alert-danger" role="alert">
+              Preencha todos os campos.
+              </div>
+              <?php
+              }
+      }
+      else{
       ?>
+      <div class="alert alert-danger" role="alert">
+      Data do fim tem que ser maior que a data de início.
+      </div>
+      <?php
+      }
+  }
+    ?>
         <div class="container">
           <div class="row">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="margin-top: 70px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Novo Emprestimo</h5>
@@ -4696,43 +4760,69 @@ if ($action == 'statusequipamento') {
                 </div>
                 <div class="modal-body">
                   <div class="container">
-                    <form action="emprestimo.php" method="POST">
-                      <div class="row">
+                    <form method="POST">
+                      <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="inputModelo">Nome_Modelo</label>
-                          <select id="inputModelo" class="form-control">
+                          <label for="inputName">Nome_Modelo</label>
+                          <select id="inputName" class="form-control" name="equipamento">
                             <option selected>Escolher...</option>
-                            <option>...</option>
+                  
+                            <div class="tabela">
+                              <?php
+                              $conn->conectar();
+                              $sql = $pdo->prepare("SELECT nome_modelo FROM equipamento WHERE situacao = 'disponivel'");
+                              $sql->execute();
+                              while ($registro = $sql->fetch()) {
+                                $nome = $registro['nome_modelo'];
+                                ?>
+                                <option value="<?php echo"$nome";?>"> <?php echo"$nome";?> </option>
+                              <?php
+                            }
+                            ?>
                           </select>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputST">Service Tag/IMEI</label>
-                          <select id="inputST" class="form-control">
+                          <select id="inputST" class="form-control" name="service">
                             <option selected>Escolher...</option>
-                            <option>...</option>
+
+                            <div class="tabela">
+                              <?php
+                              $conn->conectar();
+                              $sql = $pdo->prepare("SELECT codigo FROM equipamento");
+                             // $sql->bindValue(':nome', $equipamento);
+                              $sql->execute();
+                              while ($registro = $sql->fetch()) {
+                                $codigo = $registro['codigo'];
+                                ?>
+                                <option value="<?php echo "$codigo"; ?>"> <?php echo "$codigo"; ?> </option>
+                              <?php
+                            }
+                          
+                            ?>
                           </select>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputUsuario">Usuário</label>
-                          <input type="text" class="form-control" id="inputUsario" placeholder="Usuario">
+                          <input type="text" class="form-control" id="inputUsario" maxlength="30" name="usuario" placeholder="Usuario">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputEmail">Email</label>
-                          <input type="email" class="form-control" id="inputemail" placeholder="email">
+                          <input type="email" class="form-control" id="inputemail" maxlength="50" name="email" placeholder="email">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputDataInicio">Data Inicio</label>
-                          <input type="date" class="form-control" id="inputDataInicio" placeholder="DataInicio">
+                          <input type="date" class="form-control" id="inputDataInicio" name="dataInicio" placeholder="DataInicio">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputDataFim">Data Fim</label>
-                          <input type="date" class="form-control" id="inputDataFim" placeholder="DataFim">
-                        </div>
-                    </form>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <input type="submit" class="btn btn-primary" value="Salvar" />
+                          <input type="date" class="form-control" id="inputDataFim"  name="dataFim" placeholder="DataFim">
+                        </div>     
+                      </div>
+                         <div class="modal-footer">
+                          <input type="submit" class="btn btn-primary" value="Salvar" />
+                       </div>  
+                  </form>
                 </div>
               </div>
             </div>
@@ -5050,7 +5140,7 @@ if ($action == 'editar') {
               
               $conn->conectar();
 
-              $sql =$pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material;");
+              $sql =$pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material ORDER BY id DESC;");
               $sql->execute();
               ?>
               <div class="row">

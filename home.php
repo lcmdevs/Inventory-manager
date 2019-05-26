@@ -4691,19 +4691,19 @@ if ($action == 'statusequipamento') {
       $conn = new Conexao;
       $equi = new Equipamento;
     
-      if (isset($_POST['equipamento'])) {
-        $equipamento = $_POST['equipamento'];
+      if (isset($_POST['idEquipamento'])) {
+        $equipamento = $_POST['idEquipamento'];
         $service = $_POST['service'];
         $usuario = $_POST['usuario'];
         $email = $_POST['email'];
         $dataInicio = $_POST['dataInicio'];
         $dataFim = $_POST['dataFim'];
-    
-      if(strtotime($dataInicio) < strtotime($dataFim)){
 
-              if (!empty($equipamento) && !empty($service) && !empty($usuario) && !empty($email)
-              && !empty($dataInicio) && !empty($dataFim)) {
-              $conn->conectar();
+        if (!empty($equipamento) && !empty($service) && !empty($usuario) && !empty($email)
+        && !empty($dataInicio) && !empty($dataFim)) {
+        $conn->conectar();
+
+              if(strtotime($dataInicio) < strtotime($dataFim)){
 
                       if ($conn->msgErro == "") {
 
@@ -4731,22 +4731,22 @@ if ($action == 'statusequipamento') {
                        </div>
                        <?php
                        }
-              }    
-              else {
-              ?>
-              <div class="alert alert-danger" role="alert">
-              Preencha todos os campos.
-              </div>
-              <?php
-              }
-      }
-      else{
-      ?>
-      <div class="alert alert-danger" role="alert">
-      Data do fim tem que ser maior que a data de início.
-      </div>
-      <?php
-      }
+                      }
+                      else{
+                      ?>
+                      <div class="alert alert-danger" role="alert">
+                      Data do fim tem que ser maior que a data de início.
+                      </div>
+                      <?php
+                      }
+            }    
+            else {
+            ?>
+            <div class="alert alert-danger" role="alert">
+            Preencha todos os campos.
+            </div>
+            <?php
+            }
   }
     ?>
         <div class="container">
@@ -4758,50 +4758,62 @@ if ($action == 'statusequipamento') {
                   <a href="index.php"> <img src="img/cancelar.png" /></a>
                   </a>
                 </div>
-                <div class="modal-body">
-                  <div class="container">
-                    <form method="POST">
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="inputName">Nome_Modelo</label>
-                          <select id="inputName" class="form-control" name="equipamento">
-                            <option selected>Escolher...</option>
-                  
-                            <div class="tabela">
-                              <?php
-                              $conn->conectar();
-                              $sql = $pdo->prepare("SELECT nome_modelo FROM equipamento WHERE situacao = 'disponivel'");
-                              $sql->execute();
-                              while ($registro = $sql->fetch()) {
-                                $nome = $registro['nome_modelo'];
-                                ?>
-                                <option value="<?php echo"$nome";?>"> <?php echo"$nome";?> </option>
-                              <?php
-                            }
-                            ?>
-                          </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="inputST">Service Tag/IMEI</label>
-                          <select id="inputST" class="form-control" name="service">
-                            <option selected>Escolher...</option>
+                <?php
+                  $servidor = "localhost";
+                  $usuario = "root";
+                  $senha = "";
+                  $dbname = "lab";
+                  //Criar a conexao
+                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbname); ?>
+              <div class="modal-body">
+                <div class="container">
+                 <form method="POST">
+                  <div class="form-row">
+                   <div class="form-group col-md-6">
+                    <label for="idEquipamento">Nome_Modelo:</label>
+                    <select name="idEquipamento" id="idEquipamento" class="form-control">
+                      <option value="">Escolha o Equipamento</option>
+                      <?php
+                        $result_cat_post = "SELECT * FROM equipamento WHERE situacao='disponivel'";
+                        $resultado_cat_post = mysqli_query($conn, $result_cat_post);
+                        while($row_cat_post = mysqli_fetch_assoc($resultado_cat_post) ) {
+                          echo '<option value="'.$row_cat_post['nome_modelo'].'">'.$row_cat_post['nome_modelo'].'</option>';
+                        }
+                      ?>
+                    </select>
+                      </div>
+                      <div class="form-group col-md-6">
+                    <label for="service">Service-Tag:</label>
+                    <select name="service" id="service" class="form-control">
+                      <option value="">Escolha a Service-Tag</option>
+                    </select>
+                    
+                  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                  <script type="text/javascript">
+                    google.load("jquery", "1.4.2");
+                  </script>
+                  <script type="text/javascript">
 
-                            <div class="tabela">
-                              <?php
-                              $conn->conectar();
-                              $sql = $pdo->prepare("SELECT codigo FROM equipamento");
-                             // $sql->bindValue(':nome', $equipamento);
-                              $sql->execute();
-                              while ($registro = $sql->fetch()) {
-                                $codigo = $registro['codigo'];
-                                ?>
-                                <option value="<?php echo "$codigo"; ?>"> <?php echo "$codigo"; ?> </option>
-                              <?php
-                            }
-                          
-                            ?>
-                          </select>
-                        </div>
+                  $(function(){
+                    $('#idEquipamento').change(function(){
+                      if( $(this).val() ) {
+                        
+                        $.getJSON('sub_categorias_post.php?search=',{idEquipamento: $(this).val(), ajax: 'true'}, function(j){
+                          var options = '<option value="">Escolha Service-Tag</option>';	
+                          for (var i = 0; i < j.length; i++) {
+                            options += '<option value="' + j[i].codigo + '">' + j[i].codigo + '</option>';
+                          }	
+                          $('#service').html(options).show();
+                          $('.carregando').hide();
+                        });
+                      } else {
+                        $('#service').html('<option value="">– Escolha Service-Tag/IMEI –</option>');
+                      }
+                    });
+                  });
+                  </script>
+                         </div> 
+                        
                         <div class="form-group col-md-6">
                           <label for="inputUsuario">Usuário</label>
                           <input type="text" class="form-control" id="inputUsario" maxlength="30" name="usuario" placeholder="Usuario">
@@ -4826,6 +4838,7 @@ if ($action == 'statusequipamento') {
                 </div>
               </div>
             </div>
+          </div>
             <!----------------------------------- DEVOLUÇÃO DE EMPRÉSTIMO --------------------------------------->
 
           <?php

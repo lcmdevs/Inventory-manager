@@ -51,7 +51,7 @@
 
   $sql = $pdo->prepare("UPDATE equipamento SET situacao = :situacao WHERE nome_modelo = :equipamento");
   $sql->bindValue(":equipamento", $equipamento); 
-  $sql->bindValue(":situacao", 'Indisponível');
+  $sql->bindValue(":situacao", 'Indisponivel');
   $sql->execute();
 
  

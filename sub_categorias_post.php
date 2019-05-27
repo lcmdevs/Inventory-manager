@@ -2,7 +2,7 @@
 
 	$id_categoria = $_REQUEST['idEquipamento'];
 
-	$result_sub_cat = "SELECT * FROM equipamento WHERE nome_modelo ='$id_categoria'";
+	$result_sub_cat = "SELECT * FROM equipamento WHERE nome_modelo ='$id_categoria' AND situacao = 'Disponivel'";
 	$resultado_sub_cat = mysqli_query($conn, $result_sub_cat);
 	
 	while ($row_sub_cat = mysqli_fetch_assoc($resultado_sub_cat) ) {

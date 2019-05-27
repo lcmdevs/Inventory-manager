@@ -36,7 +36,7 @@
       }
   }
 
-  public function cadastrarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim){
+  public function realizarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim){
   global $pdo;
 
   $sql = $pdo->prepare("INSERT INTO emprestimo(nome_modelo, fk_codigo, usuario, email, data_inicio, data_fim )
@@ -49,9 +49,10 @@
   $sql->bindValue(":dataFim", $dataFim); 
   $sql->execute();
 
-  $sql = $pdo->prepare("UPDATE equipamento SET situacao = :situacao WHERE nome_modelo = :equipamento");
+  $sql = $pdo->prepare("UPDATE equipamento SET situacao = :situacao WHERE nome_modelo = :equipamento AND codigo = :serviceTag");
   $sql->bindValue(":equipamento", $equipamento); 
   $sql->bindValue(":situacao", 'Indisponivel');
+  $sql->bindValue(":serviceTag", $service); 
   $sql->execute();
 
  

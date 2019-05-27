@@ -4648,7 +4648,7 @@ if ($action == 'statusequipamento') {
                     <?php
 
                     $conn->conectar();
-                    $sql = $pdo->prepare("SELECT * FROM equipamento");
+                    $sql = $pdo->prepare("SELECT * FROM equipamento ORDER BY id desc");
                     $sql->execute();
 
                     echo '<table  class="table table-hover">';
@@ -4707,7 +4707,7 @@ if ($action == 'statusequipamento') {
 
                       if ($conn->msgErro == "") {
 
-                              if ($equi->cadastrarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim)) {
+                              if ($equi->realizarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim)) {
                               ?>
                               <div class="alert alert-success" role="alert">
                               Empréstimo realizado.
@@ -4774,7 +4774,7 @@ if ($action == 'statusequipamento') {
                     <select name="idEquipamento" id="idEquipamento" class="form-control">
                       <option value="">Escolha o Equipamento</option>
                       <?php
-                        $result_cat_post = "SELECT * FROM equipamento WHERE situacao='disponivel'";
+                        $result_cat_post = "SELECT * FROM equipamento WHERE situacao='Disponivel' ORDER BY id desc";
                         $resultado_cat_post = mysqli_query($conn, $result_cat_post);
                         while($row_cat_post = mysqli_fetch_assoc($resultado_cat_post) ) {
                           echo '<option value="'.$row_cat_post['nome_modelo'].'">'.$row_cat_post['nome_modelo'].'</option>';

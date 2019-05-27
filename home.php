@@ -4273,20 +4273,20 @@ if ($action == 'material') {
       if ($conn->msgErro == "") {
         if ($mat->cadastrar($nome, $descri, $tipo)) {
           ?>
-          <div class="alert alert-success" role="alert" style="margin-top: 10px;">
+          <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
             Material cadastrado.
           </div>
         <?php
       } else {
         ?>
-          <div class="alert alert-danger" role="alert" style="margin-bottom:10px;">
+          <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
             Material já está cadastrado.
           </div>
         <?php
       }
     } else {
       ?>
-        <div class="msn-erro" style="margin-bottom:10px;">
+        <div class="msn-erro" style="margin-top: 10px; margin-bottom:-60px;">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -4295,14 +4295,14 @@ if ($action == 'material') {
     }
   } else {
     ?>
-      <div class="alert alert-danger" role="alert" style="margin-bottom:10px;">
+      <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
         Preencha todos os campos.
       </div>
     <?php
   }
 }
 ?>
-  <div class="modal-dialog" role="document" style="margin-top: 90px;">
+  <div class="modal-dialog" role="document" style="margin-top: 110px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cadastro de Material</h5>
@@ -4381,20 +4381,20 @@ if ($action == 'equipamento') {
       if ($conn->msgErro == "") {
         if ($equipamento->cadastrar($nome_equipamento, $codigo, $status)) {
           ?>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
             Equipamento cadastrado.
           </div>
         <?php
       } else {
         ?>
-          <div class="alert alert-danger" role="alert">
+          <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
             Equipamento já está cadastrado.
           </div>
         <?php
       }
     } else {
       ?>
-        <div class="msn-erro">
+        <div class="msn-erro" style="margin-top: 10px; margin-bottom:-60px;">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -4403,14 +4403,14 @@ if ($action == 'equipamento') {
     }
   } else {
     ?>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
         Preencha todos os campos.
       </div>
     <?php
   }
 }
 ?>
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document" style="margin-top: 110px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cadastro de Equipamento</h5>
@@ -4463,20 +4463,20 @@ if ($action == 'alocacao') {
       if ($conn->msgErro == "") {
         if ($alocacao->cadastrar($nome_material, $qtde, $localizacao)) {
           ?>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
             Alocação cadastrada.
           </div>
         <?php
       } else {
         ?>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
             Alocação atualizada.
           </div>
         <?php
       }
     } else {
       ?>
-        <div class="msn-erro">
+        <div class="msn-erro" style="margin-top: 10px; margin-bottom:-60px;">
           <?php
           echo "erro: " . $conn->msgErro;
           ?>
@@ -4485,14 +4485,14 @@ if ($action == 'alocacao') {
     }
   } else {
     ?>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
         Preencha todos os campos.
       </div>
     <?php
   }
 }
 ?>
-  <div class="modal-dialog" role="document" style="margin-top: 70px;">
+  <div class="modal-dialog" role="document" style="margin-top: 110px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Alocação de Material</h5>
@@ -4642,14 +4642,14 @@ if ($action == 'statusequipamento') {
 
                               if ($equi->realizarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim)) {
                               ?>
-                              <div class="alert alert-success" role="alert">
+                              <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
                               Empréstimo realizado.
                               </div>
                               <?php
                               }
                               else {
                               ?>
-                              <div class="alert alert-success" role="alert">
+                              <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
                               Alocação atualizada.
                               </div>
                              <?php
@@ -4657,7 +4657,7 @@ if ($action == 'statusequipamento') {
                        }
                        else {
                        ?>  
-                       <div class="msn-erro">
+                       <div class="msn-erro" style="margin-top: 10px; margin-bottom:-60px;">
                        <?php
                        echo "erro: " . $conn->msgErro;
                        ?>
@@ -4667,7 +4667,7 @@ if ($action == 'statusequipamento') {
                       }
                       else{
                       ?>
-                      <div class="alert alert-danger" role="alert">
+                      <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
                       Data do fim tem que ser maior que a data de início.
                       </div>
                       <?php
@@ -4675,7 +4675,7 @@ if ($action == 'statusequipamento') {
             }    
             else {
             ?>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
             Preencha todos os campos.
             </div>
             <?php
@@ -4684,7 +4684,7 @@ if ($action == 'statusequipamento') {
     ?>
         <div class="container">
           <div class="row">
-            <div class="modal-dialog" role="document" style="margin-top: 70px;">
+            <div class="modal-dialog" role="document" style="margin-top: 110px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Novo Emprestimo</h5>
@@ -4778,7 +4778,7 @@ if ($action == 'statusequipamento') {
         }
         if ($action == 'devolucao') {
           ?>
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="margin-top: 110px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Devolução de Emprestimo</h5>

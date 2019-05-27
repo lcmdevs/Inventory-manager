@@ -62,7 +62,6 @@ if (!empty($_GET['action'])) {
 }
 if ($action == 'armario') {
   ?>
-
   <div class="row">
     <div class="col-md-12">
       <div class="card card-body" style=" height:890px;">
@@ -71,7 +70,7 @@ if ($action == 'armario') {
             </a>
             <nav class="navbar navbar-light bg-light" style="width: 100%;">
               <form class="form-inline ml-auto" method="POST" style="width: 100%;">
-              <input type="text" name="material" class="form- control" placeholder="Qual material você procura?">
+              <input type="text" name="material" class="form-control" placeholder="Qual material você procura?">
                 <input type="image" src="img/lupa.png" alt="submit" /></a>
                 <?php
                 require_once 'classes/material.php';
@@ -360,8 +359,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title">Bau A</h3>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -424,7 +422,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -483,8 +480,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira A.1</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -547,7 +543,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -607,8 +602,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira A.2</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -671,7 +665,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -730,8 +723,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta A.1</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -793,7 +785,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -853,8 +844,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta A.4</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -916,7 +906,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -975,8 +964,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta A.2</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1038,7 +1026,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1097,8 +1084,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta A.5</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1162,7 +1148,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1221,8 +1206,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta A.3</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1285,7 +1269,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1344,8 +1327,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta A.6</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <<a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1407,7 +1389,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1466,8 +1447,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira A.3</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1528,7 +1508,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1587,8 +1566,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira A.4</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1650,7 +1628,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1709,8 +1686,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Bau B</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1772,7 +1748,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1831,8 +1806,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira B.1</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -1894,7 +1868,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -1953,8 +1926,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira B.2</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2015,7 +1987,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2074,8 +2045,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta B.1</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2136,7 +2106,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2195,8 +2164,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta B.4</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2257,7 +2225,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2316,8 +2283,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta B.2</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2378,7 +2344,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2437,8 +2402,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta B.5</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2499,7 +2463,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2558,8 +2521,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta B.3</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2620,7 +2582,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2641,7 +2602,7 @@ if ($action == 'armario') {
 
     //verificar se os campos estão todos preenchidos
     if (!empty($material) && !empty($quantidade)) {
-      $conn->conectar("lab", "localhost", "root", "");
+      $conn->conectar();
       if ($conn->msgErro == "") {
         if ($mat->retirarMaterial($material, $quantidade, $localizacao)) {
           ?>
@@ -2679,8 +2640,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira B.6</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2741,7 +2701,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2800,8 +2759,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira B.3</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2862,7 +2820,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -2921,8 +2878,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira B.4</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -2983,7 +2939,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3042,8 +2997,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Bau C</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3104,7 +3058,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3163,8 +3116,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.1</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3225,7 +3177,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3284,8 +3235,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.2</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3346,7 +3296,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3405,8 +3354,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.1</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3467,7 +3415,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3526,8 +3473,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.4</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3588,7 +3534,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3647,8 +3592,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.2</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3709,7 +3653,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3768,8 +3711,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.5</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3830,7 +3772,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -3889,8 +3830,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.3</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -3951,7 +3891,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -4010,8 +3949,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.6</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -4072,7 +4010,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -4131,8 +4068,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.3</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
           </button>
         </div>
         <div class="modal-body">
@@ -4193,7 +4129,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -4252,9 +4187,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.4 </h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
         </div>
         <div class="modal-body">
           <h4 class="modal-body">Lista</h4>
@@ -4314,7 +4247,6 @@ if ($action == 'armario') {
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Retirar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
       </form>
@@ -4374,8 +4306,7 @@ if ($action == 'material') {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cadastro de Material</h5>
-        <a href="index.php"> <img src="img/cancelar.png" /></a>
-        </a>
+        <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a> 
       </div>
       <div class="modal-body">
         <div class="container">
@@ -4432,10 +4363,13 @@ if ($action == 'material') {
 <?php
 }
 if ($action == 'equipamento') {
-  ?>
-  <?php
+
   require_once 'classes/equipamento.php';
+  require_once 'conexao.php';
+
+  $conn = new Conexao;
   $equipamento = new Equipamento;
+
   if (isset($_POST['situacao'])) {
     $nome_equipamento = $_POST['nome_modelo'];
     $codigo = $_POST['codigo'];
@@ -4443,8 +4377,8 @@ if ($action == 'equipamento') {
 
     //verificar se os campos estão todos preenchidos
     if (!empty($nome_equipamento) && !empty($codigo)) {
-      $equipamento->conectar("lab", "localhost", "root", "");
-      if ($equipamento->msgErro == "") {
+      $conn->conectar();
+      if ($conn->msgErro == "") {
         if ($equipamento->cadastrar($nome_equipamento, $codigo, $status)) {
           ?>
           <div class="alert alert-success" role="alert">
@@ -4462,7 +4396,7 @@ if ($action == 'equipamento') {
       ?>
         <div class="msn-erro">
           <?php
-          echo "erro: " . $equipamento->msgErro;
+          echo "erro: " . $conn->msgErro;
           ?>
         </div>
       <?php
@@ -4634,8 +4568,7 @@ if ($action == 'statusequipamento') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Status Equipamento</h5>
-          <a href="?" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a> 
           </a>
         </div>
         <div class="modal-body">
@@ -4770,7 +4703,7 @@ if ($action == 'statusequipamento') {
                  <form method="POST">
                   <div class="form-row">
                    <div class="form-group col-md-6">
-                    <label for="idEquipamento">Nome_Modelo:</label>
+                    <label for="idEquipamento">Nome_Modelo</label>
                     <select name="idEquipamento" id="idEquipamento" class="form-control">
                       <option value="">Escolha o Equipamento</option>
                       <?php
@@ -4783,7 +4716,7 @@ if ($action == 'statusequipamento') {
                     </select>
                       </div>
                       <div class="form-group col-md-6">
-                    <label for="service">Service-Tag:</label>
+                    <label for="service">Service-Tag</label>
                     <select name="service" id="service" class="form-control">
                       <option value="">Escolha a Service-Tag</option>
                     </select>
@@ -4832,7 +4765,7 @@ if ($action == 'statusequipamento') {
                         </div>     
                       </div>
                          <div class="modal-footer">
-                          <input type="submit" class="btn btn-primary" value="Salvar" />
+                          <input type="submit" class="btn btn-success" value="Salvar" />
                        </div>  
                   </form>
                 </div>
@@ -4871,7 +4804,7 @@ if ($action == 'statusequipamento') {
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <input type="submit" class="btn btn-primary" value="Salvar">
+                  <input type="submit" class="btn btn-success" value="Salvar">
                 </div>
               </div>
             </div>

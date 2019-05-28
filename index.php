@@ -17,7 +17,7 @@ if( $_SESSION['matricula'] == null){
 	<link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
 	<link rel="stylesheet" href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css">
 </head>
-<body style="background-image:url(img/pap3.png);">
+<body style="background-image:url(img/fundo.jpeg);">
 
 	<?php
 	$pagina = 'home';

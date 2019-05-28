@@ -37,6 +37,7 @@
             <a class="dropdown-item" href="?pagina=home&action=statusequipamento" role="button">Status Equipamento</a>
             <a class="dropdown-item" href="?pagina=home&action=emprestimo" role="button">Novo Empréstimo</a>
             <a class="dropdown-item" href="?pagina=home&action=devolucao" role="button">Devolução de Empréstimo</a>
+            <a class="dropdown-item" href="?pagina=home&action=listaEmprestimo" role="button">Lista de Empréstimo</a>
           </div>
         </li>
         <li class="nav-item">
@@ -4306,7 +4307,7 @@ if ($action == 'material') {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cadastro de Material</h5>
-        <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a> 
+        <a href="index.php"> <img src="img/cancelar.png" /></a>
       </div>
       <div class="modal-body">
         <div class="container">
@@ -4435,7 +4436,7 @@ if ($action == 'equipamento') {
             </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="submit" class="btn btn-success">Salvar</button>
         </div>
       </div>
     </div>
@@ -4492,7 +4493,7 @@ if ($action == 'alocacao') {
   }
 }
 ?>
-  <div class="modal-dialog" role="document" style="margin-top: 110px;">
+  <div class="modal-dialog" role="document" style="margin-top: 70px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Alocação de Material</h5>
@@ -4777,34 +4778,50 @@ if ($action == 'statusequipamento') {
           <?php
         }
         if ($action == 'devolucao') {
+
+      
+          $servidor = "localhost";
+          $usuario = "root";
+          $senha = "";
+          $dbname = "lab";
+          //Criar a conexao
+          $conn = mysqli_connect($servidor, $usuario, $senha, $dbname); 
+
           ?>
-            <div class="modal-dialog" role="document" style="margin-top: 110px;">
+           <div class="modal-dialog" role="document" style="margin-top: 110px;">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Devolução de Emprestimo</h5>
+                  <h5 class="modal-title">Devolução de Equipamento</h5>
                   <a href="index.php"> <img src="img/cancelar.png" /></a>
                   </a>
                 </div>
                 <div class="modal-body">
                   <div class="container">
-                    <form action="devolucaoemprestimo.php" method="POST">
-                      <div class="row"></div>
-                      <div class="form-group col-md-6">
-                        <label for="inputST">Service Tag/IMEI</label>
-                        <select id="inputST" class="form-control">
-                          <option selected>Escolher...</option>
-                          <option>...</option>
+                    <form method="POST">
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label for="devolucao">Service Tag/IMEI</label>
+                          <select name="devolucao" id="devolucao" class="form-control">
+                          <option value="">Escolha a service-tag</option>
+                          <?php
+                            $result_cat_post = "SELECT * FROM equipamento WHERE situacao='Indisponivel' ORDER BY id desc";
+                            $resultado_cat_post = mysqli_query($conn, $result_cat_post);
+                            while($row_cat_post = mysqli_fetch_assoc($resultado_cat_post) ) {
+                              echo '<option value="'.$row_cat_post['codigo'].'">'.$row_cat_post['codigo'].'</option>';
+                            }
+                          ?>
                         </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="campo1">Data de devolução</label>
+                          <input type="Date" class="form-control" onkeyup="num(this);" maxlength="15" name="codigo">
+                        </div>
                       </div>
-                      <div class="form-group col-md-6">
-                        <label for="inputDataFim">Data de Devolução</label>
-                        <input type="date" class="form-control" id="inputDataDevolucao" placeholder="DataDevolucao">
-                      </div>
-                    </form>
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <input type="submit" class="btn btn-success" value="Salvar">
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                  </div>
+                </form>
                 </div>
               </div>
             </div>
@@ -4822,6 +4839,7 @@ if ($action == 'statusequipamento') {
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Estoque de Hardware</h5>
+                  <a href="index.php"> <img src="img/cancelar.png" /></a>
                 </div>
                 <div class="modal-body">
                   <div class="container">
@@ -4875,6 +4893,7 @@ if ($action == 'statusequipamento') {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Estoque de Impressão</h5>
+                <a href="index.php"> <img src="img/cancelar.png" /></a>
               </div>
               <div class="modal-body">
                 <div class="container">
@@ -4930,6 +4949,7 @@ if ($action == 'statusequipamento') {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Estoque de Telefonia</h5>
+              <a href="index.php"> <img src="img/cancelar.png" /></a>
            </div>
             <div class="modal-body">
               <div class="container">
@@ -4984,6 +5004,7 @@ if ($action == 'statusequipamento') {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Estoque Geral</h5>
+            <a href="index.php"> <img src="img/cancelar.png" /></a>
           </div>
           <div class="modal-body">
             <div class="container">
@@ -5077,6 +5098,7 @@ if ($action == 'editar') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Editar Materiais</h5>
+          <a href="index.php"> <img src="img/cancelar.png" /></a>
         </div>
         <div class="modal-body">
           <div class="container">
@@ -5107,7 +5129,7 @@ if ($action == 'editar') {
                           <td><?php echo $rows['descricao']; ?></td>
                           <td><?php echo $rows['fk_tipo']; ?></td>
                           <td>
-                            <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#exampleModal" 
+                            <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#exampleModal" 
                             data-whatever="<?php echo $rows['id']; ?>" data-whatevernome="<?php echo $rows['nome_modelo']; ?>" 
                             data-whateverdescri="<?php echo $rows['descricao']; ?>" data-whatevertipo="<?php echo $rows['fk_tipo'];
                             ?>">Editar</button>
@@ -5185,4 +5207,72 @@ if ($action == 'editar') {
           </script>
         </div>
       </div>
-    <?php } ?>
+    <?php 
+    } 
+
+             //<!----------------------------------- Lista de empréstimo --------------------------------------->
+             if ($action == 'listaEmprestimo') {
+
+              require_once 'conexao.php';
+              $conn = new Conexao;
+            
+              ?>
+                <div class="modal-dialog modal-xl" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Lista de Empréstimos</h5>
+                      <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a> 
+                      </a>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <form method="POST">
+                          <div class="row">
+                            <div class="form-group col-md-12">
+                              <!-- Faz uma conexão com o banco de dados, retorna uma lista de equipamentos e seus status -->
+                              <div>
+                                <?php
+            
+                                $conn->conectar();
+                                $sql = $pdo->prepare("SELECT * FROM emprestimo ORDER BY id desc");
+                                $sql->execute();
+            
+                                echo '<table  class="table table-hover">';
+                                echo '<tr>';
+                                echo '<td><b>Nome_modelo</td>';
+                                echo '<td><b>Service_tag/IMEI</td>';
+                                echo '<td><b>Usuário</td>';
+                                echo '<td><b>Email</td>';
+                                echo '<td><b>Data de início</td>';
+                                echo '<td><b>Data do fim</td>';
+
+                                echo '</tr>';
+            
+                                while ($registro = $sql->fetch()) {
+            
+                                  $nome = $registro['nome_modelo'];
+                                  $codigo = $registro['fk_codigo'];
+                                  $usuario = $registro['usuario'];
+                                  $email = $registro['email'];
+                                  $dataInicio = $registro['data_inicio'];
+                                  $dataFim = $registro['data_fim'];
+
+                                  echo '<tr>';
+                                  echo '<td>' . $nome . '</td>';
+                                  echo '<td>' . $codigo . '</td>';
+                                  echo '<td>' . $usuario . '</td>';
+                                  echo '<td>' . $email . '</td>';
+                                  echo '<td>' . $dataInicio . '</td>';
+                                  echo '<td>' . $dataFim . '</td>';
+                                  echo '</tr>';
+                                }
+                                echo '</table>';
+                                ?>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+            
+                  <?php
+                }

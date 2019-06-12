@@ -33,6 +33,39 @@ if( $_SESSION['matricula'] == null){
 			   }
 	 																	
 	  } ?> 
+       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                  <script type="text/javascript">
+                    google.load("jquery", "1.4.2");
+                  </script>
+                  <script type="text/javascript">
+
+                  $(function(){
+                    $('#idEquipamento').change(function(){
+                      if( $(this).val() ) {
+                        
+                        $.getJSON('sub_categorias_post.php?search=',{idEquipamento: $(this).val(), ajax: 'true'}, function(j){
+                          var options = '<option value="">Escolha Service-Tag</option>';	
+                          for (var i = 0; i < j.length; i++) {
+                            options += '<option value="' + j[i].codigo + '">' + j[i].codigo + '</option>';
+                          }	
+                          $('#service').html(options).show();
+                          $('.carregando').hide();
+                        });
+                      } else {
+                        $('#service').html('<option value="">– Escolha Service-Tag/IMEI –</option>');
+                      }
+                    });
+                  });
+                  </script>
+
+
+	  <script >window.setTimeout(function () {
+      $(".alert").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
+       });
+      }, 4000);
+      //# sourceURL=pen.js
+     </script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="node_modules/jquery/dist/jquery.js"></script>

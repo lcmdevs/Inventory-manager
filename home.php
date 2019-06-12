@@ -73,6 +73,7 @@ if ($action == 'armario') {
               <form class="form-inline ml-auto" method="POST" style="width: 100%;">
               <input type="text" name="material" class="form-control" placeholder="Qual material você procura?">
                 <input type="image" src="img/lupa.png" alt="submit" /></a>
+                <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" style="margin-left:1060px"/></a>
                 <?php
                 require_once 'classes/material.php';
                 require_once 'conexao.php';
@@ -110,7 +111,7 @@ if ($action == 'armario') {
                       } else {
                         ?>
                         <div>
-                          Nem um material encontrado.
+                          Nenhum material localizado.
                         </div>
                       <?php
                     }
@@ -4492,6 +4493,7 @@ if ($action == 'alocacao') {
     <?php
   }
 }
+
 ?>
   <div class="modal-dialog" role="document" style="margin-top: 70px;">
     <div class="modal-content">
@@ -4721,31 +4723,6 @@ if ($action == 'statusequipamento') {
                     <select name="service" id="service" class="form-control">
                       <option value="">Escolha a Service-Tag</option>
                     </select>
-                    
-                  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-                  <script type="text/javascript">
-                    google.load("jquery", "1.4.2");
-                  </script>
-                  <script type="text/javascript">
-
-                  $(function(){
-                    $('#idEquipamento').change(function(){
-                      if( $(this).val() ) {
-                        
-                        $.getJSON('sub_categorias_post.php?search=',{idEquipamento: $(this).val(), ajax: 'true'}, function(j){
-                          var options = '<option value="">Escolha Service-Tag</option>';	
-                          for (var i = 0; i < j.length; i++) {
-                            options += '<option value="' + j[i].codigo + '">' + j[i].codigo + '</option>';
-                          }	
-                          $('#service').html(options).show();
-                          $('.carregando').hide();
-                        });
-                      } else {
-                        $('#service').html('<option value="">– Escolha Service-Tag/IMEI –</option>');
-                      }
-                    });
-                  });
-                  </script>
                          </div> 
                         
                         <div class="form-group col-md-6">
@@ -5119,7 +5096,7 @@ if ($action == 'editar') {
                         <th>Nome do material</th>
                         <th>Descrição</th>
                         <th>Tipo</th>
-                        <th>Ação</th>
+                        <th>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -5134,21 +5111,22 @@ if ($action == 'editar') {
                             data-whateverdescri="<?php echo $rows['descricao']; ?>" data-whatevertipo="<?php echo $rows['fk_tipo'];
                             ?>">Editar</button>
 
-                            <a href="excluirMaterial.php?id=<?=$rows['id']?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Apagar</a>
-                          </td>
+                            <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#exampleModalExcluir">Excluir</button>
+                      
+                           </td>
                         </tr>
                       <?php } ?>
                     </tbody>
                   </table>
                 </div>
               </div>
-          </div>
+            </div>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h4>Editar material</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="img/cancelar.png" /></button>
+                  <a href="index.php?pagina=home&action=editar" ><img src="img/cancelar.png" /></a>
                 </div>
                 <div class="modal-body">
                   <form method="POST">
@@ -5180,12 +5158,13 @@ if ($action == 'editar') {
                         </select>
                       </div>
                     <input name="id" type="hidden" class="form-control" id="id" value="<?php echo $rows['id']; ?>">
-                    <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                    <button type="submit" class="btn btn-success">Salvar alterações</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
+       
 
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
           <script src="js/bootstrap.min.js"></script>
@@ -5205,8 +5184,43 @@ if ($action == 'editar') {
 
             })
           </script>
-        </div>
-      </div>
+
+         <div class="modal fade" id="exampleModalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+              <div class="modal-header">
+                  <a href="index.php?pagina=home&action=editar" ><img src="img/cancelar.png" style="margin-left:440px;"/></a>
+                </div>
+                <div class="modal-body">
+                  <form method="POST">
+                    <div class="form-group">
+                      <label class="control-label"><h4>Você tem certeza que deseja excluir este material?</h4></label>
+                      <input name="id" type="hidden" class="form-control" id="id" value="<?php echo $rows['id']; ?>">
+                    </div>
+                    <a href="excluirMaterial.php?id=<?=$rows['id']?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Excluir</a>
+                    <button type="button" class="btn btn-success">Não, voltar </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+       
+
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+          <script src="js/bootstrap.min.js"></script>
+          <script type="text/javascript">
+            $('#exampleModalExcluir').on('show.bs.modal', function(event) {
+              var button = $(event.relatedTarget) // Button that triggered the modal
+              var recipient = button.data('whatever') // Extract info from data-* attributes
+
+              var modal = $(this)
+              modal.find('#id').val(recipient)
+
+            })
+          </script>
+
+  
+
     <?php 
     } 
 

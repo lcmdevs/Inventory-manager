@@ -71,9 +71,9 @@ if ($action == 'armario') {
             </a>
             <nav class="navbar navbar-light bg-light" style="width: 100%;">
               <form class="form-inline ml-auto" method="POST" style="width: 100%;">
-              <input type="text" name="material" class="form-control" placeholder="Qual material você procura?">
+                <input type="text" name="material" class="form-control" placeholder="Qual material você procura?">
                 <input type="image" src="img/lupa.png" alt="submit" /></a>
-                <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" style="margin-left:1060px"/></a>
+                <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" style="margin-left:1060px" /></a>
                 <?php
                 require_once 'classes/material.php';
                 require_once 'conexao.php';
@@ -87,7 +87,7 @@ if ($action == 'armario') {
                     if ($conn->msgErro == "") {
                       if ($mat->buscarMaterial($material)) {
                         $sql = $pdo->prepare("SELECT * FROM alocacao WHERE fk_material LIKE :material");
-                        $sql->bindValue(":material",$material."%");
+                        $sql->bindValue(":material", $material . "%");
                         $sql->execute();
                         echo '<table  class="table table-hover">';
                         echo '<tr>';
@@ -1330,7 +1330,7 @@ if ($action == 'armario') {
         <div class="modal-header">
           <h5 class="modal-title">Gaveta A.6</h5>
           <<a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
-          </button>
+            </button>
         </div>
         <div class="modal-body">
           <h4 class="modal-body">Lista</h4>
@@ -2999,7 +2999,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Bau C</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3118,7 +3118,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.1</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3237,7 +3237,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.2</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3356,7 +3356,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.1</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3475,7 +3475,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.4</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3594,7 +3594,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.2</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3713,7 +3713,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.5</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3832,7 +3832,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.3</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -3951,7 +3951,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Gaveta C.6</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -4070,7 +4070,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.3</h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
           </button>
         </div>
         <div class="modal-body">
@@ -4189,7 +4189,7 @@ if ($action == 'armario') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Prateleira C.4 </h5>
-          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"><img src="img/cancelar.png" /></a>
         </div>
         <div class="modal-body">
           <h4 class="modal-body">Lista</h4>
@@ -4511,7 +4511,7 @@ if ($action == 'alocacao') {
                 <select id="inputST" class="form-control" name="material">
                   <option selected></option>
                   <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a localização cadastrada -->
-                
+
                   <div class="tabela">
                     <?php
                     $conn->conectar();
@@ -4535,7 +4535,7 @@ if ($action == 'alocacao') {
                 <select id="inputST" class="form-control" name="localizacao">
                   <option selected></option>
                   <!-- Faz uma conexão com o banco de dados, retorna uma consulta com a localização cadastrada -->
-                  
+
                   <div class="tabela">
                     <?php
                     $conn->conectar();
@@ -4571,7 +4571,7 @@ if ($action == 'statusequipamento') {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Status Equipamento</h5>
-          <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a> 
+          <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a>
           </a>
         </div>
         <div class="modal-body">
@@ -4623,10 +4623,10 @@ if ($action == 'statusequipamento') {
 
       require_once 'classes/equipamento.php';
       require_once 'conexao.php';
-    
+
       $conn = new Conexao;
       $equi = new Equipamento;
-    
+
       if (isset($_POST['idEquipamento'])) {
         $equipamento = $_POST['idEquipamento'];
         $service = $_POST['service'];
@@ -4635,56 +4635,54 @@ if ($action == 'statusequipamento') {
         $dataInicio = $_POST['dataInicio'];
         $dataFim = $_POST['dataFim'];
 
-        if (!empty($equipamento) && !empty($service) && !empty($usuario) && !empty($email)
-        && !empty($dataInicio) && !empty($dataFim)) {
-        $conn->conectar();
+        if (
+          !empty($equipamento) && !empty($service) && !empty($usuario) && !empty($email)
+          && !empty($dataInicio) && !empty($dataFim)
+        ) {
+          $conn->conectar();
 
-              if(strtotime($dataInicio) < strtotime($dataFim)){
+          if (strtotime($dataInicio) < strtotime($dataFim)) {
 
-                      if ($conn->msgErro == "") {
+            if ($conn->msgErro == "") {
 
-                              if ($equi->realizarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim)) {
-                              ?>
-                              <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
-                              Empréstimo realizado.
-                              </div>
-                              <?php
-                              }
-                              else {
-                              ?>
-                              <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
-                              Alocação atualizada.
-                              </div>
-                             <?php
-                             }
-                       }
-                       else {
-                       ?>  
-                       <div class="msn-erro" style="margin-top: 10px; margin-bottom:-60px;">
-                       <?php
-                       echo "erro: " . $conn->msgErro;
-                       ?>
-                       </div>
-                       <?php
-                       }
-                      }
-                      else{
-                      ?>
-                      <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
-                      Data do fim tem que ser maior que a data de início.
-                      </div>
-                      <?php
-                      }
-            }    
-            else {
-            ?>
-            <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
-            Preencha todos os campos.
-            </div>
-            <?php
+              if ($equi->realizarEmprestimo($equipamento, $service, $usuario, $email, $dataInicio, $dataFim)) {
+                ?>
+                  <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+                    Empréstimo realizado.
+                  </div>
+                <?php
+              } else {
+                ?>
+                  <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+                    Alocação atualizada.
+                  </div>
+                <?php
+              }
+            } else {
+              ?>
+                <div class="msn-erro" style="margin-top: 10px; margin-bottom:-60px;">
+                  <?php
+                  echo "erro: " . $conn->msgErro;
+                  ?>
+                </div>
+              <?php
             }
-  }
-    ?>
+          } else {
+            ?>
+              <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+                Data do fim tem que ser maior que a data de início.
+              </div>
+            <?php
+          }
+        } else {
+          ?>
+            <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+              Preencha todos os campos.
+            </div>
+          <?php
+        }
+      }
+      ?>
         <div class="container">
           <div class="row">
             <div class="modal-dialog" role="document" style="margin-top: 110px;">
@@ -4695,36 +4693,36 @@ if ($action == 'statusequipamento') {
                   </a>
                 </div>
                 <?php
-                  $servidor = "localhost";
-                  $usuario = "root";
-                  $senha = "";
-                  $dbname = "lab";
-                  //Criar a conexao
-                  $conn = mysqli_connect($servidor, $usuario, $senha, $dbname); ?>
-              <div class="modal-body">
-                <div class="container">
-                 <form method="POST">
-                  <div class="form-row">
-                   <div class="form-group col-md-6">
-                    <label for="idEquipamento">Nome_Modelo</label>
-                    <select name="idEquipamento" id="idEquipamento" class="form-control">
-                      <option value="">Escolha o Equipamento</option>
-                      <?php
-                        $result_cat_post = "SELECT * FROM equipamento WHERE situacao='Disponivel' ORDER BY id desc";
-                        $resultado_cat_post = mysqli_query($conn, $result_cat_post);
-                        while($row_cat_post = mysqli_fetch_assoc($resultado_cat_post) ) {
-                          echo '<option value="'.$row_cat_post['nome_modelo'].'">'.$row_cat_post['nome_modelo'].'</option>';
-                        }
-                      ?>
-                    </select>
-                      </div>
-                      <div class="form-group col-md-6">
-                    <label for="service">Service-Tag</label>
-                    <select name="service" id="service" class="form-control">
-                      <option value="">Escolha a Service-Tag</option>
-                    </select>
-                         </div> 
-                        
+                $servidor = "localhost";
+                $usuario = "root";
+                $senha = "";
+                $dbname = "lab";
+                //Criar a conexao
+                $conn = mysqli_connect($servidor, $usuario, $senha, $dbname); ?>
+                <div class="modal-body">
+                  <div class="container">
+                    <form method="POST">
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="idEquipamento">Nome_Modelo</label>
+                          <select name="idEquipamento" id="idEquipamento" class="form-control">
+                            <option value="">Escolha o Equipamento</option>
+                            <?php
+                            $result_cat_post = "SELECT * FROM equipamento WHERE situacao='Disponivel' ORDER BY id desc";
+                            $resultado_cat_post = mysqli_query($conn, $result_cat_post);
+                            while ($row_cat_post = mysqli_fetch_assoc($resultado_cat_post)) {
+                              echo '<option value="' . $row_cat_post['nome_modelo'] . '">' . $row_cat_post['nome_modelo'] . '</option>';
+                            }
+                            ?>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="service">Service-Tag</label>
+                          <select name="service" id="service" class="form-control">
+                            <option value="">Escolha a Service-Tag</option>
+                          </select>
+                        </div>
+
                         <div class="form-group col-md-6">
                           <label for="inputUsuario">Usuário</label>
                           <input type="text" class="form-control" id="inputUsario" maxlength="30" name="usuario" placeholder="Usuario">
@@ -4739,33 +4737,33 @@ if ($action == 'statusequipamento') {
                         </div>
                         <div class="form-group col-md-6">
                           <label for="inputDataFim">Data Fim</label>
-                          <input type="date" class="form-control" id="inputDataFim"  name="dataFim" placeholder="DataFim">
-                        </div>     
+                          <input type="date" class="form-control" id="inputDataFim" name="dataFim" placeholder="DataFim">
+                        </div>
                       </div>
-                         <div class="modal-footer">
-                          <input type="submit" class="btn btn-success" value="Salvar" />
-                       </div>  
-                  </form>
+                      <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" value="Salvar" />
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
             <!----------------------------------- DEVOLUÇÃO DE EMPRÉSTIMO --------------------------------------->
 
           <?php
         }
         if ($action == 'devolucao') {
 
-      
+
           $servidor = "localhost";
           $usuario = "root";
           $senha = "";
           $dbname = "lab";
           //Criar a conexao
-          $conn = mysqli_connect($servidor, $usuario, $senha, $dbname); 
+          $conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
 
           ?>
-           <div class="modal-dialog" role="document" style="margin-top: 110px;">
+            <div class="modal-dialog" role="document" style="margin-top: 110px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Devolução de Equipamento</h5>
@@ -4779,15 +4777,15 @@ if ($action == 'statusequipamento') {
                         <div class="form-group col-md-6">
                           <label for="devolucao">Service Tag/IMEI</label>
                           <select name="devolucao" id="devolucao" class="form-control">
-                          <option value="">Escolha a service-tag</option>
-                          <?php
+                            <option value="">Escolha a service-tag</option>
+                            <?php
                             $result_cat_post = "SELECT * FROM equipamento WHERE situacao='Indisponivel' ORDER BY id desc";
                             $resultado_cat_post = mysqli_query($conn, $result_cat_post);
-                            while($row_cat_post = mysqli_fetch_assoc($resultado_cat_post) ) {
-                              echo '<option value="'.$row_cat_post['codigo'].'">'.$row_cat_post['codigo'].'</option>';
+                            while ($row_cat_post = mysqli_fetch_assoc($resultado_cat_post)) {
+                              echo '<option value="' . $row_cat_post['codigo'] . '">' . $row_cat_post['codigo'] . '</option>';
                             }
-                          ?>
-                        </select>
+                            ?>
+                          </select>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="campo1">Data de devolução</label>
@@ -4798,7 +4796,7 @@ if ($action == 'statusequipamento') {
                   <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Salvar</button>
                   </div>
-                </form>
+                  </form>
                 </div>
               </div>
             </div>
@@ -4820,48 +4818,104 @@ if ($action == 'statusequipamento') {
                 </div>
                 <div class="modal-body">
                   <div class="container">
-                        <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
-                  <?php
-                  
-                  $conn->conectar();
-                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
+                    <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
+                    <?php
+
+                    $conn->conectar();
+                    $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
                                                alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
                                                material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Hardware'");
-                  $sql->execute();
-                  
-                  echo '<table  class="table table-hover">';
-                  echo '<tr>';
-                  echo '<th>Nome_modelo</th>';
-                  echo '<th>Descrição</th>';
-                  echo '<th>Quantidade</th>';
-                  echo '<th>Localização</th>';
-                  echo '</tr>';
+                    $sql->execute();
 
-                  while ($registro = $sql->fetch()) {
-                  
-                  $id = $registro['id'];
-                  $nome = $registro['nome_modelo'];
-                  $desc = $registro['descricao'];
-                  $qtd = $registro['quantidade'];
-                  $local = $registro['fk_localizacao'];
+                    echo '<table  class="table table-hover">';
+                    echo '<tr>';
+                    echo '<th>Nome_modelo</th>';
+                    echo '<th>Descrição</th>';
+                    echo '<th>Quantidade</th>';
+                    echo '<th>Localização</th>';
+                    echo '</tr>';
 
-                  echo '<tr>';
-                  echo '<td>' . $nome . '</td>';
-                  echo '<td>' . $desc . '</td>';
-                  echo '<td>' . $qtd . '</td>';
-                  echo '<td>' . $local . '</td>';
-                  echo '</tr>';
-                } 
-                echo '</table>';
-                  ?>
+                    while ($registro = $sql->fetch()) {
+
+                      $id = $registro['id'];
+                      $nome = $registro['nome_modelo'];
+                      $desc = $registro['descricao'];
+                      $qtd = $registro['quantidade'];
+                      $local = $registro['fk_localizacao'];
+
+                      echo '<tr>';
+                      echo '<td>' . $nome . '</td>';
+                      echo '<td>' . $desc . '</td>';
+                      echo '<td>' . $qtd . '</td>';
+                      echo '<td>' . $local . '</td>';
+                      echo '</tr>';
+                    }
+                    echo '</table>';
+                    ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!----------------------------------- ESTOQUE IMPRESSÃO --------------------------------------->
+          <?php
+        }
+        if ($action == 'impressao') {
+
+          require_once 'conexao.php';
+          $conn = new Conexao;
+          ?>
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Estoque de Impressão</h5>
+                  <a href="index.php"> <img src="img/cancelar.png" /></a>
+                </div>
+                <div class="modal-body">
+                  <div class="container">
+
+                    <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
+                    <?php
+
+                    $conn->conectar();
+                    $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
+                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
+                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Impressao'");
+                    $sql->execute();
+
+                    echo '<table  class="table table-hover">';
+                    echo '<tr>';
+                    echo '<th>Nome_modelo</th>';
+                    echo '<th>Descrição</th>';
+                    echo '<th>Quantidade</th>';
+                    echo '<th>Localização</th>';
+                    echo '</tr>';
+
+                    while ($registro = $sql->fetch()) {
+
+                      $id = $registro['id'];
+                      $nome = $registro['nome_modelo'];
+                      $desc = $registro['descricao'];
+                      $qtd = $registro['quantidade'];
+                      $local = $registro['fk_localizacao'];
+
+                      echo '<tr>';
+                      echo '<td>' . $nome . '</td>';
+                      echo '<td>' . $desc . '</td>';
+                      echo '<td>' . $qtd . '</td>';
+                      echo '<td>' . $local . '</td>';
+                      echo '</tr>';
+                    }
+                    echo '</table>';
+                    ?>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <!----------------------------------- ESTOQUE IMPRESSÃO --------------------------------------->
+          <!----------------------------------- ESTOQUE TELEFONIA --------------------------------------->
         <?php
       }
-      if ($action == 'impressao') {
+      if ($action == 'telefonia') {
 
         require_once 'conexao.php';
         $conn = new Conexao;
@@ -4869,76 +4923,20 @@ if ($action == 'statusequipamento') {
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Estoque de Impressão</h5>
+                <h5 class="modal-title">Estoque de Telefonia</h5>
                 <a href="index.php"> <img src="img/cancelar.png" /></a>
               </div>
               <div class="modal-body">
                 <div class="container">
-                  
-                    <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
-                  <?php
-                  
-                  $conn->conectar();
-                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
-                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
-                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Impressao'");
-                  $sql->execute();
-                  
-                  echo '<table  class="table table-hover">';
-                  echo '<tr>';
-                  echo '<th>Nome_modelo</th>';
-                  echo '<th>Descrição</th>';
-                  echo '<th>Quantidade</th>';
-                  echo '<th>Localização</th>';
-                  echo '</tr>';
-
-                  while ($registro = $sql->fetch()) {
-                  
-                  $id = $registro['id'];
-                  $nome = $registro['nome_modelo'];
-                  $desc = $registro['descricao'];
-                  $qtd = $registro['quantidade'];
-                  $local = $registro['fk_localizacao'];
-
-                  echo '<tr>';
-                  echo '<td>' . $nome . '</td>';
-                  echo '<td>' . $desc . '</td>';
-                  echo '<td>' . $qtd . '</td>';
-                  echo '<td>' . $local . '</td>';
-                  echo '</tr>';
-                } 
-                echo '</table>';
-                  ?>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!----------------------------------- ESTOQUE TELEFONIA --------------------------------------->
-      <?php
-    }
-    if ($action == 'telefonia') {
-
-      require_once 'conexao.php';
-      $conn = new Conexao;
-?>
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Estoque de Telefonia</h5>
-              <a href="index.php"> <img src="img/cancelar.png" /></a>
-           </div>
-            <div class="modal-body">
-              <div class="container">
                   <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
                   <?php
-                  
+
                   $conn->conectar();
                   $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
                                                alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
                                                material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Telefonia'");
                   $sql->execute();
-                  
+
                   echo '<table  class="table table-hover">';
                   echo '<tr>';
                   echo '<th>Nome_modelo</th>';
@@ -4948,7 +4946,63 @@ if ($action == 'statusequipamento') {
                   echo '</tr>';
 
                   while ($registro = $sql->fetch()) {
-                  
+
+                    $id = $registro['id'];
+                    $nome = $registro['nome_modelo'];
+                    $desc = $registro['descricao'];
+                    $qtd = $registro['quantidade'];
+                    $local = $registro['fk_localizacao'];
+
+                    echo '<tr>';
+                    echo '<td>' . $nome . '</td>';
+                    echo '<td>' . $desc . '</td>';
+                    echo '<td>' . $qtd . '</td>';
+                    echo '<td>' . $local . '</td>';
+                    echo '</tr>';
+                  }
+                  echo '</table>';
+                  ?>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!----------------------------------- ESTOQUE GERAL --------------------------------------->
+      <?php
+    }
+    if ($action == 'geral') {
+
+      require_once 'conexao.php';
+      $conn = new Conexao;
+      ?>
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Estoque Geral</h5>
+              <a href="index.php"> <img src="img/cancelar.png" /></a>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+
+                <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materiais cadastrados -->
+                <?php
+
+                $conn->conectar();
+                $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
+                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
+                                               material.nome_modelo = alocacao.fk_material");
+                $sql->execute();
+
+                echo '<table  class="table table-hover">';
+                echo '<tr>';
+                echo '<th>Nome_modelo</th>';
+                echo '<th>Descrição</th>';
+                echo '<th>Quantidade</th>';
+                echo '<th>Localização</th>';
+                echo '</tr>';
+
+                while ($registro = $sql->fetch()) {
+
                   $id = $registro['id'];
                   $nome = $registro['nome_modelo'];
                   $desc = $registro['descricao'];
@@ -4961,186 +5015,152 @@ if ($action == 'statusequipamento') {
                   echo '<td>' . $qtd . '</td>';
                   echo '<td>' . $local . '</td>';
                   echo '</tr>';
-                } 
+                }
                 echo '</table>';
-                  ?>
+                ?>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!----------------------------------- ESTOQUE GERAL --------------------------------------->
     <?php
   }
-  if ($action == 'geral') {
+  //<!----------------------------------- EDITAR MATERIAL --------------------------------------->
 
+
+  if ($action == 'editar') {
+
+    require_once 'classes/material.php';
     require_once 'conexao.php';
+
     $conn = new Conexao;
-?>
-      <div class="modal-dialog modal-lg" role="document">
+    $material = new material;
+
+    if (isset($_POST['nome'])) {
+      $nome = $_POST['nome'];
+      $descri = $_POST['descri'];
+      $tipo = $_POST['tipo'];
+      $id = $_POST['id'];
+      //verificar se os campos estão todos preenchidos
+      if (!empty($nome) && !empty($tipo)) {
+        $conn->conectar();
+        if ($conn->msgErro == "") {
+          $material->alterarMaterial($id, $nome, $descri, $tipo);
+          ?>
+            <div class="alert alert-success" role="alert">
+              Material alterado com sucesso.
+            </div>
+          <?php
+        } else {
+          ?>
+            <div class="msn-erro">
+              <?php
+              echo "erro: " . $conn->msgErro;
+              ?>
+            </div>
+          <?php
+        }
+      } else {
+        ?>
+          <div class="alert alert-danger" role="alert">
+            Preencha todos os campos.
+          </div>
+        <?php
+      }
+    }
+
+    ?>
+      <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Estoque Geral</h5>
+            <h5 class="modal-title">Editar Materiais</h5>
             <a href="index.php"> <img src="img/cancelar.png" /></a>
           </div>
           <div class="modal-body">
             <div class="container">
-
-                <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materiais cadastrados -->    
+              <form method="POST">
+                <!-- Faz uma conexão com o banco de dados, retorna uma lista com materiais com tipo igual a hardware -->
                 <?php
-                  
-                  $conn->conectar();
-                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
-                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
-                                               material.nome_modelo = alocacao.fk_material");
-                  $sql->execute();
-                  
-                  echo '<table  class="table table-hover">';
-                  echo '<tr>';
-                  echo '<th>Nome_modelo</th>';
-                  echo '<th>Descrição</th>';
-                  echo '<th>Quantidade</th>';
-                  echo '<th>Localização</th>';
-                  echo '</tr>';
 
-                  while ($registro = $sql->fetch()) {
-                  
-                  $id = $registro['id'];
-                  $nome = $registro['nome_modelo'];
-                  $desc = $registro['descricao'];
-                  $qtd = $registro['quantidade'];
-                  $local = $registro['fk_localizacao'];
+                $conn->conectar();
 
-                  echo '<tr>';
-                  echo '<td>' . $nome . '</td>';
-                  echo '<td>' . $desc . '</td>';
-                  echo '<td>' . $qtd . '</td>';
-                  echo '<td>' . $local . '</td>';
-                  echo '</tr>';
-                } 
-                echo '</table>';
+                $sql = $pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material ORDER BY id DESC;");
+                $sql->execute();
                 ?>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <?php
-}
-//<!----------------------------------- EDITAR MATERIAL --------------------------------------->
-
-
-if ($action == 'editar') {
-
-  require_once 'classes/material.php';
-  require_once 'conexao.php';
-
-  $conn = new Conexao;
-  $material = new material;
-
-  if (isset($_POST['nome'])) {
-    $nome = $_POST['nome'];
-    $descri = $_POST['descri'];
-    $tipo = $_POST['tipo'];
-    $id = $_POST['id'];
-    //verificar se os campos estão todos preenchidos
-    if (!empty($nome) && !empty($tipo)) {
-      $conn->conectar();
-      if ($conn->msgErro == "") {
-        $material->alterarMaterial($id, $nome, $descri, $tipo);
-        ?>
-          <div class="alert alert-success" role="alert">
-            Material alterado com sucesso.
-          </div>
-        <?php
-      } else {
-        ?>
-          <div class="msn-erro">
-            <?php
-            echo "erro: " . $conn->msgErro;
-            ?>
-          </div>
-        <?php
-      }
-    } else {
-      ?>
-        <div class="alert alert-danger" role="alert">
-          Preencha todos os campos.
-        </div>
-      <?php
-    }
-  }
-  ?>
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Editar Materiais</h5>
-          <a href="index.php"> <img src="img/cancelar.png" /></a>
-        </div>
-        <div class="modal-body">
-          <div class="container">
-            <form method="POST">
-              <!-- Faz uma conexão com o banco de dados, retorna uma lista com materiais com tipo igual a hardware -->
-              <?php
-              
-              $conn->conectar();
-
-              $sql =$pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material ORDER BY id DESC;");
-              $sql->execute();
-              ?>
-              <div class="row">
-                <div class="col-md-12">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Nome do material</th>
-                        <th>Descrição</th>
-                        <th>Tipo</th>
-                        <th>Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php while ($rows = $sql->fetch()) { ?>
+                <div class="row">
+                  <div class="col-md-12">
+                    <table class="table">
+                      <thead>
                         <tr>
-                          <td><?php echo $rows['nome_modelo']; ?></td>
-                          <td><?php echo $rows['descricao']; ?></td>
-                          <td><?php echo $rows['fk_tipo']; ?></td>
-                          <td>
-                            <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#exampleModal" 
-                            data-whatever="<?php echo $rows['id']; ?>" data-whatevernome="<?php echo $rows['nome_modelo']; ?>" 
-                            data-whateverdescri="<?php echo $rows['descricao']; ?>" data-whatevertipo="<?php echo $rows['fk_tipo'];
-                            ?>">Editar</button>
-
-                            <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#exampleModalExcluir">Excluir</button>
-                      
-                           </td>
+                          <th>Nome do material</th>
+                          <th>Descrição</th>
+                          <th>Tipo</th>
+                          <th>Ações</th>
                         </tr>
-                      <?php } ?>
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        <?php while ($rows = $sql->fetch()) { ?>
+                          <tr>
+                            <td><?php echo $rows['nome_modelo']; ?></td>
+                            <td><?php echo $rows['descricao']; ?></td>
+                            <td><?php echo $rows['fk_tipo']; ?></td>
+
+                            <td>
+                              <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#exampleModal" 
+                              data-whatever="<?php echo $rows['id']; ?>" data-whatevernome="<?php echo $rows['nome_modelo']; ?>" 
+                              data-whateverdescri="<?php echo $rows['descricao']; ?>" data-whatevertipo="<?php echo $rows['fk_tipo'];                                                                                                                                                                                                                                                                                    ?>">Editar</button>
+
+                              <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" 
+                              data-target="#myModal<?php echo $rows['id']; ?>">Excluir</button>
+
+                            </td>
+                          </tr>
+                          <!-- Inicio Modal de teste-->
+                          <div class="modal fade" id="myModal<?php echo $rows['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                <h4> Excluir Materiais </h4>
+                                <a href="index.php?pagina=home&action=editar"><img src="img/cancelar.png" /></a>                        
+                                </div>
+                                <div class="modal-body">
+                                  <h5>Tem certeza que deseja excluir o material "<?php echo $rows['nome_modelo']; ?>"</h5>
+                                </div>
+                                <div class="modal-footer">
+                                <a href="excluirMaterial.php?id=<?= $rows['id'] ?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Excluir</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
             </div>
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4>Editar material</h4>
-                  <a href="index.php?pagina=home&action=editar" ><img src="img/cancelar.png" /></a>
-                </div>
-                <div class="modal-body">
-                  <form method="POST">
-                    <div class="form-group">
-                      <label for="recipient-name" class="control-label">Nome_modelo:</label>
-                      <input name="nome" type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                      <label for="message-text" class="control-label">Descrição:</label>
-                      <input name="descri" class="form-control" id="descri">
-                    </div>
-                    <div class="form-group">
-                      <label for="inputModelo" class="control-label" >Tipo:</label>
-                      <select id="inputModelo" class="form-control" name="tipo">
+
+
+            <!-- Modal Editar Materiais -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4>Editar material</h4>
+                    <a href="index.php?pagina=home&action=editar"><img src="img/cancelar.png" /></a>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST">
+                      <div class="form-group">
+                        <label for="recipient-name" class="control-label">Nome_modelo:</label>
+                        <input name="nome" type="text" class="form-control" id="recipient-name">
+                      </div>
+                      <div class="form-group">
+                        <label for="message-text" class="control-label">Descrição:</label>
+                        <input name="descri" class="form-control" id="descri">
+                      </div>
+                      <div class="form-group">
+                        <label for="inputModelo" class="control-label">Tipo:</label>
+                        <select id="inputModelo" class="form-control" name="tipo">
                           <option selected></option>
                           <!-- Faz uma conexão com o banco de dados, retorna uma consulta com o tipo de material -->
 
@@ -5154,139 +5174,102 @@ if ($action == 'editar') {
                               ?>
                               <option value="<?php echo "$tipo"; ?>"> <?php echo "$tipo"; ?> </option>
                             <?php
-                          }?>
+                          } ?>
                         </select>
                       </div>
-                    <input name="id" type="hidden" class="form-control" id="id" value="<?php echo $rows['id']; ?>">
-                    <button type="submit" class="btn btn-success">Salvar alterações</button>
-                  </form>
+                      <input name="id" type="hidden" class="form-control" id="id" value="<?php echo $rows['id']; ?>">
+                      <button type="submit" class="btn btn-success">Salvar alterações</button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-       
 
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-          <script src="js/bootstrap.min.js"></script>
-          <script type="text/javascript">
-            $('#exampleModal').on('show.bs.modal', function(event) {
-              var button = $(event.relatedTarget) // Button that triggered the modal
-              var recipient = button.data('whatever') // Extract info from data-* attributes
-              var recipientnome = button.data('whatevernome')
-              var recipientdescri = button.data('whateverdescri')
-              var recipienttipo = button.data('whatevertipo')
 
-              var modal = $(this)
-              modal.find('#id').val(recipient)
-              modal.find('#recipient-name').val(recipientnome)
-              modal.find('#descri').val(recipientdescri)
-              modal.find('#tipo').val(recipienttipo)
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script type="text/javascript">
+              $('#exampleModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('whatever') // Extract info from data-* attributes
+                var recipientnome = button.data('whatevernome')
+                var recipientdescri = button.data('whateverdescri')
+                var recipienttipo = button.data('whatevertipo')
 
-            })
-          </script>
+                var modal = $(this)
+                modal.find('#id').val(recipient)
+                modal.find('#recipient-name').val(recipientnome)
+                modal.find('#descri').val(recipientdescri)
+                modal.find('#tipo').val(recipienttipo)
 
-         <div class="modal fade" id="exampleModalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
+              })
+            </script>
+   <?php    
+        }
+
+        //<!----------------------------------- Lista de empréstimo --------------------------------------->
+        if ($action == 'listaEmprestimo') {
+
+          require_once 'conexao.php';
+          $conn = new Conexao;
+
+          ?>
+            <div class="modal-dialog modal-xl" role="document">
               <div class="modal-content">
-              <div class="modal-header">
-                  <a href="index.php?pagina=home&action=editar" ><img src="img/cancelar.png" style="margin-left:440px;"/></a>
+                <div class="modal-header">
+                  <h5 class="modal-title">Lista de Empréstimos</h5>
+                  <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a>
+                  </a>
                 </div>
                 <div class="modal-body">
-                  <form method="POST">
-                    <div class="form-group">
-                      <label class="control-label"><h4>Você tem certeza que deseja excluir este material?</h4></label>
-                      <input name="id" type="hidden" class="form-control" id="id" value="<?php echo $rows['id']; ?>">
-                    </div>
-                    <a href="excluirMaterial.php?id=<?=$rows['id']?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Excluir</a>
-                    <button type="button" class="btn btn-success">Não, voltar </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-       
+                  <div class="container">
+                    <form method="POST">
+                      <div class="row">
+                        <div class="form-group col-md-12">
+                          <!-- Faz uma conexão com o banco de dados, retorna uma lista de equipamentos e seus status -->
+                          <div>
+                            <?php
 
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-          <script src="js/bootstrap.min.js"></script>
-          <script type="text/javascript">
-            $('#exampleModalExcluir').on('show.bs.modal', function(event) {
-              var button = $(event.relatedTarget) // Button that triggered the modal
-              var recipient = button.data('whatever') // Extract info from data-* attributes
+                            $conn->conectar();
+                            $sql = $pdo->prepare("SELECT * FROM emprestimo ORDER BY id desc");
+                            $sql->execute();
 
-              var modal = $(this)
-              modal.find('#id').val(recipient)
+                            echo '<table  class="table table-hover">';
+                            echo '<tr>';
+                            echo '<td><b>Nome_modelo</td>';
+                            echo '<td><b>Service_tag/IMEI</td>';
+                            echo '<td><b>Usuário</td>';
+                            echo '<td><b>Email</td>';
+                            echo '<td><b>Data de início</td>';
+                            echo '<td><b>Data do fim</td>';
 
-            })
-          </script>
+                            echo '</tr>';
 
-  
+                            while ($registro = $sql->fetch()) {
 
-    <?php 
-    } 
+                              $nome = $registro['nome_modelo'];
+                              $codigo = $registro['fk_codigo'];
+                              $usuario = $registro['usuario'];
+                              $email = $registro['email'];
+                              $dataInicio = $registro['data_inicio'];
+                              $dataFim = $registro['data_fim'];
 
-             //<!----------------------------------- Lista de empréstimo --------------------------------------->
-             if ($action == 'listaEmprestimo') {
-
-              require_once 'conexao.php';
-              $conn = new Conexao;
-            
-              ?>
-                <div class="modal-dialog modal-xl" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Lista de Empréstimos</h5>
-                      <a href="?" class="close" data-dismiss="modal"> <img src="img/cancelar.png" /></a> 
-                      </a>
-                    </div>
-                    <div class="modal-body">
-                      <div class="container">
-                        <form method="POST">
-                          <div class="row">
-                            <div class="form-group col-md-12">
-                              <!-- Faz uma conexão com o banco de dados, retorna uma lista de equipamentos e seus status -->
-                              <div>
-                                <?php
-            
-                                $conn->conectar();
-                                $sql = $pdo->prepare("SELECT * FROM emprestimo ORDER BY id desc");
-                                $sql->execute();
-            
-                                echo '<table  class="table table-hover">';
-                                echo '<tr>';
-                                echo '<td><b>Nome_modelo</td>';
-                                echo '<td><b>Service_tag/IMEI</td>';
-                                echo '<td><b>Usuário</td>';
-                                echo '<td><b>Email</td>';
-                                echo '<td><b>Data de início</td>';
-                                echo '<td><b>Data do fim</td>';
-
-                                echo '</tr>';
-            
-                                while ($registro = $sql->fetch()) {
-            
-                                  $nome = $registro['nome_modelo'];
-                                  $codigo = $registro['fk_codigo'];
-                                  $usuario = $registro['usuario'];
-                                  $email = $registro['email'];
-                                  $dataInicio = $registro['data_inicio'];
-                                  $dataFim = $registro['data_fim'];
-
-                                  echo '<tr>';
-                                  echo '<td>' . $nome . '</td>';
-                                  echo '<td>' . $codigo . '</td>';
-                                  echo '<td>' . $usuario . '</td>';
-                                  echo '<td>' . $email . '</td>';
-                                  echo '<td>' . $dataInicio . '</td>';
-                                  echo '<td>' . $dataFim . '</td>';
-                                  echo '</tr>';
-                                }
-                                echo '</table>';
-                                ?>
-                              </div>
-                            </div>
+                              echo '<tr>';
+                              echo '<td>' . $nome . '</td>';
+                              echo '<td>' . $codigo . '</td>';
+                              echo '<td>' . $usuario . '</td>';
+                              echo '<td>' . $email . '</td>';
+                              echo '<td>' . $dataInicio . '</td>';
+                              echo '<td>' . $dataFim . '</td>';
+                              echo '</tr>';
+                            }
+                            echo '</table>';
+                            ?>
                           </div>
+                        </div>
                       </div>
-                    </div>
-            
-                  <?php
-                }
+                  </div>
+                </div>
+
+              <?php
+            }

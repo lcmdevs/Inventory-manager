@@ -2,7 +2,7 @@
 	 require_once 'conexao.php';
      $conn = new Conexao;
      $conn->conectar();
-    
+
     global $pdo;
 
     $id = $_GET['id'];
@@ -19,5 +19,6 @@
     $deletar = $pdo->prepare("DELETE FROM material WHERE id=:id");
 	$deletar->bindValue(":id",$id);
     $deletar->execute();
- 
-   	header('location:index.php?pagina=home&action=editar');
+    
+    header('location:index.php?pagina=home&action=editar');
+

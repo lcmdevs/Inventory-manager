@@ -5128,6 +5128,7 @@ if ($action == 'statusequipamento') {
                                 </div>
                                 <div class="modal-footer">
                                 <a href="excluirMaterial.php?id=<?= $rows['id'] ?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Excluir</a>
+                                <a href="index.php?pagina=home&action=editar" class="btn btn-success"> <button class> </button></a>
                                 </div>
                               </div>
                             </div>

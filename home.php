@@ -4822,32 +4822,25 @@ if ($action == 'statusequipamento') {
                     <?php
 
                     $conn->conectar();
-                    $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
-                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
-                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Hardware'");
+                    $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo INNER JOIN material mat 
+                                        on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Hardware' GROUP BY fk_material");
                     $sql->execute();
 
                     echo '<table  class="table table-hover">';
                     echo '<tr>';
                     echo '<th>Nome_modelo</th>';
-                    echo '<th>Descrição</th>';
                     echo '<th>Quantidade</th>';
-                    echo '<th>Localização</th>';
                     echo '</tr>';
 
                     while ($registro = $sql->fetch()) {
 
-                      $id = $registro['id'];
-                      $nome = $registro['nome_modelo'];
-                      $desc = $registro['descricao'];
-                      $qtd = $registro['quantidade'];
-                      $local = $registro['fk_localizacao'];
+                      $nome = $registro['fk_material'];
+                      $qtd = $registro['sum(quantidade)'];
 
                       echo '<tr>';
                       echo '<td>' . $nome . '</td>';
-                      echo '<td>' . $desc . '</td>';
                       echo '<td>' . $qtd . '</td>';
-                      echo '<td>' . $local . '</td>';
+                     
                       echo '</tr>';
                     }
                     echo '</table>';
@@ -4877,32 +4870,23 @@ if ($action == 'statusequipamento') {
                     <?php
 
                     $conn->conectar();
-                    $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
-                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
-                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Impressao'");
+                    $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo INNER JOIN material mat on 
+                    mat.nome_modelo = alo.fk_material WHERE fk_tipo='Impressao' GROUP BY fk_material");
                     $sql->execute();
 
                     echo '<table  class="table table-hover">';
                     echo '<tr>';
                     echo '<th>Nome_modelo</th>';
-                    echo '<th>Descrição</th>';
                     echo '<th>Quantidade</th>';
-                    echo '<th>Localização</th>';
                     echo '</tr>';
 
                     while ($registro = $sql->fetch()) {
-
-                      $id = $registro['id'];
-                      $nome = $registro['nome_modelo'];
-                      $desc = $registro['descricao'];
-                      $qtd = $registro['quantidade'];
-                      $local = $registro['fk_localizacao'];
+                      $nome = $registro['fk_material'];
+                      $qtd = $registro['sum(quantidade)'];
 
                       echo '<tr>';
                       echo '<td>' . $nome . '</td>';
-                      echo '<td>' . $desc . '</td>';
                       echo '<td>' . $qtd . '</td>';
-                      echo '<td>' . $local . '</td>';
                       echo '</tr>';
                     }
                     echo '</table>';
@@ -4932,32 +4916,24 @@ if ($action == 'statusequipamento') {
                   <?php
 
                   $conn->conectar();
-                  $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
-                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
-                                               material.nome_modelo = alocacao.fk_material WHERE fk_tipo='Telefonia'");
+                  $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+                  INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Telefonia' GROUP BY fk_material");
                   $sql->execute();
 
                   echo '<table  class="table table-hover">';
                   echo '<tr>';
                   echo '<th>Nome_modelo</th>';
-                  echo '<th>Descrição</th>';
                   echo '<th>Quantidade</th>';
-                  echo '<th>Localização</th>';
                   echo '</tr>';
 
                   while ($registro = $sql->fetch()) {
 
-                    $id = $registro['id'];
-                    $nome = $registro['nome_modelo'];
-                    $desc = $registro['descricao'];
-                    $qtd = $registro['quantidade'];
-                    $local = $registro['fk_localizacao'];
+                    $nome = $registro['fk_material'];
+                    $qtd = $registro['sum(quantidade)'];
 
                     echo '<tr>';
                     echo '<td>' . $nome . '</td>';
-                    echo '<td>' . $desc . '</td>';
                     echo '<td>' . $qtd . '</td>';
-                    echo '<td>' . $local . '</td>';
                     echo '</tr>';
                   }
                   echo '</table>';
@@ -4988,32 +4964,23 @@ if ($action == 'statusequipamento') {
                 <?php
 
                 $conn->conectar();
-                $sql = $pdo->prepare("SELECT material.id, material.nome_modelo, material.descricao, alocacao.quantidade, 
-                                               alocacao.fk_localizacao FROM alocacao INNER JOIN material ON 
-                                               material.nome_modelo = alocacao.fk_material");
+                $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao GROUP BY fk_material");
                 $sql->execute();
 
                 echo '<table  class="table table-hover">';
                 echo '<tr>';
                 echo '<th>Nome_modelo</th>';
-                echo '<th>Descrição</th>';
                 echo '<th>Quantidade</th>';
-                echo '<th>Localização</th>';
                 echo '</tr>';
 
                 while ($registro = $sql->fetch()) {
 
-                  $id = $registro['id'];
-                  $nome = $registro['nome_modelo'];
-                  $desc = $registro['descricao'];
-                  $qtd = $registro['quantidade'];
-                  $local = $registro['fk_localizacao'];
+                  $nome = $registro['fk_material'];
+                  $qtd = $registro['sum(quantidade)'];
 
                   echo '<tr>';
                   echo '<td>' . $nome . '</td>';
-                  echo '<td>' . $desc . '</td>';
                   echo '<td>' . $qtd . '</td>';
-                  echo '<td>' . $local . '</td>';
                   echo '</tr>';
                 }
                 echo '</table>';
@@ -5071,6 +5038,7 @@ if ($action == 'statusequipamento') {
 
     if(isset($_SESSION['msg'])){
       echo $_SESSION['msg'];
+      unset($_SESSION['msg']);
     }
     ?>
     
@@ -5095,6 +5063,25 @@ if ($action == 'statusequipamento') {
                   <div class="col-md-12">
                     <table class="table">
                       <thead>
+                      <form class="form-row">
+                      <div class="row">
+                        <div class="col-3">
+                          <input type="text" class="form-control" id="material" placeholder="Pesquisar por nome">
+                        </div> 
+                        <div class="col-3">
+                        <select class="form-control" id="tipo" name="tipo">
+                          <option selected>Selecione o tipo</option>
+                          <option value="Hardware">Hardware</option>
+                          <option value="Impressao">Impressão</option>
+                          <option value="Telefonia">Telefonia</option>
+                       </select>
+                        </div>
+                        <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                       </div>
+                      </div>
+                      <br>
+                      </form>
                         <tr>
                           <th>Nome do material</th>
                           <th>Descrição</th>

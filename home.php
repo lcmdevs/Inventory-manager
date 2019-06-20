@@ -4809,6 +4809,33 @@ if ($action == 'statusequipamento') {
           require_once 'conexao.php';
           $conn = new Conexao;
 
+          $conn->conectar();
+          $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo 
+          INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Hardware' GROUP BY fk_material");
+          $sql->execute();
+
+              //Filtro nome 
+              if(isset($_POST['material'])){
+                $material = $_POST['material'];
+                        
+                 if(!empty($material)){
+                   $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+                   INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Hardware' 
+                   AND fk_material = :material GROUP BY fk_material");
+                   $sql->bindValue(":material",$material);
+                   $sql->execute();
+         
+                 }
+       
+                   else if(empty($material)){
+                     $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+                     INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Hardware' GROUP BY fk_material");
+                     $sql->execute();
+             
+                   }
+                  
+               }
+
           ?>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -4818,14 +4845,21 @@ if ($action == 'statusequipamento') {
                 </div>
                 <div class="modal-body">
                   <div class="container">
+                  <form class="form-row" method="POST">
+                      <div class="row">
+                        <div class="col-9">
+                          <input type="text" class="form-control" name="material" id="material" placeholder="Nome/Modelo">
+                        </div> 
+                        <div class="col-3">
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                       </div>
+                        <input type="hidden" value="1" id="filtro" name="filtro">
+                      </div>
+                      <br>
+                      </form>
                     <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
                     <?php
-
-                    $conn->conectar();
-                    $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo INNER JOIN material mat 
-                                        on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Hardware' GROUP BY fk_material");
-                    $sql->execute();
-
+                    echo '<br>';
                     echo '<table  class="table table-hover">';
                     echo '<tr>';
                     echo '<th>Nome_modelo</th>';
@@ -4856,6 +4890,34 @@ if ($action == 'statusequipamento') {
 
           require_once 'conexao.php';
           $conn = new Conexao;
+
+          $conn->conectar();
+
+          $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo INNER JOIN material mat on 
+          mat.nome_modelo = alo.fk_material WHERE fk_tipo='Impressao' GROUP BY fk_material");
+          $sql->execute();
+    
+          //Filtro nome 
+          if(isset($_POST['material'])){
+             $material = $_POST['material'];
+                     
+              if(!empty($material)){
+                $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+                INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Impressao' 
+                AND fk_material = :material GROUP BY fk_material");
+                $sql->bindValue(":material",$material);
+                $sql->execute();
+      
+              }
+    
+                else if(empty($material)){
+                  $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+                  INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Impressao' GROUP BY fk_material");
+                  $sql->execute();
+          
+                }
+               
+            }
           ?>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -4865,15 +4927,22 @@ if ($action == 'statusequipamento') {
                 </div>
                 <div class="modal-body">
                   <div class="container">
+                  <form class="form-row" method="POST">
+                      <div class="row">
+                        <div class="col-9">
+                          <input type="text" class="form-control" name="material" id="material" placeholder="Nome/Modelo">
+                        </div> 
+                        <div class="col-3">
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                       </div>
+                        <input type="hidden" value="1" id="filtro" name="filtro">
+                      </div>
+                      <br>
+                      </form>
 
                     <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
                     <?php
-
-                    $conn->conectar();
-                    $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo INNER JOIN material mat on 
-                    mat.nome_modelo = alo.fk_material WHERE fk_tipo='Impressao' GROUP BY fk_material");
-                    $sql->execute();
-
+                    echo '<br>';
                     echo '<table  class="table table-hover">';
                     echo '<tr>';
                     echo '<th>Nome_modelo</th>';
@@ -4903,6 +4972,34 @@ if ($action == 'statusequipamento') {
 
         require_once 'conexao.php';
         $conn = new Conexao;
+
+        $conn->conectar();
+
+        $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+        INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Telefonia' GROUP BY fk_material");
+        $sql->execute();
+  
+        //Filtro nome 
+        if(isset($_POST['material'])){
+           $material = $_POST['material'];
+                   
+            if(!empty($material)){
+              $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+              INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Telefonia' 
+              AND fk_material = :material GROUP BY fk_material");
+              $sql->bindValue(":material",$material);
+              $sql->execute();
+    
+            }
+  
+              else if(empty($material)){
+                $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
+                INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Telefonia' GROUP BY fk_material");
+                $sql->execute();
+        
+              }
+             
+          }
         ?>
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -4912,14 +5009,21 @@ if ($action == 'statusequipamento') {
               </div>
               <div class="modal-body">
                 <div class="container">
+                <form class="form-row" method="POST">
+                      <div class="row">
+                        <div class="col-9">
+                          <input type="text" class="form-control" name="material" id="material" placeholder="Nome/Modelo">
+                        </div> 
+                        <div class="col-3">
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                       </div>
+                        <input type="hidden" value="1" id="filtro" name="filtro">
+                      </div>
+                      <br>
+                      </form>
                   <!-- Faz uma conexão com o banco de dados, retorna uma lista com todos os materias com tipo telefonia -->
                   <?php
-
-                  $conn->conectar();
-                  $sql = $pdo->prepare("SELECT fk_material, sum(quantidade) FROM alocacao alo
-                  INNER JOIN material mat on mat.nome_modelo = alo.fk_material WHERE fk_tipo='Telefonia' GROUP BY fk_material");
-                  $sql->execute();
-
+                  echo '<br>';
                   echo '<table  class="table table-hover">';
                   echo '<tr>';
                   echo '<th>Nome_modelo</th>';
@@ -4974,8 +5078,7 @@ if ($action == 'statusequipamento') {
             }
            
         }
-     
-
+    
       ?>
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
@@ -4991,7 +5094,7 @@ if ($action == 'statusequipamento') {
                           <input type="text" class="form-control" name="material" id="material" placeholder="Nome/Modelo">
                         </div> 
                         <div class="col-3">
-                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        <button type="submit" class="btn btn-success">Buscar</button>
                        </div>
                         <input type="hidden" value="1" id="filtro" name="filtro">
                       </div>
@@ -5153,7 +5256,7 @@ if ($action == 'statusequipamento') {
                         </div>
                         <input type="hidden" value="1" id="filtro" name="filtro">
                         <div class="col-2">
-                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        <button type="submit" class="btn btn-success">Buscar</button>
                        </div>
                       </div>
                       <br>

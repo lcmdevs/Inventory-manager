@@ -5040,8 +5040,58 @@ if ($action == 'statusequipamento') {
       echo $_SESSION['msg'];
       unset($_SESSION['msg']);
     }
+
+
+                $conn->conectar();
+             
+                //Filtro nome e tipo selecionados
+                if(isset($_POST['material']) || isset($_POST['tipo']) || isset($_POST['filtro'])){
+                $material = $_POST['material'];
+                $tipo = $_POST['tipo'];
+                $filtro = $_POST['filtro'];
+                
+                    if(!empty($material) && !empty($tipo)){
+           
+                    $sql = $pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE 
+                    nome_modelo = :material AND fk_tipo = :tipo;");
+
+                    $sql->bindValue(":material",$material);
+                    $sql->bindValue(":tipo",$tipo);
+                    $sql->execute();
+                    }
+
+                    else if(empty($material) && !empty($tipo)){
+                  
+                    $sql = $pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE fk_tipo = :tipo;");
+                    $sql->bindValue(":tipo",$tipo);
+                    $sql->execute();
+                    }
+                    
+                        else if(!empty($material) && empty($tipo)){
+                      
+                        $sql = $pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material WHERE nome_modelo = :material;");
+                        $sql->bindValue(":material",$material);
+                        $sql->execute();
+                        
+                        } 
+                        else if(empty($material) && empty($tipo) && !empty($filtro)){
+                          $sql = $pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material ORDER BY id DESC;");
+                          $sql->execute();
+                        
+                        }
+               
+
+                }
+                // Sem Filtros
+
+               if(!isset($_POST['material']) && !isset($_POST['tipo'])){
+                $sql = $pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material ORDER BY id DESC;");
+                $sql->execute();
+              
+              }
+
+              
     ?>
-    
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -5049,33 +5099,25 @@ if ($action == 'statusequipamento') {
             <a href="index.php"> <img src="img/cancelar.png" /></a>
           </div>
           <div class="modal-body">
-            <div class="container">
-              <form method="POST">
-                <!-- Faz uma conexão com o banco de dados, retorna uma lista com materiais com tipo igual a hardware -->
-                <?php
-
-                $conn->conectar();
-
-                $sql = $pdo->prepare("SELECT id, nome_modelo, descricao, fk_tipo FROM material ORDER BY id DESC;");
-                $sql->execute();
-                ?>
+            <div class="container">              
                 <div class="row">
                   <div class="col-md-12">
                     <table class="table">
                       <thead>
-                      <form class="form-row">
+                      <form class="form-row" method="POST">
                       <div class="row">
                         <div class="col-3">
-                          <input type="text" class="form-control" id="material" placeholder="Pesquisar por nome">
+                          <input type="text" class="form-control" name="material" id="material" placeholder="Pesquisar por nome">
                         </div> 
                         <div class="col-3">
                         <select class="form-control" id="tipo" name="tipo">
-                          <option selected>Selecione o tipo</option>
+                          <option value="" selected>Selecione o tipo</option>
                           <option value="Hardware">Hardware</option>
                           <option value="Impressao">Impressão</option>
                           <option value="Telefonia">Telefonia</option>
                        </select>
                         </div>
+                        <input type="hidden" value="1" id="filtro" name="filtro">
                         <div class="col-2">
                         <button type="submit" class="btn btn-primary">Buscar</button>
                        </div>

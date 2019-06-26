@@ -4634,12 +4634,15 @@ if ($action == 'statusequipamento') {
         $email = $_POST['email'];
         $dataInicio = $_POST['dataInicio'];
         $dataFim = $_POST['dataFim'];
-
+        $dataAtual =  date('Y-m-d');
+        
         if (
           !empty($equipamento) && !empty($service) && !empty($usuario) && !empty($email)
           && !empty($dataInicio) && !empty($dataFim)
         ) {
           $conn->conectar();
+          
+          if(strtotime($dataAtual) < strtotime($dataFim)){
 
           if (strtotime($dataInicio) < strtotime($dataFim)) {
 
@@ -4674,7 +4677,15 @@ if ($action == 'statusequipamento') {
               </div>
             <?php
           }
-        } else {
+        }else {
+          ?>
+            <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+              Data do fim tem que ser maior que a data de Atual.
+            </div>
+          <?php
+        }
+      }
+         else {
           ?>
             <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
               Preencha todos os campos.
@@ -4754,6 +4765,53 @@ if ($action == 'statusequipamento') {
         }
         if ($action == 'devolucao') {
 
+          require_once 'classes/equipamento.php';
+          require_once 'conexao.php';
+    
+          $conn = new Conexao;
+          $equi = new Equipamento;
+    
+          if (isset($_POST['service'])) {
+            $service = $_POST['service'];
+            $data = $_POST['data'];
+            
+    
+            if (!empty($service) && !empty($data)) {
+              $conn->conectar();
+    
+                if ($conn->msgErro == "") {
+    
+                  if ($equi->realizarDevolucao($service, $data)) {
+                    ?>
+                      <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+                        Devolução realizada.
+                      </div>
+                    <?php
+                  } else {
+                    ?>
+                      <div class="alert alert-success" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+                        Não foi posssivel realizar a Devolução.
+                      </div>
+                    <?php
+                  }
+                } else {
+                  ?>
+                    <div class="msn-erro" style="margin-top: 10px; margin-bottom:-60px;">
+                      <?php
+                      echo "erro: " . $conn->msgErro;
+                      ?>
+                    </div>
+                  <?php
+                }
+
+            } else {
+              ?>
+                <div class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom:-60px;">
+                  Preencha todos os campos.
+                </div>
+              <?php
+            }
+          }
 
           $servidor = "localhost";
           $usuario = "root";
@@ -4763,6 +4821,8 @@ if ($action == 'statusequipamento') {
           $conn = mysqli_connect($servidor, $usuario, $senha, $dbname);
 
           ?>
+
+
             <div class="modal-dialog" role="document" style="margin-top: 110px;">
               <div class="modal-content">
                 <div class="modal-header">
@@ -4776,7 +4836,7 @@ if ($action == 'statusequipamento') {
                       <div class="row">
                         <div class="form-group col-md-6">
                           <label for="devolucao">Service Tag/IMEI</label>
-                          <select name="devolucao" id="devolucao" class="form-control">
+                          <select name="service" id="service" class="form-control">
                             <option value="">Escolha a service-tag</option>
                             <?php
                             $result_cat_post = "SELECT * FROM equipamento WHERE situacao='Indisponivel' ORDER BY id desc";
@@ -4789,7 +4849,7 @@ if ($action == 'statusequipamento') {
                         </div>
                         <div class="form-group col-md-6">
                           <label for="campo1">Data de devolução</label>
-                          <input type="Date" class="form-control" onkeyup="num(this);" maxlength="15" name="codigo">
+                          <input type="Date" class="form-control" onkeyup="num(this);" maxlength="15" name="data" id="data">
                         </div>
                       </div>
                   </div>
@@ -5134,44 +5194,8 @@ if ($action == 'statusequipamento') {
 
   if ($action == 'editar') {
 
-    require_once 'classes/material.php';
     require_once 'conexao.php';
-
     $conn = new Conexao;
-    $material = new material;
-
-    if (isset($_POST['nome'])) {
-      $nome = $_POST['nome'];
-      $descri = $_POST['descri'];
-      $tipo = $_POST['tipo'];
-      $id = $_POST['id'];
-      //verificar se os campos estão todos preenchidos
-      if (!empty($nome) && !empty($tipo)) {
-        $conn->conectar();
-        if ($conn->msgErro == "") {
-          $material->alterarMaterial($id, $nome, $descri, $tipo);
-          ?>
-            <div class="alert alert-success" role="alert">
-              Material alterado com sucesso.
-            </div>
-          <?php
-        } else {
-          ?>
-            <div class="msn-erro">
-              <?php
-              echo "erro: " . $conn->msgErro;
-              ?>
-            </div>
-          <?php
-        }
-      } else {
-        ?>
-          <div class="alert alert-danger" role="alert">
-            Preencha todos os campos.
-          </div>
-        <?php
-      }
-    }
 
     if(isset($_SESSION['msg'])){
       echo $_SESSION['msg'];
@@ -5298,8 +5322,7 @@ if ($action == 'statusequipamento') {
                                 </div>
                                 <div class="modal-footer">
                                 <a href="excluirMaterial.php?id=<?= $rows['id'] ?>" type="submit" class="btn btn-xs btn-danger" style="color:white;">Excluir</a>
-                                <a href="index.php?pagina=home&action=editar" class="btn btn-success"> <button class> </button></a>
-                                </div>
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Não, voltar</button>                                </div>
                               </div>
                             </div>
                           </div>
@@ -5320,7 +5343,7 @@ if ($action == 'statusequipamento') {
                     <a href="index.php?pagina=home&action=editar"><img src="img/cancelar.png" /></a>
                   </div>
                   <div class="modal-body">
-                    <form method="POST">
+                    <form method="POST" action="EditarMaterial.php">
                       <div class="form-group">
                         <label for="recipient-name" class="control-label">Nome_modelo:</label>
                         <input name="nome" type="text" class="form-control" id="recipient-name">
@@ -5382,7 +5405,23 @@ if ($action == 'statusequipamento') {
         if ($action == 'listaEmprestimo') {
 
           require_once 'conexao.php';
+        
           $conn = new Conexao;
+          $conn->conectar();
+          $dataAtual =  date('Y-m-d');
+
+          $sql = $pdo->prepare("UPDATE emprestimo SET prazo_emprestimo = :situacao WHERE data_fim >= :dataAtual
+          AND prazo_emprestimo <> Finalizado dentro do prazo");
+          $sql->bindValue(":situacao", 'Dentro do prazo');
+          $sql->bindValue(":dataAtual", $dataAtual);
+          $sql->execute();
+
+          $sql = $pdo->prepare("UPDATE emprestimo SET prazo_emprestimo = :situacao WHERE data_fim < :dataAtual
+           AND prazo_emprestimo <> Finalizado dentro do prazo");
+          $sql->bindValue(":situacao",'Fora do prazo');
+          $sql->bindValue(":dataAtual", $dataAtual);
+          $sql->execute();
+
 
           ?>
             <div class="modal-dialog modal-xl" role="document">
@@ -5394,16 +5433,48 @@ if ($action == 'statusequipamento') {
                 </div>
                 <div class="modal-body">
                   <div class="container">
-                    <form method="POST">
+                    <form class="form-row" method="POST" action="">
+                      <div class="row">
+                        <div class="col-2">
+                          <input type="text" class="form-control" name="material" id="material" placeholder="Filtrar por nome">
+                        </div> 
+                        <div class="col-3">
+                          <input type="text" class="form-control" name="serviceTag" id="serviceTag" placeholder="Filtrar por ServiceTag">
+                        </div> 
+                        <div class="col-3">
+                          <input type="text" class="form-control" name="usuario" id="Usuario" placeholder="Filtrar por Usuário">
+                        </div> 
+                        <div class="col-2">
+                        <select class="form-control" id="prazo" name="prazo">
+                          <option value="" selected>Status do prazo</option>
+                          <option value="Dentro do prazo">Dentro do prazo</option>
+                          <option value="Fora do prazo">Fora do prazo</option>
+                          <option value="Finalizado fora do prazo">Finalizado fora do prazo</option>
+                          <option value="Finalizado dentro do prazo">Finalizado dentro do prazo</option>
+                       </select>
+                        </div>
+                        <input type="hidden" value="1" id="filtro" name="filtro">
+                        <div class="col-1">
+                          <button type="submit" class="btn btn-success">Buscar</button>
+                        </div>
+                      </div>
+                      <br>
+                      </form>
+                      <br>
                       <div class="row">
                         <div class="form-group col-md-12">
                           <!-- Faz uma conexão com o banco de dados, retorna uma lista de equipamentos e seus status -->
                           <div>
                             <?php
-
-                            $conn->conectar();
+                           
                             $sql = $pdo->prepare("SELECT * FROM emprestimo ORDER BY id desc");
                             $sql->execute();
+                            echo "inicio";
+                            
+       ########################################### FILTROS ###############################################
+
+
+             
 
                             echo '<table  class="table table-hover">';
                             echo '<tr>';
@@ -5411,7 +5482,8 @@ if ($action == 'statusequipamento') {
                             echo '<td><b>Service_tag/IMEI</td>';
                             echo '<td><b>Usuário</td>';
                             echo '<td><b>Email</td>';
-                            echo '<td><b>Data de início</td>';
+                            echo '<td><b>Prazo de empréstimo</td>';
+                           // echo '<td><b>Data de início</td>';
                             echo '<td><b>Data do fim</td>';
 
                             echo '</tr>';
@@ -5422,7 +5494,8 @@ if ($action == 'statusequipamento') {
                               $codigo = $registro['fk_codigo'];
                               $usuario = $registro['usuario'];
                               $email = $registro['email'];
-                              $dataInicio = $registro['data_inicio'];
+                              $prazo = $registro['prazo_emprestimo'];
+                             // $dataInicio = $registro['data_inicio'];
                               $dataFim = $registro['data_fim'];
 
                               echo '<tr>';
@@ -5430,8 +5503,9 @@ if ($action == 'statusequipamento') {
                               echo '<td>' . $codigo . '</td>';
                               echo '<td>' . $usuario . '</td>';
                               echo '<td>' . $email . '</td>';
-                              echo '<td>' . $dataInicio . '</td>';
-                              echo '<td>' . $dataFim . '</td>';
+                              echo '<td>' . $prazo . '</td>';
+                              //echo '<td>' .  date('d/m/Y', strtotime($dataInicio)) . '</td>';
+                              echo '<td>' .  date('d/m/Y', strtotime($dataFim)) . '</td>';
                               echo '</tr>';
                             }
                             echo '</table>';

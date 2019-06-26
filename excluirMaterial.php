@@ -25,7 +25,7 @@
 
     if($material != null ){
 
-		$_SESSION['msg'] = " <div class='alert alert-success' role='alert'> Material apagado com sucesso </div>";
+		$_SESSION['msg'] = " <div class='alert alert-success' role='alert'> Material excluido com sucesso </div>";
 		header('location:index.php?pagina=home&action=editar');
 	}else{
 		

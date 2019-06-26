@@ -1,7 +1,7 @@
 <?php
 session_start();
-if( $_SESSION['matricula'] == null){
-	header("location: login.php");
+if($_SESSION['matricula'] == null){
+	header("location:login.php");
 } else{
 
 

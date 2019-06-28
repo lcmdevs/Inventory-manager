@@ -25,11 +25,11 @@
 
     if($material != null ){
 
-		$_SESSION['msg'] = " <div class='alert alert-success' role='alert'> Material excluido com sucesso </div>";
+		$_SESSION['msg'] = " <div class='alert alert-success'  style='margin-top: 10px; margin-bottom:-60px;' role='alert'> Material excluido com sucesso </div>";
 		header('location:index.php?pagina=home&action=editar');
 	}else{
 		
-		$_SESSION['msg'] = " <div class='alert alert-danger' role='alert'> Falha ao apagar material </div>";
+		$_SESSION['msg'] = " <div class='alert alert-danger'  style='margin-top: 10px; margin-bottom:-60px;' role='alert'> Falha ao apagar material </div>";
 		header('location:index.php?pagina=home&action=editar');
 	}
     

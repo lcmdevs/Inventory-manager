@@ -41,10 +41,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="margin-left:310px; color:white;" href=""> Seja Bem vindo <?php echo $_SESSION['nome']; ?></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="margin-left: 15px; color: white;" href="sair.php">
+          <a class="nav-link" style="margin-left: 570px; color: white;" href="sair.php">
             Sair
           </a>
         </li>
@@ -4304,7 +4301,7 @@ if ($action == 'material') {
   }
 }
 ?>
-  <div class="modal-dialog" role="document" style="margin-top: 110px;">
+  <div class="modal-dialog" role="document" style="margin-top: 70px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cadastro de Material</h5>
@@ -4412,7 +4409,7 @@ if ($action == 'equipamento') {
   }
 }
 ?>
-  <div class="modal-dialog" role="document" style="margin-top: 110px;">
+  <div class="modal-dialog" role="document" style="margin-top: 70px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cadastro de Equipamento</h5>
@@ -4424,7 +4421,7 @@ if ($action == 'equipamento') {
           <form method="POST">
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="campo1">Nome_Modelo</label>
+                <label for="campo1">Nome/Modelo</label>
                 <input type="text" class="form-control" maxlength="20" name="nome_modelo">
               </div>
               <div class="form-group col-md-6">
@@ -4567,7 +4564,7 @@ if ($action == 'statusequipamento') {
   $conn = new Conexao;
 
   ?>
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document" style="margin-top: 70px;">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Status Equipamento</h5>
@@ -4696,7 +4693,7 @@ if ($action == 'statusequipamento') {
       ?>
         <div class="container">
           <div class="row">
-            <div class="modal-dialog" role="document" style="margin-top: 110px;">
+            <div class="modal-dialog" role="document" style="margin-top: 70px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Novo Emprestimo</h5>
@@ -4823,7 +4820,7 @@ if ($action == 'statusequipamento') {
           ?>
 
 
-            <div class="modal-dialog" role="document" style="margin-top: 110px;">
+            <div class="modal-dialog" role="document" style="margin-top: 70px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Devolução de Equipamento</h5>
@@ -4897,7 +4894,7 @@ if ($action == 'statusequipamento') {
                }
 
           ?>
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg" role="document" style="margin-top: 70px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Estoque de Hardware</h5>
@@ -4979,7 +4976,7 @@ if ($action == 'statusequipamento') {
                
             }
           ?>
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg" role="document" style="margin-top: 70px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Estoque de Impressão</h5>
@@ -5061,7 +5058,7 @@ if ($action == 'statusequipamento') {
              
           }
         ?>
-          <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-dialog modal-lg" role="document" style="margin-top: 70px;">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Estoque de Telefonia</h5>
@@ -5140,7 +5137,7 @@ if ($action == 'statusequipamento') {
         }
     
       ?>
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document" style="margin-top: 70px;">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Estoque Geral</h5>
@@ -5253,7 +5250,7 @@ if ($action == 'statusequipamento') {
 
               
     ?>
-      <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-dialog modal-xl" role="document" style="margin-top: 70px;" >
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Editar Materiais</h5>
@@ -5424,7 +5421,7 @@ if ($action == 'statusequipamento') {
 
 
           ?>
-            <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-dialog modal-xl" role="document" style="margin-top: 70px;">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Lista de Empréstimos</h5>
@@ -5469,12 +5466,10 @@ if ($action == 'statusequipamento') {
                            
                             $sql = $pdo->prepare("SELECT * FROM emprestimo ORDER BY id desc");
                             $sql->execute();
-                            echo "inicio";
+                            
                             
        ########################################### FILTROS ###############################################
 
-
-             
 
                             echo '<table  class="table table-hover">';
                             echo '<tr>';

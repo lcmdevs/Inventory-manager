@@ -21,17 +21,17 @@
             
           $material->alterarMaterial($id, $nome, $descri, $tipo);
 
-          $_SESSION['msg'] = " <div class='alert alert-success' role='alert'> Material alterado com sucesso </div>";
+          $_SESSION['msg'] = " <div class='alert alert-success' style='margin-top: 10px; margin-bottom:-60px;' role='alert'> Material alterado com sucesso </div>";
           header('location:index.php?pagina=home&action=editar');
         } else {
 
-         	$_SESSION['msg'] = " <div class='alert alert-danger' role='alert'> Não foi possivel alterar </div>";
+         	$_SESSION['msg'] = " <div class='alert alert-danger'  style='margin-top: 10px; margin-bottom:-60px;' role='alert'> Não foi possivel alterar </div>";
 		header('location:index.php?pagina=home&action=editar');
         }
 
       } else {
 
-        $_SESSION['msg'] = " <div class='alert alert-danger' role='alert'> Preencha todos os campos </div>";
+        $_SESSION['msg'] = " <div class='alert alert-danger'  style='margin-top: 10px; margin-bottom:-60px;' role='alert'> Preencha todos os campos </div>";
 		header('location:index.php?pagina=home&action=editar');
       }
     }

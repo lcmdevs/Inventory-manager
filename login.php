@@ -38,9 +38,6 @@
          <br>
          <br>
       </div>
-      <div class="form-group">
-         <p class="text-center">Esqueceu sua senha? <a href="#" id="signup">Clique aqui</a></p>
-      </div>
       </form>
    </div>
 </div>
